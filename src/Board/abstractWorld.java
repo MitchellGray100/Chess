@@ -34,8 +34,22 @@ public abstract class abstractWorld implements World {
 
 	@Override
 	public boolean isValidMove(int x, int y, int r, int c) {
-		// TODO Auto-generated method stub
-		return false;
+		Piece.type pieceType = ((Piece)(board[r][c])).getType();
+		switch(pieceType)
+		{
+		case Piece.type.PAWN: 
+			return pawnMove(x,y,r,c);
+		case Piece.type.KNIGHT: 
+			return knightMove(x,y,r,c);
+		case Piece.type.BISHOP: 
+			return bishopMove(x,y,r,c);
+		case Piece.type.ROOK: 
+			return rookMove(x,y,r,c);
+		case Piece.type.QUEEN: 
+			return queenMove(x,y,r,c);
+		default: 
+			return kingMove(x,y,r,c);
+		}
 	}
 
 	@Override
@@ -91,5 +105,29 @@ public abstract class abstractWorld implements World {
 			}
 		}
 
+	}
+	public boolean pawnMove(int x, int y, int r, int c)
+	{
+		return false;
+	}
+	public boolean knightMove(int x, int y, int r, int c)
+	{
+		return false;
+	}
+	public boolean bishopMove(int x, int y, int r, int c)
+	{
+		return false;
+	}
+	public boolean rookMove(int x, int y, int r, int c)
+	{
+		return false;
+	}
+	public boolean queenMove(int x, int y, int r, int c)
+	{
+		return false;
+	}
+	public boolean kingMove(int x, int y, int r, int c)
+	{
+		return false;
 	}
 }
