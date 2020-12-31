@@ -1,2 +1,0 @@
-# Chess
-It's chess
