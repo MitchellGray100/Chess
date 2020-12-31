@@ -4,8 +4,9 @@ public class Bishop extends abstractPiece implements Piece {
 	
 	Bishop(color pieceColor)
 	{
-		pieceType = type.BISHOP;
-		this.pieceColor = pieceColor;
+		setType(type.BISHOP);
+		setColor(pieceColor);
+		setValue(3);
 	}
 
 }

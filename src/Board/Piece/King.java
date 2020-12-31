@@ -4,7 +4,8 @@ public class King extends abstractPiece implements Piece {
 	
 	King(color pieceColor)
 	{
-		pieceType = type.KING;
-		this.pieceColor = pieceColor;
+		setType(type.KING);
+		setColor(pieceColor);
+		setValue(100);
 	}
 }

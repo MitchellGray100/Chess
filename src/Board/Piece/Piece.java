@@ -32,6 +32,17 @@ public interface Piece
 	 */
 	public void setColor(color pieceColor);
 
+	/**
+	 * Gets the value of the piece
+	 * returns the value of the piece
+	 */
+	public int getValue();
+	
+	/**
+	 * Sets the value of the piece
+	 * @param value the value to set
+	 */
+	public void setValue(int value);
 	enum type
 	{
 		PAWN,
@@ -46,4 +57,5 @@ public interface Piece
 		BLACK,
 		WHITE;
 	}
+	
 }

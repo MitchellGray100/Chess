@@ -4,7 +4,8 @@ public class Queen extends abstractPiece implements Piece {
 	
 	Queen(color pieceColor)
 	{
-		pieceType = type.QUEEN;
-		this.pieceColor = pieceColor;
+		setType(type.QUEEN);
+		setColor(pieceColor);
+		setValue(9);
 	}
 }

@@ -4,7 +4,8 @@ public class Rook extends abstractPiece implements Piece {
 	
 	Rook(color pieceColor)
 	{
-		pieceType = type.ROOK;
-		this.pieceColor = pieceColor;
+		setType(type.ROOK);
+		setColor(pieceColor);
+		setValue(5);
 	}
 }

@@ -1,8 +1,9 @@
 package Board.Piece;
 
 public abstract class abstractPiece implements Piece {
-	public type pieceType;
-	public color pieceColor;
+	private type pieceType;
+	private color pieceColor;
+	private int pieceValue;
 	
 	@Override
 	public type getType() {
@@ -24,6 +25,16 @@ public abstract class abstractPiece implements Piece {
 	public void setColor(color pieceColor) {
 		this.pieceColor = pieceColor;
 		
+	}
+
+	@Override
+	public int getValue() {
+		return pieceValue;
+	}
+
+	@Override
+	public void setValue(int value) {
+		pieceValue = value;
 	}
 
 }

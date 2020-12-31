@@ -7,7 +7,7 @@ public interface World {
 	 * @param x The x coordinate to move to
 	 * @param y The y coordinate to move to
 	 */
-	public void move(int x, int y);
+	public void move(int x,int y,int r,int c);
 	
 	
 	/**
@@ -20,5 +20,12 @@ public interface World {
 	 */
 	public boolean isValidMove(int x, int y, int r, int c);
 	
+	
+	/**
+	 * Changes the score of the game whenever a piece is taken
+	 * @param r The x position of the piece being taken
+	 * @param c The y position of the piece being taken
+	 */
+	public void changeScore(int r, int c);
 }
 
