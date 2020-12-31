@@ -1,6 +1,6 @@
-package Board;
+package board;
 
-public interface World {
+public interface Board {
 	
 	/**
 	 * 
@@ -11,9 +11,9 @@ public interface World {
 	
 	
 	/**
-	 * Determines whether the given move is a valid move for the piece
-	 * @param x The x coordinate of the piece
-	 * @param y The y coordinate of the piece
+	 * Determines whether the given move is a valid move for the pieces
+	 * @param x The x coordinate of the pieces
+	 * @param y The y coordinate of the pieces
 	 * @param r The proposed x coordinate of the move
 	 * @param c The proposed y coordinate of the move
 	 * @return whether or not the move is valid
@@ -22,9 +22,9 @@ public interface World {
 	
 	
 	/**
-	 * Changes the score of the game whenever a piece is taken
-	 * @param r The x position of the piece being taken
-	 * @param c The y position of the piece being taken
+	 * Changes the score of the game whenever a pieces is taken
+	 * @param r The x position of the pieces being taken
+	 * @param c The y position of the pieces being taken
 	 */
 	public void changeScore(int r, int c);
 }

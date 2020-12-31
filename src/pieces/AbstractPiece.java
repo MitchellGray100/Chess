@@ -1,28 +1,28 @@
-package Board.Piece;
+package pieces;
 
-public abstract class abstractPiece implements Piece {
-	private type pieceType;
-	private color pieceColor;
+public abstract class AbstractPiece implements Piece {
+	private Type pieceType;
+	private Color pieceColor;
 	private int pieceValue;
 	
 	@Override
-	public type getType() {
+	public Type getType() {
 		return pieceType;
 	}
 
 	@Override
-	public color getColor() {
+	public Color getColor() {
 		return pieceColor;
 	}
 
 	@Override
-	public void setType(type pieceType) {
+	public void setType(Type pieceType) {
 		this.pieceType = pieceType;
 		
 	}
 
 	@Override
-	public void setColor(color pieceColor) {
+	public void setColor(Color pieceColor) {
 		this.pieceColor = pieceColor;
 		
 	}

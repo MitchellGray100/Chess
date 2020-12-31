@@ -1,8 +1,8 @@
-package Board;
+package board;
 
-import Board.Piece.Piece;
+import pieces.Piece;
 
-public abstract class abstractWorld implements World {
+public abstract class AbstractBoard implements Board {
 	Piece[][] board = new Piece[8][8];
 	int whitePoints = 0;
 	int blackPoints = 0;
@@ -34,7 +34,7 @@ public abstract class abstractWorld implements World {
 
 	@Override
 	public boolean isValidMove(int x, int y, int r, int c) {
-		Piece.type pieceType = ((Piece)(board[r][c])).getType();
+		Piece.Type pieceType = ((Piece)(board[r][c])).getType();
 		switch(pieceType)
 		{
 		case PAWN: 
@@ -57,12 +57,12 @@ public abstract class abstractWorld implements World {
 	{
 		if(whitePoints == blackPoints)
 		{
-			if(((Piece)(board[r][c])).getColor().equals(Piece.color.BLACK)) 
+			if(((Piece)(board[r][c])).getColor().equals(Piece.Color.BLACK)) 
 			{
 				whitePoints += ((Piece)(board[r][c])).getValue();
 			}
 		}
-		else if(((Piece)(board[r][c])).getColor().equals(Piece.color.BLACK)) 
+		else if(((Piece)(board[r][c])).getColor().equals(Piece.Color.BLACK)) 
 		{
 			if(whitePoints > blackPoints)
 			{
@@ -83,7 +83,7 @@ public abstract class abstractWorld implements World {
 				whitePoints = 0;
 			}
 		}
-		else if(((Piece)(board[r][c])).getColor().equals(Piece.color.WHITE)) 
+		else if(((Piece)(board[r][c])).getColor().equals(Piece.Color.WHITE)) 
 		{
 			if(blackPoints > whitePoints)
 			{
