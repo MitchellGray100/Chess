@@ -37,15 +37,15 @@ public abstract class abstractWorld implements World {
 		Piece.type pieceType = ((Piece)(board[r][c])).getType();
 		switch(pieceType)
 		{
-		case Piece.type.PAWN: 
+		case PAWN: 
 			return pawnMove(x,y,r,c);
-		case Piece.type.KNIGHT: 
+		case KNIGHT: 
 			return knightMove(x,y,r,c);
-		case Piece.type.BISHOP: 
+		case BISHOP: 
 			return bishopMove(x,y,r,c);
-		case Piece.type.ROOK: 
+		case ROOK: 
 			return rookMove(x,y,r,c);
-		case Piece.type.QUEEN: 
+		case QUEEN: 
 			return queenMove(x,y,r,c);
 		default: 
 			return kingMove(x,y,r,c);
