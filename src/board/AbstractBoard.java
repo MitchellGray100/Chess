@@ -277,6 +277,36 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean kingMove(int x, int y, int r, int c)
 	{
+		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+		{
+			if(Math.abs(r - x) == 1 && Math.abs(c - y) == 1)
+			{
+				return true;
+			}
+			else if(r == x && Math.abs(c-y) == 1)
+			{
+				return true;
+			}
+			else if(c == y && Math.abs(r-x) == 1)
+			{
+				return true;
+			}
+		}
+		if(board[r][c] == null)
+		{
+			if(Math.abs(r - x) == 1 && Math.abs(c - y) == 1)
+			{
+				return true;
+			}
+			else if(r == x && Math.abs(c-y) == 1)
+			{
+				return true;
+			}
+			else if(c == y && Math.abs(r-x) == 1)
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 
