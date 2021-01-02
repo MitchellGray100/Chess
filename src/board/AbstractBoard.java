@@ -121,7 +121,6 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean pawnMove(int x, int y, int r, int c)
 	{
-
 		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
 		{
 			if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
@@ -206,30 +205,20 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean bishopMove(int x, int y, int r, int c)
 	{
-
 		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
 		{
-			if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
-			{
-				return true;
-			}
-			if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
+			if(Math.abs(y-c) == Math.abs(x-r))
 			{
 				return true;
 			}
 		}
 		if(board[r][c] == null)
 		{
-			if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
-			{
-				return true;
-			}
-			if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
+			if(Math.abs(y-c) == Math.abs(x-r))
 			{
 				return true;
 			}
 		}
-
 		return false;
 	}
 	/**
