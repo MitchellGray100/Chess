@@ -31,6 +31,10 @@ public abstract class AbstractBoard implements Board {
 	public boolean isValidMove(int x, int y, int r, int c) {
 		if (r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0) return false;
+		if(putsKingInCheck(x,y,r,c))
+		{
+			return false;
+		}
 		try {
 			Piece.Type pieceType = ((Piece)(board[r][c])).getType();
 			switch(pieceType)
@@ -117,43 +121,42 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean pawnMove(int x, int y, int r, int c)
 	{
-		if(!putsKingInCheck(x,y,r,c))
+
+		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
 		{
-			if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+			if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
 			{
-				if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
+				if(r == x + 1 && (c == y + 1 || c == y - 1))
 				{
-					if(r == x + 1 && (c == y + 1 || c == y - 1))
-					{
-						return true;
-					}
-				}
-				if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
-				{
-					if(r == x - 1 && (c == y + 1 || c == y - 1))
-					{
-						return true;
-					}
+					return true;
 				}
 			}
-			if(board[r][c] == null)
+			if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
 			{
-				if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
+				if(r == x - 1 && (c == y + 1 || c == y - 1))
 				{
-					if(r == x + 1 && c == y)
-					{
-						return true;
-					}
-				}
-				if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
-				{
-					if(r == x - 1 && c == y)
-					{
-						return true;
-					}
+					return true;
 				}
 			}
 		}
+		if(board[r][c] == null)
+		{
+			if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
+			{
+				if(r == x + 1 && c == y)
+				{
+					return true;
+				}
+			}
+			if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
+			{
+				if(r == x - 1 && c == y)
+				{
+					return true;
+				}
+			}
+		}
+
 		return false;
 	}
 
@@ -167,31 +170,29 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean knightMove(int x, int y, int r, int c)
 	{
-		if(!putsKingInCheck(x,y,r,c))
+		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
 		{
-			if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+			if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
 			{
-				if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
-				{
-					return true;
-				}
-				if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
-				{
-					return true;
-				}
+				return true;
 			}
-			if(board[r][c] == null)
+			if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
 			{
-				if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
-				{
-					return true;
-				}
-				if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
-				{
-					return true;
-				}
+				return true;
 			}
 		}
+		if(board[r][c] == null)
+		{
+			if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
+			{
+				return true;
+			}
+			if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
+			{
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -205,6 +206,30 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean bishopMove(int x, int y, int r, int c)
 	{
+
+		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+		{
+			if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
+			{
+				return true;
+			}
+			if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
+			{
+				return true;
+			}
+		}
+		if(board[r][c] == null)
+		{
+			if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
+			{
+				return true;
+			}
+			if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
+			{
+				return true;
+			}
+		}
+
 		return false;
 	}
 	/**
