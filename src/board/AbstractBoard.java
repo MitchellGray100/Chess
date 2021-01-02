@@ -13,22 +13,14 @@ public abstract class AbstractBoard implements Board {
 		{
 			if(board[r][c] == null)
 			{
-				if(isValidMove(x,y,r,c))
-				{
-					if(board[r][c] == null)
-					{
-						board[r][c] = board[x][y];
-						board[x][y] = null;
-					}
-					else
-					{
-						changeScore(r,c);
-						board[r][c] = board[x][y];
-						board[x][y] = null;
-					}
-					return true;
-				}
-
+				board[r][c] = board[x][y];
+				board[x][y] = null;
+			}
+			else
+			{
+				changeScore(r,c);
+				board[r][c] = board[x][y];
+				board[x][y] = null;
 			}
 			return true;
 		}
