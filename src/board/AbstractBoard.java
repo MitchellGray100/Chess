@@ -8,7 +8,7 @@ public abstract class AbstractBoard implements Board {
 	int blackPoints = 0;
 
 	@Override
-	public void move(int x, int y,int r, int c) {
+	public boolean move(int x, int y,int r, int c) {
 		if(!(r>7) && !(r<0))
 		{
 			if(!(c>7) && !(c<0))
@@ -26,10 +26,12 @@ public abstract class AbstractBoard implements Board {
 						board[r][c] = board[x][y];
 						board[x][y] = null;
 					}
+					return true;
 				}
+				
 			}
 		}
-
+		return false;
 	}
 
 	@Override
@@ -108,6 +110,40 @@ public abstract class AbstractBoard implements Board {
 	}
 	public boolean pawnMove(int x, int y, int r, int c)
 	{
+		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+		{
+			if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
+			{
+				if(r == x + 1 && (c == y + 1 || c == y - 1))
+				{
+					return true;
+				}
+			}
+			if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
+			{
+				if(r == x - 1 && (c == y + 1 || c == y - 1))
+				{
+					return true;
+				}
+			}
+		}
+		if(board[r][c] == null)
+		{
+			if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
+			{
+				if(r == x + 1 && c == y)
+				{
+					return true;
+				}
+			}
+			if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
+			{
+				if(r == x - 1 && c == y)
+				{
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	public boolean knightMove(int x, int y, int r, int c)

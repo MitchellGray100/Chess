@@ -7,8 +7,9 @@ public interface Board {
 	 * @param y the y coordinate of the piece
 	 * @param r The x coordinate to move to
 	 * @param c The y coordinate to move to
+	 * @return whether or not the move is valid
 	 */
-	public void move(int x,int y,int r,int c);
+	public boolean move(int x,int y,int r,int c);
 	
 	
 	/**
