@@ -9,9 +9,9 @@ public abstract class AbstractBoard implements Board {
 
 	@Override
 	public boolean move(int x, int y,int r, int c) {
-		if(!(r>7) && !(r<0))
+		if(isValidMove(x,y,r,c))
 		{
-			if(!(c>7) && !(c<0))
+			if(board[r][c] == null)
 			{
 				if(isValidMove(x,y,r,c))
 				{
@@ -30,27 +30,34 @@ public abstract class AbstractBoard implements Board {
 				}
 
 			}
+			return true;
 		}
 		return false;
 	}
 
 	@Override
 	public boolean isValidMove(int x, int y, int r, int c) {
-		Piece.Type pieceType = ((Piece)(board[r][c])).getType();
-		switch(pieceType)
-		{
-		case PAWN: 
-			return pawnMove(x,y,r,c);
-		case KNIGHT: 
-			return knightMove(x,y,r,c);
-		case BISHOP: 
-			return bishopMove(x,y,r,c);
-		case ROOK: 
-			return rookMove(x,y,r,c);
-		case QUEEN: 
-			return queenMove(x,y,r,c);
-		default: 
-			return kingMove(x,y,r,c);
+		if (r > 7 || r < 0 || c > 7 || c < 0 ||
+				x > 7 || x < 0 || y > 7 || y < 0) return false;
+		try {
+			Piece.Type pieceType = ((Piece)(board[r][c])).getType();
+			switch(pieceType)
+			{
+			case PAWN:
+				return pawnMove(x,y,r,c);
+			case KNIGHT:
+				return knightMove(x,y,r,c);
+			case BISHOP:
+				return bishopMove(x,y,r,c);
+			case ROOK:
+				return rookMove(x,y,r,c);
+			case QUEEN:
+				return queenMove(x,y,r,c);
+			default:
+				return kingMove(x,y,r,c);
+			}
+		} catch (NullPointerException e) {
+			return false;
 		}
 	}
 
@@ -59,12 +66,12 @@ public abstract class AbstractBoard implements Board {
 	{
 		if(whitePoints == blackPoints)
 		{
-			if(((Piece)(board[r][c])).getColor().equals(Piece.Color.BLACK)) 
+			if(((Piece)(board[r][c])).getColor().equals(Piece.Color.BLACK))
 			{
 				whitePoints += ((Piece)(board[r][c])).getValue();
 			}
 		}
-		else if(((Piece)(board[r][c])).getColor().equals(Piece.Color.BLACK)) 
+		else if(((Piece)(board[r][c])).getColor().equals(Piece.Color.BLACK))
 		{
 			if(whitePoints > blackPoints)
 			{
@@ -85,7 +92,7 @@ public abstract class AbstractBoard implements Board {
 				whitePoints = 0;
 			}
 		}
-		else if(((Piece)(board[r][c])).getColor().equals(Piece.Color.WHITE)) 
+		else if(((Piece)(board[r][c])).getColor().equals(Piece.Color.WHITE))
 		{
 			if(blackPoints > whitePoints)
 			{
@@ -157,7 +164,7 @@ public abstract class AbstractBoard implements Board {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Checks to see if the move is valid
 	 * @param x The row value of the piece
@@ -195,9 +202,9 @@ public abstract class AbstractBoard implements Board {
 		}
 		return false;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param x The row value of the piece
 	 * @param y	The column value of the piece
 	 * @param r The proposed row value of the move
@@ -244,7 +251,7 @@ public abstract class AbstractBoard implements Board {
 	{
 		return false;
 	}
-	
+
 	/**
 	 * Checks to see if the move is valid
 	 * @param x The row value of the piece
