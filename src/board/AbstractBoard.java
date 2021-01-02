@@ -31,6 +31,10 @@ public abstract class AbstractBoard implements Board {
 	public boolean isValidMove(int x, int y, int r, int c) {
 		if (r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0) return false;
+		if(x == r && y == c)
+		{
+			return false;
+		}
 		if(putsKingInCheck(x,y,r,c))
 		{
 			return false;
@@ -231,6 +235,20 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean rookMove(int x, int y, int r, int c)
 	{
+		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+		{
+			if(r == x || c == y)
+			{
+				return true;
+			}
+		}
+		if(board[r][c] == null)
+		{
+			if(r == x || c == y)
+			{
+				return true;
+			}
+		}
 		return false;
 	}
 	/**
