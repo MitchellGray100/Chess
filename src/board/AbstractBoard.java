@@ -28,7 +28,7 @@ public abstract class AbstractBoard implements Board {
 					}
 					return true;
 				}
-				
+
 			}
 		}
 		return false;
@@ -108,62 +108,152 @@ public abstract class AbstractBoard implements Board {
 		}
 
 	}
+	/**
+	 * Checks to see if the move is valid
+	 * @param x The row value of the piece
+	 * @param y	The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move is valid for a pawn
+	 */
 	public boolean pawnMove(int x, int y, int r, int c)
 	{
-		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+		if(!putsKingInCheck(x,y,r,c))
 		{
-			if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
+			if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
 			{
-				if(r == x + 1 && (c == y + 1 || c == y - 1))
+				if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
 				{
-					return true;
+					if(r == x + 1 && (c == y + 1 || c == y - 1))
+					{
+						return true;
+					}
+				}
+				if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
+				{
+					if(r == x - 1 && (c == y + 1 || c == y - 1))
+					{
+						return true;
+					}
 				}
 			}
-			if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
+			if(board[r][c] == null)
 			{
-				if(r == x - 1 && (c == y + 1 || c == y - 1))
+				if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
 				{
-					return true;
+					if(r == x + 1 && c == y)
+					{
+						return true;
+					}
 				}
-			}
-		}
-		if(board[r][c] == null)
-		{
-			if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
-			{
-				if(r == x + 1 && c == y)
+				if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
 				{
-					return true;
-				}
-			}
-			if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
-			{
-				if(r == x - 1 && c == y)
-				{
-					return true;
+					if(r == x - 1 && c == y)
+					{
+						return true;
+					}
 				}
 			}
 		}
 		return false;
 	}
+	
+	/**
+	 * Checks to see if the move is valid
+	 * @param x The row value of the piece
+	 * @param y	The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move is valid for a knight
+	 */
 	public boolean knightMove(int x, int y, int r, int c)
 	{
+		if(!putsKingInCheck(x,y,r,c))
+		{
+			if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+			{
+				if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
+				{
+					return true;
+				}
+				if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
+				{
+					return true;
+				}
+			}
+			if(board[r][c] == null)
+			{
+				if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
+				{
+					return true;
+				}
+				if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
+				{
+					return true;
+				}
+			}
+		}
 		return false;
 	}
+	
+	/**
+	 * 
+	 * @param x The row value of the piece
+	 * @param y	The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move is valid for a bishop
+	 */
 	public boolean bishopMove(int x, int y, int r, int c)
 	{
 		return false;
 	}
+	/**
+	 * Checks to see if the move is valid
+	 * @param x The row value of the piece
+	 * @param y	The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move is valid for a rook
+	 */
 	public boolean rookMove(int x, int y, int r, int c)
 	{
 		return false;
 	}
+	/**
+	 * Checks to see if the move is valid
+	 * @param x The row value of the piece
+	 * @param y	The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move is valid for a queen
+	 */
 	public boolean queenMove(int x, int y, int r, int c)
 	{
 		return false;
 	}
+	/**
+	 * Checks to see if the move is valid
+	 * @param x The row value of the piece
+	 * @param y	The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move is valid for a queen
+	 */
 	public boolean kingMove(int x, int y, int r, int c)
 	{
+		return false;
+	}
+	
+	/**
+	 * Checks to see if the move is valid
+	 * @param x The row value of the piece
+	 * @param y	The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move puts the king in check
+	 */
+	private boolean putsKingInCheck(int x, int y, int r, int c) {
 		return false;
 	}
 }

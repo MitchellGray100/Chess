@@ -3,6 +3,7 @@ package board;
 public interface Board {
 	
 	/**
+	 * Moves the piece from one spot to another
 	 * @param x the x coordinate of the piece
 	 * @param y the y coordinate of the piece
 	 * @param r The x coordinate to move to
