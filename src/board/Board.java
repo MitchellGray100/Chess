@@ -3,9 +3,10 @@ package board;
 public interface Board {
 	
 	/**
-	 * 
-	 * @param x The x coordinate to move to
-	 * @param y The y coordinate to move to
+	 * @param x the x coordinate of the piece
+	 * @param y the y coordinate of the piece
+	 * @param r The x coordinate to move to
+	 * @param c The y coordinate to move to
 	 */
 	public void move(int x,int y,int r,int c);
 	
