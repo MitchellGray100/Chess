@@ -243,6 +243,10 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean queenMove(int x, int y, int r, int c)
 	{
+		if(bishopMove(x,y,r,c) || rookMove(x,y,r,c))
+		{
+			return true;
+		}
 		return false;
 	}
 	/**
