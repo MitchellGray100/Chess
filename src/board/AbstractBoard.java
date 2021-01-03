@@ -2,9 +2,17 @@ package board;
 
 import pieces.Piece;
 
+/** An abstract implementation of the chess board */
 public abstract class AbstractBoard implements Board {
+	/** A 2d array of pieces representing the chess board */
 	Piece[][] board = new Piece[8][8];
+	/** Number of points for white 
+	 * Invariant: nonnegative
+	 */
 	int whitePoints = 0;
+	/** Number of points for black 
+	 * Invariant: nonnegative
+	 */
 	int blackPoints = 0;
 
 	@Override
@@ -324,6 +332,7 @@ public abstract class AbstractBoard implements Board {
 		Piece temp2 = board[r][c];
 		board[r][c] = board[x][y];
 		board[x][y] = null;
+		@SuppressWarnings("unused")
 		boolean returner;
 		if(pieceColor == Piece.Color.WHITE)
 		{

@@ -1,5 +1,6 @@
 package board;
 
+/** The board in a game of chess */
 public interface Board {
 	
 	/**
