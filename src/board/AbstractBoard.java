@@ -4,6 +4,7 @@ import pieces.Piece;
 
 /** An abstract implementation of the chess board */
 public abstract class AbstractBoard implements Board {
+	
 	/** A 2d array of pieces representing the chess board */
 	Piece[][] board = new Piece[8][8];
 	/** Number of points for white 
@@ -15,6 +16,13 @@ public abstract class AbstractBoard implements Board {
 	 */
 	int blackPoints = 0;
 
+	@Override
+	public Piece squareInfo(int x, int y) {
+		if (x < 0 || x > 7 || y < 0 || y > 7)
+			return null;
+		return board[x][y];
+	}
+	
 	@Override
 	public boolean move(int x, int y,int r, int c) {
 		if(isValidMove(x,y,r,c))

@@ -1,5 +1,7 @@
 package board;
 
+import pieces.Piece;
+
 /** The board in a game of chess */
 public interface Board {
 	
@@ -31,5 +33,13 @@ public interface Board {
 	 * @param c The y position of the pieces being taken
 	 */
 	public void changeScore(int r, int c);
+	
+	/**
+	 * Returns the piece at the specified square or null if the square is empty
+	 * @param x - x coordinate of the square
+	 * @param y - y coordinate of the square
+	 * @return the piece at the specified square, null if square is empty
+	 */
+	public Piece squareInfo(int x, int y);
 }
 
