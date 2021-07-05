@@ -1,8 +1,8 @@
-package board;
+package com.robotchad.chess.client.board;
 
-import pieces.Piece.Color;
-import pieces.Piece.Type;
-import pieces.PieceFactory;
+import com.robotchad.chess.client.pieces.Piece.Color;
+import com.robotchad.chess.client.pieces.Piece.Type;
+import com.robotchad.chess.client.pieces.PieceFactory;
 
 /** Implementation of the chess board */
 public class BoardImpl extends AbstractBoard implements Board {

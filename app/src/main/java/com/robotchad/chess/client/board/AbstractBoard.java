@@ -1,6 +1,6 @@
-package board;
+package com.robotchad.chess.client.board;
 
-import pieces.Piece;
+import com.robotchad.chess.client.pieces.Piece;
 
 /** An abstract implementation of the chess board */
 public abstract class AbstractBoard implements Board {

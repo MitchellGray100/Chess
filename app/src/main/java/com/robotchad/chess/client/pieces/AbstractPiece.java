@@ -1,4 +1,4 @@
-package pieces;
+package com.robotchad.chess.client.pieces;
 
 public abstract class AbstractPiece implements Piece {
 	private Type pieceType;

@@ -1,6 +1,6 @@
-package controller;
+package com.robotchad.chess.client.controller;
 
-import board.BoardImpl;
+import com.robotchad.chess.client.board.BoardImpl;
 
 /** Implementation of a controller for the chess game */
 public class ControllerImpl implements Controller {
