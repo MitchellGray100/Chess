@@ -51,12 +51,12 @@ public abstract class AbstractBoard implements Board {
 		{
 			return false;
 		}
-		if(putsKingInCheck(x,y,r,c))
-		{
-			return false;
-		}
+		//if(putsKingInCheck(x,y,r,c))
+		//{
+		//	return false;
+		//}
 		try {
-			Piece.Type pieceType = ((Piece)(board[r][c])).getType();
+			Piece.Type pieceType = ((Piece)(board[x][y])).getType();
 			switch(pieceType)
 			{
 			case PAWN:
@@ -176,7 +176,7 @@ public abstract class AbstractBoard implements Board {
 			}
 		}
 
-		return false;
+		return false;//should be false
 	}
 
 	/**

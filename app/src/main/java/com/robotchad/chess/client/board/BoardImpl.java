@@ -23,7 +23,7 @@ public class BoardImpl extends AbstractBoard implements Board {
 		board[0][6] = factory.getPiece(Type.KNIGHT, Color.WHITE);
 		board[0][7] = factory.getPiece(Type.ROOK, Color.WHITE);
 		for (int i = 0; i < board[1].length; i++)
-			board[1][i] = factory.getPiece(Type.PAWN, Color.BLACK);
+			board[1][i] = factory.getPiece(Type.PAWN, Color.WHITE);
 		board[7][0] = factory.getPiece(Type.ROOK, Color.BLACK);
 		board[7][1] = factory.getPiece(Type.KNIGHT, Color.BLACK);
 		board[7][2] = factory.getPiece(Type.BISHOP, Color.BLACK);
@@ -33,7 +33,7 @@ public class BoardImpl extends AbstractBoard implements Board {
 		board[7][6] = factory.getPiece(Type.KNIGHT, Color.BLACK);
 		board[7][7] = factory.getPiece(Type.ROOK, Color.BLACK);
 		for (int i = 0; i < board[6].length; i++)
-			board[6][i] = factory.getPiece(Type.PAWN, Color.WHITE);
+			board[6][i] = factory.getPiece(Type.PAWN, Color.BLACK);
 		
 	}
 }
