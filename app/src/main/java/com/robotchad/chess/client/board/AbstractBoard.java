@@ -2,6 +2,9 @@ package com.robotchad.chess.client.board;
 
 import com.robotchad.chess.client.pieces.Piece;
 
+//@TODO Add pawns moving 2 spaces if first move
+
+
 /** An abstract implementation of the chess board */
 public abstract class AbstractBoard implements Board {
 	

@@ -2,6 +2,7 @@ package com.robotchad.chess;
 
 import com.robotchad.chess.client.board.Board;
 import com.robotchad.chess.client.board.BoardImpl;
+import com.robotchad.chess.client.pieces.Piece;
 
 import org.junit.Test;
 
@@ -19,11 +20,19 @@ public class MovementTests {
 	}
 
 	@Test
-	public void pawnWhiteObstacleMovementTest()
+	public void pawnObstacleMovementTest()
 	{
 		Board chess = new BoardImpl();
 		chess.forceMove(1,1,2,0);
 		assertEquals(false,chess.isValidMove(1,0,2,0));
+	}
+
+	@Test
+	public void pawnEnemyMovementTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(6,0,2,1);
+		assertEquals(true,chess.isValidMove(1,0,2,1));
 	}
 
 	@Test
@@ -202,5 +211,22 @@ public class MovementTests {
 		Board chess  = new BoardImpl();
 		chess.forceMove(7,3,3,3);
 		assertFalse(chess.isValidMove(3,3,3,3));
+	}
+
+	@Test
+	public void kingObstacleMovementTest()
+	{
+		Board chess = new BoardImpl();
+
+		assertEquals(false,chess.isValidMove(0,3,1,3));
+	}
+
+	@Test
+	public void kingEnemyMovementTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(6,0,1,3);
+		//assertEquals(Piece.Type.PAWN, chess.squareInfo(1,3));
+		assertEquals(true,chess.isValidMove(0,3,1,3));
 	}
 }
