@@ -25,7 +25,18 @@ public abstract class AbstractBoard implements Board {
 			return null;
 		return board[x][y];
 	}
-	
+
+	@Override
+	public void deleteSquare(int x, int y) {
+		board[x][y] = null;
+	}
+
+	@Override
+	public void changeSquare(int x, int y, Piece piece)
+	{
+		board[x][y] = piece;
+	}
+
 	@Override
 	public boolean move(int x, int y,int r, int c) {
 		if(isValidMove(x,y,r,c))
@@ -46,6 +57,7 @@ public abstract class AbstractBoard implements Board {
 		return false;
 	}
 
+	@Override
 	public void forceMove(int x, int y,int r, int c) {
 		if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0)) {

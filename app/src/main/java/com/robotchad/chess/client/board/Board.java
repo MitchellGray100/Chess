@@ -13,7 +13,7 @@ public interface Board {
 	 * @param c The y coordinate to move to
 	 * @return whether or not the move is valid
 	 */
-	public boolean move(int x,int y,int r,int c);
+	boolean move(int x,int y,int r,int c);
 
 	/**
 	 * Moves the piece from one spot to another even if not valid. Only used for testing.
@@ -21,9 +21,8 @@ public interface Board {
 	 * @param y the y coordinate of the piece
 	 * @param r The x coordinate to move to
 	 * @param c The y coordinate to move to
-	 * @return whether or not the move is valid
 	 */
-	public void forceMove(int x,int y,int r,int c);
+	void forceMove(int x,int y,int r,int c);
 
 	/**
 	 * Determines whether the given move is a valid move for the pieces
@@ -33,7 +32,7 @@ public interface Board {
 	 * @param c The proposed y coordinate of the move
 	 * @return whether or not the move is valid
 	 */
-	public boolean isValidMove(int x, int y, int r, int c);
+	boolean isValidMove(int x, int y, int r, int c);
 	
 	
 	/**
@@ -41,7 +40,7 @@ public interface Board {
 	 * @param r The x position of the pieces being taken
 	 * @param c The y position of the pieces being taken
 	 */
-	public void changeScore(int r, int c);
+	void changeScore(int r, int c);
 	
 	/**
 	 * Returns the piece at the specified square or null if the square is empty
@@ -49,6 +48,20 @@ public interface Board {
 	 * @param y - y coordinate of the square
 	 * @return the piece at the specified square, null if square is empty
 	 */
-	public Piece squareInfo(int x, int y);
+	Piece squareInfo(int x, int y);
+
+	/**
+	 * Deletes piece on board at specified x and y coordinates
+	 * @param x - x coordinate of the square
+	 * @param y - y coordinate of the square
+	 */
+	void deleteSquare(int x, int y);
+
+	/**
+	 * Deletes piece on board at specified x and y coordinates
+	 * @param x - x coordinate of the square
+	 * @param y - y coordinate of the square
+	 */
+	 void changeSquare(int x, int y,Piece piece);
 }
 
