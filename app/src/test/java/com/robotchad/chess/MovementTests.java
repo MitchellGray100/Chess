@@ -12,24 +12,45 @@ import junit.framework.Assert;
 public class MovementTests {
 
 	@Test
-	public void pawnWrongMovementTest()
+	public void pawnWhiteWrongMovementTest()
 	{
 		Board chess = new BoardImpl();
 		assertEquals(false,chess.isValidMove(1,0,1,1));
 	}
 
 	@Test
-	public void pawnCorrectMovementTest()
+	public void pawnWhiteCorrectMovementTest()
 	{
 		Board chess = new BoardImpl();
 		assertTrue(chess.isValidMove(1,0,2,0));
 	}
 
 	@Test
-	public void pawnSameMovementTest()
+	public void pawnWhiteSameMovementTest()
 	{
 		Board chess = new BoardImpl();
 		assertEquals(false,chess.isValidMove(1,0,1,0));
+	}
+
+	@Test
+	public void pawnBlackWrongMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertEquals(false,chess.isValidMove(6,0,6,1));
+	}
+
+	@Test
+	public void pawnBlackCorrectMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertTrue(chess.isValidMove(6,0,5,0));
+	}
+
+	@Test
+	public void pawnBlackSameMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertEquals(false,chess.isValidMove(6,0,6,0));
 	}
 
 }
