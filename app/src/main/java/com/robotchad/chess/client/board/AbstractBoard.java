@@ -43,6 +43,20 @@ public abstract class AbstractBoard implements Board {
 		return false;
 	}
 
+	public void forceMove(int x, int y,int r, int c) {
+		if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
+				x > 7 || x < 0 || y > 7 || y < 0)) {
+			if (board[r][c] == null) {
+				board[r][c] = board[x][y];
+				board[x][y] = null;
+			} else {
+				changeScore(r, c);
+				board[r][c] = board[x][y];
+				board[x][y] = null;
+			}
+		}
+	}
+
 	@Override
 	public boolean isValidMove(int x, int y, int r, int c) {
 		if (r > 7 || r < 0 || c > 7 || c < 0 ||
@@ -323,7 +337,7 @@ public abstract class AbstractBoard implements Board {
 				return true;
 			}
 		}
-		return false;
+		return false;//false
 	}
 
 	/**

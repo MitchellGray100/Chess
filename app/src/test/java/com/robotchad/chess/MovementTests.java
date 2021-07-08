@@ -53,4 +53,75 @@ public class MovementTests {
 		assertEquals(false,chess.isValidMove(6,0,6,0));
 	}
 
+	@Test
+	public void kingWhiteUpMovementTest()
+	{
+		Board chess  = new BoardImpl();
+		chess.forceMove(0,4,3,3);
+		assertTrue(chess.isValidMove(3,3,2,3));
+	}
+
+	@Test
+	public void kingWhiteDownMovementTest()
+	{
+		Board chess  = new BoardImpl();
+		chess.forceMove(0,4,3,3);
+		assertTrue(chess.isValidMove(3,3,4,3));
+	}
+
+	@Test
+	public void kingWhiteRightMovementTest()
+	{
+		Board chess  = new BoardImpl();
+		chess.forceMove(0,4,3,3);
+		assertTrue(chess.isValidMove(3,3,3,4));
+	}
+
+	@Test
+	public void kingWhiteLeftMovementTest()
+	{
+		Board chess  = new BoardImpl();
+		chess.forceMove(0,4,3,3);
+		assertTrue(chess.isValidMove(3,3,3,2));
+	}
+
+	@Test
+	public void kingWhiteUpLeftMovementTest()
+	{
+		Board chess  = new BoardImpl();
+		chess.forceMove(0,4,3,3);
+		assertTrue(chess.isValidMove(3,3,2,2));
+	}
+
+	@Test
+	public void kingWhiteUpRightMovementTest()
+	{
+		Board chess  = new BoardImpl();
+		chess.forceMove(0,4,3,3);
+		assertTrue(chess.isValidMove(3,3,2,4));
+	}
+
+	@Test
+	public void kingWhiteDownLeftMovementTest()
+	{
+		Board chess  = new BoardImpl();
+		chess.forceMove(0,4,3,3);
+		assertTrue(chess.isValidMove(3,3,4,2));
+	}
+
+	@Test
+	public void kingWhiteDownRightMovementTest()
+	{
+		Board chess  = new BoardImpl();
+		chess.forceMove(0,4,3,3);
+		assertTrue(chess.isValidMove(3,3,4,4));
+	}
+
+	@Test
+	public void kingWhitSameMovementTest()
+	{
+		Board chess  = new BoardImpl();
+		chess.forceMove(0,4,3,3);
+		assertFalse(chess.isValidMove(3,3,3,3));
+	}
 }
