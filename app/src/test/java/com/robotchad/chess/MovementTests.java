@@ -19,6 +19,14 @@ public class MovementTests {
 	}
 
 	@Test
+	public void pawnWhiteObstacleMovementTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(1,1,2,0);
+		assertEquals(false,chess.isValidMove(1,0,2,0));
+	}
+
+	@Test
 	public void pawnWhiteCorrectMovementTest()
 	{
 		Board chess = new BoardImpl();
