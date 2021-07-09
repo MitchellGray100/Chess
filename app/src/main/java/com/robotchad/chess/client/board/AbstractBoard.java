@@ -2,7 +2,7 @@ package com.robotchad.chess.client.board;
 
 import com.robotchad.chess.client.pieces.Piece;
 
-//@TODO Add pawns moving 2 spaces if first move
+//@TODO Add pawns using en passant
 
 
 /** An abstract implementation of the chess board */
@@ -49,7 +49,7 @@ public abstract class AbstractBoard implements Board {
 
 	@Override
 	public boolean move(int x, int y,int r, int c) {
-		if(isValidMove(x,y,r,c))
+		if(isValidMove(x,y,r,c) && !putsKingInCheck(x,y,r,c))
 		{
 			if(board[r][c] == null)
 			{
@@ -205,14 +205,14 @@ public abstract class AbstractBoard implements Board {
 		{
 			if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
 			{
-				if(r == x + 1 && c == y)
+				if(((r == x + 1) || (x == 1 && c == y && r == x + 2)) && c == y)
 				{
 					return true;
 				}
 			}
 			if(((Piece)(board[x][y])).getColor() == Piece.Color.BLACK)
 			{
-				if(r == x - 1 && c == y)
+				if(((r == x - 1) || (x == 6 && c == y && r == x - 2)) && c == y)
 				{
 					return true;
 				}

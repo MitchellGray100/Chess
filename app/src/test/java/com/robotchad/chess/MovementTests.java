@@ -39,6 +39,12 @@ public class MovementTests {
 		Board chess = new BoardImpl();
 		assertTrue(chess.isValidMove(1,0,2,0));
 	}
+	@Test
+	public void pawnWhiteCorrectTwoForwardMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertTrue(chess.isValidMove(1,0,3,0));
+	}
 
 	@Test
 	public void pawnWhiteSameMovementTest()
@@ -59,6 +65,13 @@ public class MovementTests {
 	{
 		Board chess = new BoardImpl();
 		assertTrue(chess.isValidMove(6,0,5,0));
+	}
+
+	@Test
+	public void pawnBlackCorrectTwoForwardMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertTrue(chess.isValidMove(6,0,4,0));
 	}
 
 	@Test
