@@ -291,7 +291,51 @@ public abstract class AbstractBoard implements Board {
 		}
 		if(board[r][c] == null && (Math.abs(y-c) == Math.abs(x-r)))
 		{
+			if(r < x && c > y)
+			{
+				for(int i = 1; i < x-r; i++)
+				{
+					if(board[x-i][y+i] != null)
+					{
+						return false;
+					}
+				}
 				return true;
+			}
+
+			else if(r < x && c < y)
+			{
+				for(int i = 1; i < x-r; i++)
+				{
+					if(board[x-i][y-i] != null)
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			else if(r > x && c < y)
+			{
+				for(int i = 1; i < r-x; i++)
+				{
+					if(board[x+i][y-i] != null)
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			else if(r > x && c > y)
+			{
+				for(int i = 1; i < r-x; i++)
+				{
+					if(board[x+i][y+i] != null)
+					{
+						return false;
+					}
+				}
+				return true;
+			}
 		}
 
 		return false;

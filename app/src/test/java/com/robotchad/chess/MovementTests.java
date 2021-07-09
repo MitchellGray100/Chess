@@ -256,6 +256,21 @@ public class MovementTests {
 		assertFalse(chess.isValidMove(3, 3, 4, 5));
 
 	}
+	@Test
+	public void bishopBlockedMovementTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(7,2,3,3);
+		chess.forceMove(1,0,4,2);
+		chess.forceMove(1,1,4,4);
+		chess.forceMove(1,2,2,2);
+		chess.forceMove(1,3,2,4);
+		assertFalse(chess.isValidMove(3,3,5,1));
+		assertFalse(chess.isValidMove(3,3,5,5));
+		assertFalse(chess.isValidMove(3,3,1,5));
+		assertFalse(chess.isValidMove(3,3,1,1));
+
+	}
 
 	//king tests
 	@Test
