@@ -6,10 +6,9 @@ import com.robotchad.chess.client.board.BoardImpl;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
+//testing studio
 
 public class MovementTests {
-
 
 	//pawn tests
 	@Test
