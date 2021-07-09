@@ -170,7 +170,7 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean pawnMove(int x, int y, int r, int c)
 	{
-		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+		if((board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor()))
 		{
 			if(((Piece)(board[x][y])).getColor() == Piece.Color.WHITE)
 			{
@@ -301,20 +301,58 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean rookMove(int x, int y, int r, int c)
 	{
-		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+		if((board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor()) || board[r][c] == null)
 		{
 			if(r == x || c == y)
 			{
-				return true;
+				if(r == x && c > y)
+				{
+					for(int i = 1; i < c-y; i++)
+					{
+						if(board[x][y+i] != null)
+						{
+							return false;
+						}
+					}
+					return true;
+				}
+
+				else if(r == x && c < y)
+				{
+					for(int i = 1; i < y-c; i++)
+					{
+						if(board[x][y-i] != null)
+						{
+							return false;
+						}
+					}
+					return true;
+				}
+				else if(r > x && c == y)
+				{
+					for(int i = 1; i < r-x; i++)
+					{
+						if(board[x+i][y] != null)
+						{
+							return false;
+						}
+					}
+					return true;
+				}
+				else if(r < x && c == y)
+				{
+					for(int i = 1; i < x-r; i++)
+					{
+						if(board[x-i][y] != null)
+						{
+							return false;
+						}
+					}
+					return true;
+				}
 			}
 		}
-		if(board[r][c] == null)
-		{
-			if(r == x || c == y)
-			{
-				return true;
-			}
-		}
+
 		return false;
 	}
 	/**

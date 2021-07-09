@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class MovementTests {
 
-	//pawn tests
+	//PAWN TESTS
 	@Test
 	public void pawnWhiteWrongMovementTest()
 	{
@@ -69,7 +69,7 @@ public class MovementTests {
 	}
 
 
-	//knight tests
+	//KNIGHT TESTS
 	@Test
 	public void knightWhiteWrongMovementTest()
 	{
@@ -162,7 +162,7 @@ public class MovementTests {
 	}
 
 
-	//bishop tests
+	//BISHOP TESTS
 	@Test
 	public void bishopWhiteWrongMovementTest()
 	{
@@ -270,7 +270,116 @@ public class MovementTests {
 
 	}
 
-	//king tests
+
+	//ROOK TESTS
+	@Test
+	public void rookWhiteWrongMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertFalse(chess.isValidMove(0, 0, 1, 1));
+	}
+
+	@Test
+	public void rookObstacleMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertFalse(chess.isValidMove(7, 0, 5, 1));
+	}
+
+	@Test
+	public void rookEnemyMovementTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(1,0,6,0);
+		assertTrue(chess.isValidMove(7, 0, 6, 0));
+	}
+
+	@Test
+	public void rookWhiteCorrectMovementTest()
+	{
+		Board chess = new BoardImpl();
+		chess.deleteSquare(0,1);
+		assertTrue(chess.isValidMove(0,0,0,1));
+	}
+
+	@Test
+	public void rookWhiteSameMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertFalse(chess.isValidMove(0, 0, 0, 0));
+	}
+
+	@Test
+	public void rookBlackWrongMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertFalse(chess.isValidMove(7, 0, 6, 1));
+	}
+
+	@Test
+	public void rookBlackCorrectMovementTest()
+	{
+		Board chess = new BoardImpl();
+		chess.deleteSquare(7,1);
+		assertTrue(chess.isValidMove(7,0,7,1));
+	}
+
+	@Test
+	public void rookBlackSameMovementTest()
+	{
+		Board chess = new BoardImpl();
+		assertFalse(chess.isValidMove(7, 0, 7, 0));
+	}
+
+	@Test
+	public void rookMultipleMovementTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(7,0,3,3);
+		assertFalse(chess.isValidMove(3, 3, 2, 2));
+		assertFalse(chess.isValidMove(3, 3, 2, 4));
+		assertFalse(chess.isValidMove(3, 3, 4, 2));
+		assertFalse(chess.isValidMove(3, 3, 4, 4));
+		assertFalse(chess.isValidMove(3, 3, 5, 1));
+		assertFalse(chess.isValidMove(3, 3, 5, 5));
+		assertFalse(chess.isValidMove(3, 3, 1, 5));
+		assertFalse(chess.isValidMove(3, 3, 1, 1));
+		assertTrue(chess.isValidMove(3, 3, 3, 2));
+		assertTrue(chess.isValidMove(3, 3, 2, 3));
+		assertTrue(chess.isValidMove(3, 3, 3, 4));
+		assertTrue(chess.isValidMove(3, 3, 4, 3));
+		assertFalse(chess.isValidMove(3, 3, 5, 2));
+		assertFalse(chess.isValidMove(3, 3, 3, 3));
+		assertTrue(chess.isValidMove(3, 3, 3, 4));
+		assertFalse(chess.isValidMove(3, 3, 4, 1));
+		assertTrue(chess.isValidMove(3, 3, 3, 1));
+		assertFalse(chess.isValidMove(3, 3, 2, 1));
+		assertFalse(chess.isValidMove(3, 3, 1, 2));
+		assertTrue(chess.isValidMove(3, 3, 1, 3));
+		assertFalse(chess.isValidMove(3, 3, 1, 4));
+		assertFalse(chess.isValidMove(3, 3, 2, 5));
+		assertTrue(chess.isValidMove(3, 3, 3, 5));
+		assertFalse(chess.isValidMove(3, 3, 4, 5));
+		assertFalse(chess.isValidMove(3, 3, 6, 3));
+	}
+	@Test
+	public void rookBlockedMovementTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(7,0,3,3);
+		chess.forceMove(1,0,3,2);
+		chess.forceMove(1,1,3,4);
+		chess.forceMove(1,2,2,3);
+		chess.forceMove(1,3,4,3);
+		assertFalse(chess.isValidMove(3,3,3,0));
+		assertFalse(chess.isValidMove(3,3,0,3));
+		assertFalse(chess.isValidMove(3,3,3,7));
+		assertFalse(chess.isValidMove(3,3,5,3));
+
+	}
+
+
+	//KING TESTS
 	@Test
 	public void kingWhiteUpMovementTest()
 	{
