@@ -27,8 +27,8 @@ public class BoardImpl extends AbstractBoard implements Board {
 		board[7][0] = factory.getPiece(Type.ROOK, Color.BLACK);
 		board[7][1] = factory.getPiece(Type.KNIGHT, Color.BLACK);
 		board[7][2] = factory.getPiece(Type.BISHOP, Color.BLACK);
-		board[7][3] = factory.getPiece(Type.KING, Color.BLACK);
-		board[7][4] = factory.getPiece(Type.QUEEN, Color.BLACK);
+		board[7][3] = factory.getPiece(Type.QUEEN, Color.BLACK);
+		board[7][4] = factory.getPiece(Type.KING, Color.BLACK);
 		board[7][5] = factory.getPiece(Type.BISHOP, Color.BLACK);
 		board[7][6] = factory.getPiece(Type.KNIGHT, Color.BLACK);
 		board[7][7] = factory.getPiece(Type.ROOK, Color.BLACK);
