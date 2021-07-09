@@ -218,27 +218,14 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean knightMove(int x, int y, int r, int c)
 	{
-		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor() && (((Math.abs(x-r) == 1 && Math.abs(y-c) == 2) || Math.abs(x-r) == 2 && Math.abs(y-c) == 1)))
 		{
-			if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
-			{
+
 				return true;
-			}
-			if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
-			{
-				return true;
-			}
 		}
-		if(board[r][c] == null)
+		if((board[r][c] == null) && ((Math.abs(x-r) == 1 && Math.abs(y-c) == 2) || Math.abs(x-r) == 2 && Math.abs(y-c) == 1))
 		{
-			if(Math.abs(x-r) == 1 && Math.abs(y-c) == 2)
-			{
 				return true;
-			}
-			if(Math.abs(x-r) == 2 && Math.abs(y-c) == 1)
-			{
-				return true;
-			}
 		}
 
 		return false;
@@ -254,20 +241,59 @@ public abstract class AbstractBoard implements Board {
 	 */
 	public boolean bishopMove(int x, int y, int r, int c)
 	{
-		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor())
+		if(board[r][c] != null && ((Piece)(board[r][c])).getColor() != ((Piece)(board[x][y])).getColor() && (Math.abs(y-c) == Math.abs(x-r)))
 		{
-			if(Math.abs(y-c) == Math.abs(x-r))
+				if(r < x && c > y)
+				{
+					for(int i = 1; i < x-r; i++)
+					{
+						if(board[x-i][y+i] != null)
+						{
+							return false;
+						}
+					}
+					return true;
+				}
+
+			else if(r < x && c < y)
 			{
+				for(int i = 1; i < x-r; i++)
+				{
+					if(board[x-i][y-i] != null)
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			else if(r > x && c < y)
+			{
+				for(int i = 1; i < r-x; i++)
+				{
+					if(board[x+i][y-i] != null)
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+			else if(r > x && c > y)
+			{
+				for(int i = 1; i < r-x; i++)
+				{
+					if(board[x+i][y+i] != null)
+					{
+						return false;
+					}
+				}
 				return true;
 			}
 		}
-		if(board[r][c] == null)
+		if(board[r][c] == null && (Math.abs(y-c) == Math.abs(x-r)))
 		{
-			if(Math.abs(y-c) == Math.abs(x-r))
-			{
 				return true;
-			}
 		}
+
 		return false;
 	}
 	/**
