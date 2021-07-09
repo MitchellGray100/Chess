@@ -422,51 +422,50 @@ public abstract class AbstractBoard implements Board {
 	 * @param c The proposed column value of the move
 	 * @return Whether or not the move puts the king in check
 	 */
-	private boolean putsKingInCheck(int x, int y, int r, int c) {
+	public boolean putsKingInCheck(int x, int y, int r, int c) {
 		Piece.Color pieceColor = ((board[x][y])).getColor();
 		Piece temp1 = board[x][y];
 		Piece temp2 = board[r][c];
 		board[r][c] = board[x][y];
 		board[x][y] = null;
-		@SuppressWarnings("unused")
-		boolean returner;
+		boolean returner = false;
 		if(pieceColor == Piece.Color.WHITE)
 		{
-			for(int row = 0; r < board.length; row++)
+			for(int row = 0; row < board.length; row++)
 			{
-				for(int column = 0; c < board[0].length; column++)
+				for(int column = 0; column < board[0].length; column++)
 				{
 					if(board[row][column] != null && board[row][column].getType() == Piece.Type.KING && board[row][column].getColor() == Piece.Color.WHITE)
 					{
+						returner =  isCheck(row,column);
 						board[x][y] = temp1;
 						board[r][c] = temp2;
-						returner = isCheck(row,column);
 					}
 				}
 			}
 		}
 		else
 		{
-			for(int row = board.length; r > 0 ; row--)
+			for(int row = board.length - 1; row >= 0 ; row--)
 			{
-				for(int column = board[0].length; c > 0; column--)
+				for(int column = board[0].length - 1; column >= 0; column--)
 				{
 					if(board[row][column] != null && board[row][column].getType() == Piece.Type.KING && board[row][column].getColor() == Piece.Color.BLACK)
 					{
+						returner = isCheck(row,column);
 						board[x][y] = temp1;
 						board[r][c] = temp2;
-						returner = isCheck(row,column);
 					}
 				}
 			}
 		}
-		return false;
+		return returner;
 	}
 	/**
 	 * Checks whether or not the king is in check.
 	 * @return whether or not the king at the specified location is in check
 	 */
-	private boolean isCheck(int x, int y)
+	public boolean isCheck(int x, int y)
 	{
 		for(int r = 0; r < board.length; r++)
 		{

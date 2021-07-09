@@ -63,5 +63,9 @@ public interface Board {
 	 * @param y - y coordinate of the square
 	 */
 	 void changeSquare(int x, int y,Piece piece);
+
+	boolean isCheck(int x, int y);
+
+	boolean putsKingInCheck(int x, int y, int r, int c);
 }
 
