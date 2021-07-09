@@ -1,6 +1,6 @@
-package com.robotchad.chess.client.board;
+package board;
 
-import com.robotchad.chess.client.pieces.Piece;
+import pieces.Piece;
 
 /** The board in a game of chess */
 public interface Board {

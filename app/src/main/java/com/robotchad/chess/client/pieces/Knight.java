@@ -1,5 +1,4 @@
-package com.robotchad.chess.client.pieces;
-
+package pieces;
 
 public class Knight extends AbstractPiece implements Piece {
 	

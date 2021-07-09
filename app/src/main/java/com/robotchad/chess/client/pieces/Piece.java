@@ -1,5 +1,4 @@
-package com.robotchad.chess.client.pieces;
-
+package pieces;
 
 /**
  * 

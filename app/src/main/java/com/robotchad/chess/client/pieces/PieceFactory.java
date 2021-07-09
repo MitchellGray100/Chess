@@ -1,5 +1,4 @@
-package com.robotchad.chess.client.pieces;
-
+package pieces;
 
 /** A factory class for creating chess pieces */
 public class PieceFactory {

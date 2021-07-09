@@ -1,6 +1,6 @@
-package com.robotchad.chess.client.board;
+package board;
 
-import com.robotchad.chess.client.pieces.Piece;
+import pieces.Piece;
 
 //@TODO Add pawns moving 2 spaces if first move
 

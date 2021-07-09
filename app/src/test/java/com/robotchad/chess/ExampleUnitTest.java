@@ -1,4 +1,4 @@
-package com.robotchad.chess;
+package com.jakejack.chess;
 
 import org.junit.Test;
 

@@ -1,5 +1,4 @@
-package com.robotchad.chess.client.pieces;
-
+package pieces;
 
 public class Rook extends AbstractPiece implements Piece {
 	

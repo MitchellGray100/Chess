@@ -1,4 +1,4 @@
-package com.robotchad.chess.client.controller;
+package controller;
 
 /** The controller of the chess game */
 public interface Controller {
