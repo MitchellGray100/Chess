@@ -660,4 +660,41 @@ public class MovementTests {
 		//assertEquals(Piece.Type.PAWN, chess.squareInfo(1,3));
 		assertTrue(chess.isValidMove(0, 3, 1, 3));
 	}
+
+
+	//MOVE TEST
+	@Test
+	public void trueValidMovingPawnTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(6,0,2,1);
+		assertTrue(chess.move(1,0,2,1));
+		assertTrue(chess.getWhitePoints() == 1);
+		assertTrue(chess.getBlackPoints() == 0);
+	}
+	@Test
+	public void falseValidMovingPawnTest()
+	{
+		Board chess = new BoardImpl();
+		assertFalse(chess.move(1,0,1,1));
+	}
+	@Test
+	public void putsWhiteKingInCheckTrueTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(0,4,4,6);
+		chess.deleteSquare(6,4);
+		chess.forceMove(0,2,5,5);
+		assertFalse(chess.move(5,5,5,4));
+	}
+
+	@Test
+	public void putsBlackKingInCheckTrueTest()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(7,4,3,0);
+		chess.deleteSquare(1,2);
+		chess.forceMove(7,2,2,1);
+		assertFalse(chess.move(2,1,3,2));
+	}
 }
