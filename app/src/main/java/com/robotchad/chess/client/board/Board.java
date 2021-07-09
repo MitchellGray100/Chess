@@ -67,5 +67,9 @@ public interface Board {
 	boolean isCheck(int x, int y);
 
 	boolean putsKingInCheck(int x, int y, int r, int c);
+
+	int getWhitePoints();
+
+	int getBlackPoints();
 }
 

@@ -19,6 +19,16 @@ public abstract class AbstractBoard implements Board {
 	 */
 	int blackPoints = 0;
 
+	public int getWhitePoints()
+	{
+		return whitePoints;
+	}
+
+	public int getBlackPoints()
+	{
+		return blackPoints;
+	}
+
 	@Override
 	public Piece squareInfo(int x, int y) {
 		if (x < 0 || x > 7 || y < 0 || y > 7)
@@ -114,6 +124,10 @@ public abstract class AbstractBoard implements Board {
 			if(((Piece)(board[r][c])).getColor().equals(Piece.Color.BLACK))
 			{
 				whitePoints += ((Piece)(board[r][c])).getValue();
+			}
+			if(((Piece)(board[r][c])).getColor().equals(Piece.Color.WHITE))
+			{
+				blackPoints += ((Piece)(board[r][c])).getValue();
 			}
 		}
 		else if(((Piece)(board[r][c])).getColor().equals(Piece.Color.BLACK))
