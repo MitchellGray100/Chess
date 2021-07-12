@@ -1,7 +1,7 @@
 package com.robotchad.chess.client.board;
 
-import com.robotchad.chess.client.location.Location;
 import com.robotchad.chess.client.location.LocationImpl;
+import com.robotchad.chess.client.pieces.Pawn;
 import com.robotchad.chess.client.pieces.Piece;
 
 //@TODO Add pawns using en passant
@@ -24,6 +24,11 @@ public abstract class AbstractBoard implements Board {
 	 * Invariant: nonnegative
 	 */
 	int blackPoints = 0;
+
+	/**
+	 * How many turns have been taken in the game. Each move is a turn.
+	 */
+	int turn = 0;
 
 	public int getWhitePoints() {
 		return whitePoints;
@@ -52,15 +57,28 @@ public abstract class AbstractBoard implements Board {
 
 	@Override
 	public boolean move(int x, int y, int r, int c) {
-		if (isValidMove(x, y, r, c) && !putsKingInCheck(x, y, r, c)) {
-			if (board[r][c] == null) {
-				board[r][c] = board[x][y];
-				board[x][y] = null;
-			} else {
+		LocationImpl location = isValidMove(x, y, r, c);
+		if (isValidMoveConverter(location) && !putsKingInCheck(x, y, r, c)) {
+			if (board[r][c] != null) {
 				changeScore(r, c);
-				board[r][c] = board[x][y];
-				board[x][y] = null;
 			}
+			if(Math.abs(location.getXAxis()) != 100 && Math.abs(location.getYAxis()) != 100)
+			{
+				changeScore(location.getXAxis(),location.getYAxis());
+				board[location.getXAxis()][location.getYAxis()] = null;
+			}
+
+			if(board[x][y].getType() == Piece.Type.PAWN)
+			{
+				((Pawn)board[x][y]).setPrevLocation(new LocationImpl(x,y));
+				((Pawn)board[x][y]).setTurnMoved(turn);
+			}
+
+			board[r][c] = board[x][y];
+			board[x][y] = null;
+
+			turn++;
+
 			return true;
 		}
 		return false;
@@ -82,16 +100,12 @@ public abstract class AbstractBoard implements Board {
 	}
 
 	@Override
-	public boolean isValidMove(int x, int y, int r, int c) {
+	public LocationImpl isValidMove(int x, int y, int r, int c) {
 		if (r > 7 || r < 0 || c > 7 || c < 0 ||
-				x > 7 || x < 0 || y > 7 || y < 0) return false;
+				x > 7 || x < 0 || y > 7 || y < 0) return (new LocationImpl(-100,-100));
 		if (x == r && y == c) {
-			return false;
+			return (new LocationImpl(-100,-100));
 		}
-		//if(putsKingInCheck(x,y,r,c))
-		//{
-		//	return false;
-		//}
 		try {
 			Piece.Type pieceType = ((Piece) (board[x][y])).getType();
 			switch (pieceType) {
@@ -109,8 +123,22 @@ public abstract class AbstractBoard implements Board {
 					return kingMove(x, y, r, c);
 			}
 		} catch (NullPointerException e) {
-			return false;
+			return (new LocationImpl(-100,-100));
 		}
+	}
+
+	/**
+	 * Converts the output of isValidMove to boolean
+	 * @param input Location
+	 * @return whether or not the move was valid or not. All negative locations are invalid and all postiive locations are positive
+	 */
+	public boolean isValidMoveConverter(LocationImpl input)
+	{
+		if(input.getXAxis() >= 0)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -159,33 +187,49 @@ public abstract class AbstractBoard implements Board {
 	 * @param c The proposed column value of the move
 	 * @return Whether or not the move is valid for a pawn
 	 */
-	public boolean pawnMove(int x, int y, int r, int c) {
+	public LocationImpl pawnMove(int x, int y, int r, int c) {
 		if ((board[r][c] != null && ((Piece) (board[r][c])).getColor() != ((Piece) (board[x][y])).getColor())) {
 			if (((Piece) (board[x][y])).getColor() == Piece.Color.WHITE) {
 				if (r == x + 1 && (c == y + 1 || c == y - 1)) {
-					return true;
+					return (new LocationImpl(100,100));
 				}
 			}
 			if (((Piece) (board[x][y])).getColor() == Piece.Color.BLACK) {
 				if (r == x - 1 && (c == y + 1 || c == y - 1)) {
-					return true;
+					return (new LocationImpl(100,100));
 				}
 			}
 		}
 		if (board[r][c] == null) {
 			if (((Piece) (board[x][y])).getColor() == Piece.Color.WHITE) {
 				if (((r == x + 1) || (x == 1 && c == y && r == x + 2)) && c == y) {
-					return true;
+					return (new LocationImpl(100,100));
+				}
+				if(((r == x + 1) && (c == y+ 1 || c == y-1))) {
+					if(board[r-1][c] != null && board[r-1][c].getType() == Piece.Type.PAWN &&
+							((Pawn)board[r-1][c]).getTurnMoved() == turn - 1 &&
+							((Pawn)board[r-1][c]).getPrevLocation().getXAxis() == r + 1)
+					{
+						return (new LocationImpl(r-1,c));
+					}
 				}
 			}
 			if (((Piece) (board[x][y])).getColor() == Piece.Color.BLACK) {
 				if (((r == x - 1) || (x == 6 && c == y && r == x - 2)) && c == y) {
-					return true;
+					return (new LocationImpl(100,100));
+				}
+				if(((r == x - 1) && (c == y - 1 || c == y + 1))) {
+					if(board[r+1][c] != null && board[r+1][c].getType() == Piece.Type.PAWN &&
+							((Pawn)board[r+1][c]).getTurnMoved() == turn - 1 &&
+							((Pawn)board[r+1][c]).getPrevLocation().getXAxis() == r - 1)
+					{
+						return (new LocationImpl(r+1,c));
+					}
 				}
 			}
 		}
 
-		return false;//should be false
+		return (new LocationImpl(-100,-100));//should be false
 	}
 
 	/**
@@ -197,16 +241,16 @@ public abstract class AbstractBoard implements Board {
 	 * @param c The proposed column value of the move
 	 * @return Whether or not the move is valid for a knight
 	 */
-	public boolean knightMove(int x, int y, int r, int c) {
+	public LocationImpl knightMove(int x, int y, int r, int c) {
 		if (board[r][c] != null && ((Piece) (board[r][c])).getColor() != ((Piece) (board[x][y])).getColor() && (((Math.abs(x - r) == 1 && Math.abs(y - c) == 2) || Math.abs(x - r) == 2 && Math.abs(y - c) == 1))) {
 
-			return true;
+			return (new LocationImpl(100,100));
 		}
 		if ((board[r][c] == null) && ((Math.abs(x - r) == 1 && Math.abs(y - c) == 2) || Math.abs(x - r) == 2 && Math.abs(y - c) == 1)) {
-			return true;
+			return (new LocationImpl(100,100));
 		}
 
-		return false;
+		return (new LocationImpl(-100,-100));
 	}
 
 	/**
@@ -216,39 +260,39 @@ public abstract class AbstractBoard implements Board {
 	 * @param c The proposed column value of the move
 	 * @return Whether or not the move is valid for a bishop
 	 */
-	public boolean bishopMove(int x, int y, int r, int c) {
+	public LocationImpl bishopMove(int x, int y, int r, int c) {
 		if ((board[r][c] != null && ((Piece) (board[r][c])).getColor() != ((Piece) (board[x][y])).getColor() && (Math.abs(y - c) == Math.abs(x - r))) || (board[r][c] == null && (Math.abs(y - c) == Math.abs(x - r)))) {
 			if (r < x && c > y) {
 				for (int i = 1; i < x - r; i++) {
 					if (board[x - i][y + i] != null) {
-						return false;
+						return (new LocationImpl(-100,-100));
 					}
 				}
-				return true;
+				return (new LocationImpl(100,100));
 			} else if (r < x && c < y) {
 				for (int i = 1; i < x - r; i++) {
 					if (board[x - i][y - i] != null) {
-						return false;
+						return (new LocationImpl(-100,-100));
 					}
 				}
-				return true;
+				return (new LocationImpl(100,100));
 			} else if (r > x && c < y) {
 				for (int i = 1; i < r - x; i++) {
 					if (board[x + i][y - i] != null) {
-						return false;
+						return (new LocationImpl(-100,-100));
 					}
 				}
-				return true;
+				return (new LocationImpl(100,100));
 			} else if (r > x && c > y) {
 				for (int i = 1; i < r - x; i++) {
 					if (board[x + i][y + i] != null) {
-						return false;
+						return (new LocationImpl(-100,-100));
 					}
 				}
-				return true;
+				return (new LocationImpl(100,100));
 			}
 		}
-		return false;
+		return (new LocationImpl(-100,-100));
 	}
 
 	/**
@@ -260,42 +304,42 @@ public abstract class AbstractBoard implements Board {
 	 * @param c The proposed column value of the move
 	 * @return Whether or not the move is valid for a rook
 	 */
-	public boolean rookMove(int x, int y, int r, int c) {
+	public LocationImpl rookMove(int x, int y, int r, int c) {
 		if ((board[r][c] != null && ((Piece) (board[r][c])).getColor() != ((Piece) (board[x][y])).getColor()) || board[r][c] == null) {
 			if (r == x || c == y) {
 				if (r == x && c > y) {
 					for (int i = 1; i < c - y; i++) {
 						if (board[x][y + i] != null) {
-							return false;
+							return (new LocationImpl(-100,-100));
 						}
 					}
-					return true;
+					return (new LocationImpl(100,100));
 				} else if (r == x && c < y) {
 					for (int i = 1; i < y - c; i++) {
 						if (board[x][y - i] != null) {
-							return false;
+							return (new LocationImpl(-100,-100));
 						}
 					}
-					return true;
+					return (new LocationImpl(100,100));
 				} else if (r > x && c == y) {
 					for (int i = 1; i < r - x; i++) {
 						if (board[x + i][y] != null) {
-							return false;
+							return (new LocationImpl(-100,-100));
 						}
 					}
-					return true;
+					return (new LocationImpl(100,100));
 				} else if (r < x && c == y) {
 					for (int i = 1; i < x - r; i++) {
 						if (board[x - i][y] != null) {
-							return false;
+							return (new LocationImpl(-100,-100));
 						}
 					}
-					return true;
+					return (new LocationImpl(100,100));
 				}
 			}
 		}
 
-		return false;
+		return (new LocationImpl(-100,-100));
 	}
 
 	/**
@@ -307,11 +351,11 @@ public abstract class AbstractBoard implements Board {
 	 * @param c The proposed column value of the move
 	 * @return Whether or not the move is valid for a queen
 	 */
-	public boolean queenMove(int x, int y, int r, int c) {
-		if (bishopMove(x, y, r, c) || rookMove(x, y, r, c)) {
-			return true;
+	public LocationImpl queenMove(int x, int y, int r, int c) {
+		if (bishopMove(x, y, r, c).getXAxis() == 100 || rookMove(x, y, r, c).getXAxis() == 100) {
+			return (new LocationImpl(100,100));
 		}
-		return false;
+		return (new LocationImpl(-100,-100));
 	}
 
 	/**
@@ -323,26 +367,26 @@ public abstract class AbstractBoard implements Board {
 	 * @param c The proposed column value of the move
 	 * @return Whether or not the move is valid for a queen
 	 */
-	public boolean kingMove(int x, int y, int r, int c) {
+	public LocationImpl kingMove(int x, int y, int r, int c) {
 		if (board[r][c] != null && ((Piece) (board[r][c])).getColor() != ((Piece) (board[x][y])).getColor()) {
 			if (Math.abs(r - x) == 1 && Math.abs(c - y) == 1) {
-				return true;
+				return (new LocationImpl(100,100));
 			} else if (r == x && Math.abs(c - y) == 1) {
-				return true;
+				return (new LocationImpl(100,100));
 			} else if (c == y && Math.abs(r - x) == 1) {
-				return true;
+				return (new LocationImpl(100,100));
 			}
 		}
 		if (board[r][c] == null) {
 			if (Math.abs(r - x) == 1 && Math.abs(c - y) == 1) {
-				return true;
+				return (new LocationImpl(100,100));
 			} else if (r == x && Math.abs(c - y) == 1) {
-				return true;
+				return (new LocationImpl(100,100));
 			} else if (c == y && Math.abs(r - x) == 1) {
-				return true;
+				return (new LocationImpl(100,100));
 			}
 		}
-		return false;//false
+		return (new LocationImpl(-100,-100));
 	}
 
 	/**
@@ -394,7 +438,7 @@ public abstract class AbstractBoard implements Board {
 		for (int r = 0; r < board.length; r++) {
 			for (int c = 0; c < board[0].length; c++) {
 				if (board[r][c] != null && board[r][c].getColor() != board[x][y].getColor()) {
-					if (isValidMove(r, c, x, y)) {
+					if (isValidMoveConverter(isValidMove(r, c, x, y))) {
 						return true;
 					}
 				}

@@ -5,8 +5,9 @@ public class LocationImpl
     int xAxis;
     int yAxis;
 
-    public LocationImpl() {
-
+    public LocationImpl(int xCord, int yCord) {
+        setXAxis(xCord);
+        setYAxis(yCord);
     }
 
     public int getXAxis()

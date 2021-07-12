@@ -1,5 +1,6 @@
 package com.robotchad.chess.client.board;
 
+import com.robotchad.chess.client.location.LocationImpl;
 import com.robotchad.chess.client.pieces.Piece;
 
 /** The board in a game of chess */
@@ -30,10 +31,13 @@ public interface Board {
 	 * @param y The y coordinate of the pieces
 	 * @param r The proposed x coordinate of the move
 	 * @param c The proposed y coordinate of the move
-	 * @return whether or not the move is valid
+	 * @return object array that at [0] is boolean. True for valid moves and False for invalid moves.
+	 * [1] is a Location that is -100,-100 if no en passent and a specified location if it is an en passent.
+	 * Location should be passed to move as passX and passY.
 	 */
-	boolean isValidMove(int x, int y, int r, int c);
-	
+	LocationImpl isValidMove(int x, int y, int r, int c);
+
+	boolean isValidMoveConverter(LocationImpl input);
 	
 	/**
 	 * Changes the score of the game whenever a pieces is taken

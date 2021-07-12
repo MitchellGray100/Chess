@@ -1,5 +1,7 @@
 package com.robotchad.chess.client.pieces;
 
+import com.robotchad.chess.client.location.Location;
+
 public abstract class AbstractPiece implements Piece {
 	private Type pieceType;
 	private Color pieceColor;
