@@ -6,7 +6,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.jakejack.chess"
+        applicationId "com.robotchad.chess"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -27,6 +27,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        dataBinding true
     }
 }
 

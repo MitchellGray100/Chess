@@ -1,4 +1,4 @@
-package com.jakejack.chess;
+package com.robotchad.chess.gui;
 
 import android.os.Bundle;
 
@@ -13,7 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.jakejack.chess.databinding.ActivityMainBinding;
+import com.robotchad.chess.gui.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;

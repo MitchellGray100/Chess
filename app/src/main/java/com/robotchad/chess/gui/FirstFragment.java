@@ -1,4 +1,4 @@
-package com.jakejack.chess;
+package com.robotchad.chess.gui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.jakejack.chess.databinding.FragmentFirstBinding;
+import com.robotchad.chess.gui.databinding.FragmentFirstBinding;
 
 public class FirstFragment extends Fragment {
 
