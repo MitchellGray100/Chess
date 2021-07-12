@@ -31,9 +31,9 @@ public interface Board {
 	 * @param y The y coordinate of the pieces
 	 * @param r The proposed x coordinate of the move
 	 * @param c The proposed y coordinate of the move
-	 * @return object array that at [0] is boolean. True for valid moves and False for invalid moves.
-	 * [1] is a Location that is -100,-100 if no en passent and a specified location if it is an en passent.
-	 * Location should be passed to move as passX and passY.
+	 * @return a locationImpl. The output can be converted to boolean with isValidMoveConverter().
+	 * 100,100 means true; -100,-100 means false; x,y (where x and y are coordinates of the chess
+	 * board) means there is an en passant and (x,y) is the location of the pawn.
 	 */
 	LocationImpl isValidMove(int x, int y, int r, int c);
 
