@@ -1,6 +1,7 @@
 package com.robotchad.chess.client.board;
 
 import com.robotchad.chess.client.location.LocationImpl;
+import com.robotchad.chess.client.pieces.AbstractPiece;
 import com.robotchad.chess.client.pieces.Pawn;
 import com.robotchad.chess.client.pieces.Piece;
 
@@ -30,6 +31,21 @@ public abstract class AbstractBoard implements Board {
 	 */
 	int turn = 0;
 
+	/**
+	 * All pieces of the game in an array.
+	 */
+	Piece[] pieces = new Piece[32];
+
+	/**
+	 *Getter for the pieces array
+	 * @param num The pos in the pieces array needed
+	 * @return The piece at the pieces[num]
+	 */
+	public Piece piecesGetter(int num)
+	{
+		return pieces[num];
+	}
+
 	public int getWhitePoints() {
 		return whitePoints;
 	}
@@ -37,6 +53,7 @@ public abstract class AbstractBoard implements Board {
 	public int getBlackPoints() {
 		return blackPoints;
 	}
+
 
 	@Override
 	public Piece squareInfo(int x, int y) {

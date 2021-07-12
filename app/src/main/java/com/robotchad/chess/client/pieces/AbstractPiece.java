@@ -7,6 +7,10 @@ public abstract class AbstractPiece implements Piece {
 	private Color pieceColor;
 	private int pieceValue;
 	
+	//Thinking we can use a Location variable here so we can store all white pieces in an array and
+	// all black pieces in an array. Then when we need to know where each piece is we can just
+	// search for the piece and its location.
+	
 	@Override
 	public Type getType() {
 		return pieceType;

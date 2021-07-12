@@ -37,6 +37,9 @@ public interface Board {
 	 */
 	LocationImpl isValidMove(int x, int y, int r, int c);
 
+
+	public Piece piecesGetter(int num);
+
 	boolean isValidMoveConverter(LocationImpl input);
 	
 	/**
