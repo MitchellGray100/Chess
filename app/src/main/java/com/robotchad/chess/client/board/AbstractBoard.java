@@ -5,7 +5,7 @@ import com.robotchad.chess.client.pieces.AbstractPiece;
 import com.robotchad.chess.client.pieces.Pawn;
 import com.robotchad.chess.client.pieces.Piece;
 
-//@TODO Add pawns using en passant
+//@TODO AI
 
 
 /** An abstract implementation of the chess board */
@@ -443,18 +443,53 @@ public abstract class AbstractBoard implements Board {
 	 *
 	 * @return whether or not the king at the specified location is in check
 	 */
-	public boolean isCheck(int x, int y) {
-		for (int r = 0; r < board.length; r++) {
-			for (int c = 0; c < board[0].length; c++) {
-				if (board[r][c] != null && board[r][c].getColor() != board[x][y].getColor()) {
-					if (isValidMoveConverter(isValidMove(r, c, x, y))) {
+	public boolean isCheck(int x, int y)
+	{
+		if(board[x][y].getColor() == Piece.Color.BLACK)
+		{
+			for(int i = 0; i < 16; i++)
+			{
+				if(pieces[i] != null)
+				{
+					if(isValidMoveConverter(isValidMove(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),x,y)))
+					{
 						return true;
 					}
 				}
 			}
+			return false;
 		}
-		return false;
+		else
+		{
+			for(int i = 16; i < 32; i++)
+			{
+				if(pieces[i] != null)
+				{
+					if(isValidMoveConverter(isValidMove(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),x,y)))
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
 	}
+	//slightly worried about this because of pieces not being nulled. Can't remember...
+
+
+
+//	public boolean isCheck(int x, int y) {
+//		for (int r = 0; r < board.length; r++) {
+//			for (int c = 0; c < board[0].length; c++) {
+//				if (board[r][c] != null && board[r][c].getColor() != board[x][y].getColor()) {
+//					if (isValidMoveConverter(isValidMove(r, c, x, y))) {
+//						return true;
+//					}
+//				}
+//			}
+//		}
+//		return false;
+//	}
 
 
 
