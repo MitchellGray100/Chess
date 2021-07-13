@@ -5,7 +5,14 @@ import com.robotchad.chess.client.pieces.Piece;
 
 /** The board in a game of chess */
 public interface Board {
-	
+
+	/**
+	 * Chooses the best ai move based on how much score the ai gains from the move.
+	 * @param color The color of the ai playing.
+	 * @return locationImpl array. [0] holds x and y, [1] holds r and c.
+	 */
+	LocationImpl[] aiMove(Piece.Color color);
+
 	/**
 	 * Moves the piece from one spot to another if valid
 	 * @param x the x coordinate of the piece
@@ -74,6 +81,7 @@ public interface Board {
 	boolean isCheck(int x, int y);
 
 	boolean putsKingInCheck(int x, int y, int r, int c);
+
 
 	int getWhitePoints();
 

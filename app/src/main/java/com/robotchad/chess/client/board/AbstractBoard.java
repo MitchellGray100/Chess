@@ -72,7 +72,38 @@ public abstract class AbstractBoard implements Board {
 		board[x][y] = piece;
 	}
 
+
 	@Override
+	public LocationImpl[] aiMove(Piece.Color color)
+	{
+		int maxScore = 0;
+		LocationImpl maxLocation = null;
+		LocationImpl[] returner = new LocationImpl[2];
+
+		if(color == Piece.Color.WHITE)
+		{
+			for(int i = 0; i < 16; i++)
+			{
+				switch(pieces[i].getType())
+				{
+					case PAWN:
+						break;
+					case KNIGHT:
+						break;
+					case BISHOP:
+						break;
+					case KING:
+						break;
+					case QUEEN:
+						break;
+					case ROOK:
+						break;
+				}
+			}
+		}
+		return returner;
+	}
+								 @Override
 	public boolean move(int x, int y, int r, int c) {
 		LocationImpl location = isValidMove(x, y, r, c);
 		if (isValidMoveConverter(location) && !putsKingInCheck(x, y, r, c)) {
@@ -474,10 +505,10 @@ public abstract class AbstractBoard implements Board {
 			return false;
 		}
 	}
-	//slightly worried about this because of pieces not being nulled. Can't remember... Can always use -100 -100 as location when dead if so.
 
 
 
+//OLD ISCHECK()
 //	public boolean isCheck(int x, int y) {
 //		for (int r = 0; r < board.length; r++) {
 //			for (int c = 0; c < board[0].length; c++) {
