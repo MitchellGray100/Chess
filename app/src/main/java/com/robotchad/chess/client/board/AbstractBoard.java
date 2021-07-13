@@ -91,6 +91,7 @@ public abstract class AbstractBoard implements Board {
 				((Pawn)board[x][y]).setTurnMoved(turn);
 			}
 
+			board[x][y].setLocation(new LocationImpl(r,c));
 			board[r][c] = board[x][y];
 			board[x][y] = null;
 
@@ -105,6 +106,7 @@ public abstract class AbstractBoard implements Board {
 	public void forceMove(int x, int y, int r, int c) {
 		if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0)) {
+			board[x][y].setLocation(new LocationImpl(r,c));
 			if (board[r][c] == null) {
 				board[r][c] = board[x][y];
 				board[x][y] = null;
@@ -423,25 +425,15 @@ public abstract class AbstractBoard implements Board {
 		board[x][y] = null;
 		boolean returner = false;
 		if (pieceColor == Piece.Color.WHITE) {
-			for (int row = 0; row < board.length; row++) {
-				for (int column = 0; column < board[0].length; column++) {
-					if (board[row][column] != null && board[row][column].getType() == Piece.Type.KING && board[row][column].getColor() == Piece.Color.WHITE) {
-						returner = isCheck(row, column);
+						returner = isCheck((pieces[4]).getLocation().getXAxis(),((LocationImpl)(pieces[4]).getLocation()).getYAxis());
 						board[x][y] = temp1;
 						board[r][c] = temp2;
-					}
-				}
-			}
 		} else {
-			for (int row = board.length - 1; row >= 0; row--) {
-				for (int column = board[0].length - 1; column >= 0; column--) {
-					if (board[row][column] != null && board[row][column].getType() == Piece.Type.KING && board[row][column].getColor() == Piece.Color.BLACK) {
-						returner = isCheck(row, column);
+
+						returner = isCheck((pieces[20]).getLocation().getXAxis(),((LocationImpl)(pieces[20]).getLocation()).getYAxis());
 						board[x][y] = temp1;
 						board[r][c] = temp2;
-					}
-				}
-			}
+
 		}
 		return returner;
 	}

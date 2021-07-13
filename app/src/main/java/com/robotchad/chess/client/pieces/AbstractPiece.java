@@ -1,12 +1,14 @@
 package com.robotchad.chess.client.pieces;
 
 import com.robotchad.chess.client.location.Location;
+import com.robotchad.chess.client.location.LocationImpl;
 
 public abstract class AbstractPiece implements Piece {
 	private Type pieceType;
 	private Color pieceColor;
 	private int pieceValue;
-	
+	private LocationImpl location;
+
 	//Thinking we can use a Location variable here so we can store all white pieces in an array and
 	// all black pieces in an array. Then when we need to know where each piece is we can just
 	// search for the piece and its location.
@@ -43,4 +45,14 @@ public abstract class AbstractPiece implements Piece {
 		pieceValue = value;
 	}
 
+	@Override
+	public LocationImpl getLocation() {
+		return location;
+	}
+
+	@Override
+	public void setLocation(LocationImpl loc) {
+		location = loc;
+
+	}
 }

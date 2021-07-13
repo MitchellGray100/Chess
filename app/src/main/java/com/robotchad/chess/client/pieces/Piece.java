@@ -1,6 +1,8 @@
 package com.robotchad.chess.client.pieces;
 
 
+import com.robotchad.chess.client.location.LocationImpl;
+
 /**
  * 
  * Interface for all of the Pieces. Standardizes Type and Color.
@@ -44,6 +46,18 @@ public interface Piece
 	 * @param value the value to set
 	 */
 	public void setValue(int value);
+
+	/**
+	 * Sets the location of the piece
+	 * @param loc the location to set
+	 */
+	public void setLocation(LocationImpl loc);
+
+	/**
+	 * Gets the location of the piece
+	 * returns the location of the piece
+	 */
+	public LocationImpl getLocation();
 	
 	/** An enumeration of all possible pieces */
 	public enum Type
