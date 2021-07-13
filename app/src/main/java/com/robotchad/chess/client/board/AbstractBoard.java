@@ -474,7 +474,7 @@ public abstract class AbstractBoard implements Board {
 			return false;
 		}
 	}
-	//slightly worried about this because of pieces not being nulled. Can't remember...
+	//slightly worried about this because of pieces not being nulled. Can't remember... Can always use -100 -100 as location when dead if so.
 
 
 

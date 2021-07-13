@@ -13,6 +13,17 @@ public class CheckTests {
 
     //IS CHECK TESTS
     @Test
+    public void isCheckNullPieceTest()
+    {
+        Board chess = new BoardImpl();
+        chess.move(6,2,4,2);
+        chess.move(1,1,3,1);
+        chess.move(3,1,4,2);
+        chess.move(1,3,3,3);
+        assertFalse(chess.isCheck(3,3));
+    }
+
+    @Test
     public void isCheckImplTest()
     {
         Board chess = new BoardImpl();
