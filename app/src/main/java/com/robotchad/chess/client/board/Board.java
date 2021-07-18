@@ -82,6 +82,13 @@ public interface Board {
 
 	boolean putsKingInCheck(int x, int y, int r, int c);
 
+	/**
+	 * Checks if a king is in Checkmated.
+	 * @param color The color of the king to check is checkmated
+	 * @return whether or not the king is checkmated
+	 */
+	boolean isCheckmate(Piece.Color color);
+
 
 	int getWhitePoints();
 

@@ -506,6 +506,42 @@ public abstract class AbstractBoard implements Board {
 		}
 	}
 
+	public boolean isCheckmate(Piece.Color color)
+	{
+		int x;
+		int y;
+		if(color.equals(Piece.Color.WHITE))
+		{
+			x = pieces[4].getLocation().getXAxis();
+			y = pieces[4].getLocation().getYAxis();
+			for(int i = x-1; i <= x+1; i++)
+			{
+				for(int k = y-1; k <= y+1; k++)
+				{
+					if(isValidMoveConverter(isValidMove(i,k,-100,-100)) && !isCheck(i,k))
+					{
+						return false;
+					}
+				}
+			}
+		}
+		if(color.equals(Piece.Color.BLACK))
+		{
+			x = pieces[20].getLocation().getXAxis();
+			y = pieces[20].getLocation().getYAxis();
+			for(int i = x-1; i <= x+1; i++)
+			{
+				for(int k = y-1; k <= y+1; k++)
+				{
+					if(isValidMoveConverter(isValidMove(i,k,-100,-100)) && !isCheck(i,k))
+					{
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
 
 
 //OLD ISCHECK()
