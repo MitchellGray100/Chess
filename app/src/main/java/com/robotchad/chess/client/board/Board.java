@@ -100,10 +100,11 @@ public interface Board {
 
 	/**
 	 * Checks if a piece can block the check
-	 * @param color The color of the king that is being checkmated
+	 * @param x The x cord of the piece putting the king in check
+	 * @param y The y cord of the piece putting the king in check
 	 * @return whether or not the king is checkmated
 	 */
-	boolean isCheckmatePieceMove(Piece.Color color);
+	boolean isCheckmatePieceMove(int x, int y);
 
 	/**
 	 * Checks if a piece can block the check

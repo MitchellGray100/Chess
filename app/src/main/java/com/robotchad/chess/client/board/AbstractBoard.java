@@ -5,6 +5,8 @@ import com.robotchad.chess.client.pieces.AbstractPiece;
 import com.robotchad.chess.client.pieces.Pawn;
 import com.robotchad.chess.client.pieces.Piece;
 
+import java.util.ArrayList;
+
 //@TODO AI
 
 
@@ -585,8 +587,54 @@ public abstract class AbstractBoard implements Board {
 		 return true;
 
 	}
-	public boolean isCheckmatePieceMove(Piece.Color color)
+	public boolean isCheckmatePieceMove(int x, int y)
 	{
+		int xCord;
+		int yCord;
+		LocationImpl holder;
+		ArrayList<LocationImpl> list = new ArrayList<>();
+		for(int r = 0; r< board.length; r++)
+		{
+			for(int c = 0; c < board.length; c++)
+			{
+				holder = isValidMove(x,y,r,c);
+				if(isValidMoveConverter(holder))
+				{
+					list.add(holder);
+				}
+			}
+		}
+
+		if(board[x][y].getColor() == Piece.Color.WHITE)
+		{
+			for(int i = 0; i < 16; i++)
+			{
+				xCord = pieces[i].getLocation().getXAxis();
+				yCord = pieces[i].getLocation().getYAxis();
+				for(int k = 0; k < list.size(); k++)
+				{
+					if(isValidMoveConverter(isValidMove(xCord,yCord,list.get(k).getXAxis(), list.get(k).getYAxis())) && !putsKingInCheck(xCord,yCord,list.get(k).getXAxis(), list.get(k).getYAxis()))
+					{
+						return false;
+					}
+				}
+			}
+		}
+		else
+		{
+			for(int i = 16; i < 32; i++)
+			{
+				xCord = pieces[i].getLocation().getXAxis();
+				yCord = pieces[i].getLocation().getYAxis();
+				for(int k = 0; k < list.size(); k++)
+				{
+					if(isValidMoveConverter(isValidMove(xCord,yCord,list.get(k).getXAxis(), list.get(k).getYAxis())) && !putsKingInCheck(xCord,yCord,list.get(k).getXAxis(), list.get(k).getYAxis()))
+					{
+						return false;
+					}
+				}
+			}
+		}
 		return true;
 	}
 
