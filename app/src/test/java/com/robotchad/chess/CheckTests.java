@@ -2,6 +2,7 @@ package com.robotchad.chess;
 
 import com.robotchad.chess.client.board.Board;
 import com.robotchad.chess.client.board.BoardImpl;
+import com.robotchad.chess.client.pieces.Piece;
 
 import org.junit.Test;
 
@@ -20,15 +21,15 @@ public class CheckTests {
         chess.move(1,1,3,1);
         chess.move(3,1,4,2);
         chess.move(1,3,3,3);
-        assertFalse(chess.isCheck(3,3));
+        assertFalse(chess.isValidMoveConverter(chess.isCheck(3,3)));
     }
 
     @Test
     public void isCheckImplTest()
     {
         Board chess = new BoardImpl();
-        assertFalse(chess.isCheck(0,3));
-        assertFalse(chess.isCheck(7,3));
+        assertFalse(chess.isValidMoveConverter(chess.isCheck(0,3)));
+        assertFalse(chess.isValidMoveConverter(chess.isCheck(7,3)));
     }
 
     @Test
@@ -37,8 +38,8 @@ public class CheckTests {
         Board chess = new BoardImpl();
         chess.forceMove(0,1,5,3);
         chess.forceMove(7,1,2,3);
-        assertTrue(chess.isCheck(0,4));
-        assertTrue(chess.isCheck(7,4));
+        assertTrue(chess.isValidMoveConverter(chess.isCheck(0,4)));
+        assertTrue(chess.isValidMoveConverter(chess.isCheck(7,4)));
     }
 
     @Test
@@ -47,8 +48,8 @@ public class CheckTests {
         Board chess = new BoardImpl();
         chess.forceMove(0,4,3,3);
         chess.forceMove(7,4,3,4);
-        assertTrue(chess.isCheck(3,4));
-        assertTrue(chess.isCheck(3,3));
+        assertTrue(chess.isValidMoveConverter(chess.isCheck(3,4)));
+        assertTrue(chess.isValidMoveConverter(chess.isCheck(3,3)));
     }
 
     @Test
@@ -72,7 +73,7 @@ public class CheckTests {
     {
         Board chess = new BoardImpl();
         chess.forceMove(0,3,0,4);
-        assertFalse(chess.isCheck(7,4));
+        assertFalse(chess.isValidMoveConverter(chess.isCheck(7,4)));
     }
 
 
@@ -82,6 +83,14 @@ public class CheckTests {
     {
         Board chess = new BoardImpl();
         assertFalse(chess.putsKingInCheck(1,4,2,4));
+    }
+
+    @Test
+    public void putsKingInCheckWithRookFalseTest()
+    {
+        Board chess = new BoardImpl();
+        chess.forceMove(7,0,1,4);
+        assertFalse(chess.putsKingInCheck(0,4,1,4));
     }
 
     @Test
@@ -102,5 +111,41 @@ public class CheckTests {
         chess.deleteSquare(1,2);
         chess.forceMove(7,2,2,1);
         assertTrue(chess.putsKingInCheck(2,1,3,2));
+    }
+
+    @Test
+    public void whiteRookInCheckMate()
+    {
+        Board chess = new BoardImpl();
+        chess.forceMove(7,0,1,4);
+        assertFalse(chess.isCheckmateKingMove(Piece.Color.WHITE));
+    }
+
+    @Test
+    public void blackRookInCheckMate()
+    {
+        Board chess = new BoardImpl();
+
+        chess.forceMove(0,0,6,4);
+        assertFalse(chess.isCheckmateKingMove(Piece.Color.BLACK));
+    }
+
+    @Test
+    public void pieceAttackBishopInCheckMate()
+    {
+        Board chess = new BoardImpl();
+        chess.forceMove(7,5,2,6);
+        chess.forceMove(1,5,5,5);
+        assertFalse(chess.isCheckmatePieceAttack(chess.isCheck(0,4).getXAxis(),chess.isCheck(0,4).getYAxis()));
+    }
+
+    @Test
+    public void pieceAttackDoubleInCheckMate()
+    {
+        Board chess = new BoardImpl();
+        chess.forceMove(7,3,3,4);
+        chess.forceMove(1,4,5,5);
+        chess.forceMove(7,6,2,5);
+        assertTrue(chess.isCheckmatePieceAttack(chess.isCheck(0,4).getXAxis(),chess.isCheck(0,4).getYAxis()));
     }
 }

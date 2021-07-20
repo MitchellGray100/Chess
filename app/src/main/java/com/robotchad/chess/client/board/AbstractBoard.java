@@ -150,6 +150,21 @@ public abstract class AbstractBoard implements Board {
 	}
 
 	@Override
+	public void forceMoveWithoutScore(int x, int y, int r, int c) {
+		if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
+				x > 7 || x < 0 || y > 7 || y < 0)) {
+			board[x][y].setLocation(new LocationImpl(r,c));
+			if (board[r][c] == null) {
+				board[r][c] = board[x][y];
+				board[x][y] = null;
+			} else {
+				board[r][c] = board[x][y];
+				board[x][y] = null;
+			}
+		}
+	}
+
+	@Override
 	public LocationImpl isValidMove(int x, int y, int r, int c) {
 		if (r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0) return (new LocationImpl(-100,-100));
@@ -452,18 +467,24 @@ public abstract class AbstractBoard implements Board {
 		Piece.Color pieceColor = ((board[x][y])).getColor();
 		Piece temp1 = board[x][y];
 		Piece temp2 = board[r][c];
-		board[r][c] = board[x][y];
-		board[x][y] = null;
+		forceMoveWithoutScore(x,y,r,c);
+
 		boolean returner = false;
 		if (pieceColor == Piece.Color.WHITE) {
-						returner = isCheck((pieces[4]).getLocation().getXAxis(),((LocationImpl)(pieces[4]).getLocation()).getYAxis());
+			//pieces[4].setLocation(new LocationImpl(r,c));
+						returner = isValidMoveConverter(isCheck((pieces[4]).getLocation().getXAxis(),((LocationImpl)(pieces[4]).getLocation()).getYAxis()));
 						board[x][y] = temp1;
 						board[r][c] = temp2;
+
+			//pieces[4].setLocation(new LocationImpl(x,y));
 		} else {
 
-						returner = isCheck((pieces[20]).getLocation().getXAxis(),((LocationImpl)(pieces[20]).getLocation()).getYAxis());
+			//pieces[20].setLocation(new LocationImpl(r,c));
+						returner = isValidMoveConverter(isCheck((pieces[20]).getLocation().getXAxis(),((LocationImpl)(pieces[20]).getLocation()).getYAxis()));
 						board[x][y] = temp1;
 						board[r][c] = temp2;
+
+			//pieces[20].setLocation(new LocationImpl(x,y));
 
 		}
 		return returner;
@@ -474,7 +495,7 @@ public abstract class AbstractBoard implements Board {
 	 *
 	 * @return whether or not the king at the specified location is in check
 	 */
-	public boolean isCheck(int x, int y)
+	public LocationImpl isCheck(int x, int y)
 	{
 		if(board[x][y].getColor() == Piece.Color.BLACK)
 		{
@@ -484,11 +505,11 @@ public abstract class AbstractBoard implements Board {
 				{
 					if(isValidMoveConverter(isValidMove(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),x,y)))
 					{
-						return true;
+						return new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
 					}
 				}
 			}
-			return false;
+			return new LocationImpl(-100,-100);
 		}
 		else
 		{
@@ -498,48 +519,74 @@ public abstract class AbstractBoard implements Board {
 				{
 					if(isValidMoveConverter(isValidMove(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),x,y)))
 					{
-						return true;
+						return new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
 					}
 				}
 			}
-			return false;
+			return new LocationImpl(-100,-100);
 		}
 	}
 
-	public boolean isCheckmate(Piece.Color color)
+	public boolean isCheckmateKingMove(Piece.Color color)
 	{
 		int x;
 		int y;
+
+		LocationImpl isCheckLocation;
 		if(color.equals(Piece.Color.WHITE))
 		{
 			x = pieces[4].getLocation().getXAxis();
 			y = pieces[4].getLocation().getYAxis();
-			for(int i = x-1; i <= x+1; i++)
-			{
-				for(int k = y-1; k <= y+1; k++)
-				{
-					if(isValidMoveConverter(isValidMove(i,k,-100,-100)) && !isCheck(i,k))
-					{
-						return false;
+			 isCheckLocation = isCheck(x,y);
+			if(isCheckLocation.getXAxis() != -100 && isCheckLocation.getYAxis() != -100) {
+				for (int i = x - 1; i <= x + 1; i++) {
+					for (int k = y - 1; k <= y + 1; k++) {
+						if (isValidMoveConverter(isValidMove(x,y,i,k)) && !putsKingInCheck(x,y,i,k)) {
+							return false;
+						}
 					}
 				}
+
+			}
+			else
+			{
+				return false;
 			}
 		}
 		if(color.equals(Piece.Color.BLACK))
 		{
 			x = pieces[20].getLocation().getXAxis();
 			y = pieces[20].getLocation().getYAxis();
-			for(int i = x-1; i <= x+1; i++)
-			{
-				for(int k = y-1; k <= y+1; k++)
-				{
-					if(isValidMoveConverter(isValidMove(i,k,-100,-100)) && !isCheck(i,k))
-					{
-						return false;
+			isCheckLocation = isCheck(x,y);
+			if(isCheckLocation.getXAxis() != -100 && isCheckLocation.getYAxis() != -100) {
+				for (int i = x - 1; i <= x + 1; i++) {
+					for (int k = y - 1; k <= y + 1; k++) {
+						if (isValidMoveConverter(isValidMove(x, y, i, k)) && !putsKingInCheck(x,y,i, k)) {
+							return false;
+						}
 					}
 				}
 			}
+			else
+			{
+				return false;
+			}
 		}
+		return true;
+	}
+
+	public boolean isCheckmatePieceAttack(int x, int y)
+	{
+		LocationImpl canBeTaken = isCheck(x,y);
+		 if(isValidMoveConverter(canBeTaken) && !putsKingInCheck(canBeTaken.getXAxis(),canBeTaken.getYAxis(),x,y))
+		 {
+		 	return false;
+		 }
+		 return true;
+
+	}
+	public boolean isCheckmatePieceMove(Piece.Color color)
+	{
 		return true;
 	}
 

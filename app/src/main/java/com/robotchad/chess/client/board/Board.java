@@ -33,6 +33,15 @@ public interface Board {
 	void forceMove(int x,int y,int r,int c);
 
 	/**
+	 * Moves the piece from one spot to another even if not valid and doesnt change score. Only used for testing.
+	 * @param x the x coordinate of the piece
+	 * @param y the y coordinate of the piece
+	 * @param r The x coordinate to move to
+	 * @param c The y coordinate to move to
+	 */
+	void forceMoveWithoutScore(int x,int y,int r,int c);
+
+	/**
 	 * Determines whether the given move is a valid move for the pieces
 	 * @param x The x coordinate of the pieces
 	 * @param y The y coordinate of the pieces
@@ -78,17 +87,31 @@ public interface Board {
 	 */
 	 void changeSquare(int x, int y,Piece piece);
 
-	boolean isCheck(int x, int y);
+	LocationImpl isCheck(int x, int y);
 
 	boolean putsKingInCheck(int x, int y, int r, int c);
 
 	/**
-	 * Checks if a king is in Checkmated.
+	 * Checks if a king can move itself out of check.
 	 * @param color The color of the king to check is checkmated
 	 * @return whether or not the king is checkmated
 	 */
-	boolean isCheckmate(Piece.Color color);
+	boolean isCheckmateKingMove(Piece.Color color);
 
+	/**
+	 * Checks if a piece can block the check
+	 * @param color The color of the king that is being checkmated
+	 * @return whether or not the king is checkmated
+	 */
+	boolean isCheckmatePieceMove(Piece.Color color);
+
+	/**
+	 * Checks if a piece can block the check
+	 * @param x The x cord of the piece putting the king in check
+	 * @param y The y cord of the piece putting the king in check
+	 * @return whether or not the king is checkmated
+	 */
+	boolean isCheckmatePieceAttack(int x, int y);
 
 	int getWhitePoints();
 
