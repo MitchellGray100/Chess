@@ -56,8 +56,8 @@ public interface Board {
 
 	public Piece piecesGetter(int num);
 
-	boolean isValidMoveConverter(LocationImpl input);
-	
+	boolean locationToBoolean(LocationImpl input);
+
 	/**
 	 * Changes the score of the game whenever a pieces is taken
 	 * @param r The x position of the pieces being taken
@@ -113,6 +113,8 @@ public interface Board {
 	 * @return whether or not the king is checkmated
 	 */
 	boolean isCheckmatePieceAttack(int x, int y);
+
+	boolean isCheckmate(int x, int y);
 
 	int getWhitePoints();
 
