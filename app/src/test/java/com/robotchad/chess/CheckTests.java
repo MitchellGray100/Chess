@@ -113,6 +113,8 @@ public class CheckTests {
         assertTrue(chess.putsKingInCheck(2,1,3,2));
     }
 
+
+    //King move checkmate tests
     @Test
     public void whiteRookInCheckMate()
     {
@@ -130,6 +132,8 @@ public class CheckTests {
         assertFalse(chess.isCheckmateKingMove(Piece.Color.BLACK));
     }
 
+
+    //Piece attack checkmate tests
     @Test
     public void pieceAttackBishopInCheckMate()
     {
@@ -149,12 +153,24 @@ public class CheckTests {
         assertTrue(chess.isCheckmatePieceAttack(chess.isCheck(0,4).getXAxis(),chess.isCheck(0,4).getYAxis()));
     }
 
+
+    //Piece move checkmate tests
     @Test
     public void pieceMovementBlockBishop()
     {
         Board chess = new BoardImpl();
         chess.forceMove(1,5,5,5);
         chess.forceMove(7,2,3,7);
+        assertFalse(chess.isCheckmatePieceMove(chess.isCheck(0,4).getXAxis(),chess.isCheck(0,4).getYAxis()));
+    }
+    @Test
+    public void pieceMovementKnightBlockBishop()
+    {
+        Board chess = new BoardImpl();
+        chess.forceMove(1,5,5,5);
+        chess.forceMove(7,2,3,7);
+        chess.forceMove(1,6,5,6);
+        chess.forceMove(0,6,3,4);
         assertFalse(chess.isCheckmatePieceMove(chess.isCheck(0,4).getXAxis(),chess.isCheck(0,4).getYAxis()));
     }
 
