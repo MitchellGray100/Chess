@@ -159,15 +159,7 @@ public class CheckTests {
     }
 
 
-
-
-
-
-
-
-
-
-
+    //Checkmate tests
     @Test
     public void wRookInCheckMate()
     {

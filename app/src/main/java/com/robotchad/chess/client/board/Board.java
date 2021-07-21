@@ -54,8 +54,18 @@ public interface Board {
 	LocationImpl isValidMove(int x, int y, int r, int c);
 
 
+	/**
+	 * Returns the specified piece at the index in the pieces array
+	 * @param num The index of the pieces array to grab
+	 * @return The piece in the pieces array at index num
+	 */
 	public Piece piecesGetter(int num);
 
+	/**
+	 * Checks to see if the location is not -100,-100. If it is -100 -100 then false, otherwise true;
+	 * @param input Location to be converted to boolean
+	 * @return whether or not the location is valid or not.
+	 */
 	boolean locationToBoolean(LocationImpl input);
 
 	/**
@@ -87,14 +97,28 @@ public interface Board {
 	 */
 	 void changeSquare(int x, int y,Piece piece);
 
+	/**
+	 * Checks if a piece if being checked (made for king but works for any piece).
+	 * @param x The x cord of piece
+	 * @param y The y cord of piece
+	 * @return the location of the piece checking the (x,y) piece.
+	 */
 	LocationImpl isCheck(int x, int y);
 
+	/**
+	 * Checks to see if a player's piece puts its own king in check
+	 * @param x The x cord of the piece to move.
+	 * @param y the y cord of the piece to move.
+	 * @param r The proposed x cord of the move.
+	 * @param c The proposed y cord of the move.
+	 * @return Whether or not the player's king would be checked from their own move.
+	 */
 	boolean putsKingInCheck(int x, int y, int r, int c);
 
 	/**
 	 * Checks if a king can move itself out of check.
 	 * @param color The color of the king to check is checkmated
-	 * @return whether or not the king is checkmated
+	 * @return whether or not the king can move away from the checker
 	 */
 	boolean isCheckmateKingMove(Piece.Color color);
 
@@ -102,22 +126,36 @@ public interface Board {
 	 * Checks if a piece can block the check
 	 * @param x The x cord of the piece putting the king in check
 	 * @param y The y cord of the piece putting the king in check
-	 * @return whether or not the king is checkmated
+	 * @return whether or not the king's pieces can block the attack
 	 */
 	boolean isCheckmatePieceMove(int x, int y);
 
 	/**
-	 * Checks if a piece can block the check
+	 * Checks if a piece can attack the checker
 	 * @param x The x cord of the piece putting the king in check
 	 * @param y The y cord of the piece putting the king in check
-	 * @return whether or not the king is checkmated
+	 * @return whether or not the king's piece can attack the checker
 	 */
 	boolean isCheckmatePieceAttack(int x, int y);
 
+	/**
+	 * Checks if the king is checkmated.
+	 * @param x The x cord of the piece putting the king in check
+	 * @param y The y cord of the piece putting the king in check
+	 * @return whether or not the king is checkmated.
+	 */
 	boolean isCheckmate(int x, int y);
 
+	/**
+	 * Returns the board's white points
+	 * @return the board's white points
+	 */
 	int getWhitePoints();
 
+	/**
+	 * Returns the board's black points
+	 * @return the board's black points
+	 */
 	int getBlackPoints();
 }
 
