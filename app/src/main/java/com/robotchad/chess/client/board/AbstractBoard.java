@@ -472,18 +472,15 @@ public abstract class AbstractBoard implements Board {
 		if (pieceColor == Piece.Color.WHITE) {
 
 						returner = locationToBoolean(isCheck((pieces[4]).getLocation().getXAxis(),((LocationImpl)(pieces[4]).getLocation()).getYAxis()));
-						board[x][y] = temp1;
-						board[r][c] = temp2;
-			board[x][y].setLocation(new LocationImpl(x,y));
 			//board[r][c].setLocation(new LocationImpl(r,c));
 			//pieces[4].setLocation(new LocationImpl(x,y));
 		} else {
 						returner = locationToBoolean(isCheck((pieces[20]).getLocation().getXAxis(),((LocationImpl)(pieces[20]).getLocation()).getYAxis()));
-						board[x][y] = temp1;
-						board[r][c] = temp2;
-			board[x][y].setLocation(new LocationImpl(x,y));
 			//pieces[20].setLocation(new LocationImpl(x,y));
 		}
+		board[x][y] = temp1;
+		board[r][c] = temp2;
+		board[x][y].setLocation(new LocationImpl(x,y));
 
 		return returner;
 	}
@@ -671,7 +668,7 @@ public abstract class AbstractBoard implements Board {
 				{
 					for(int c = 0; c < 8; c++)
 					{
-						if(locationToBoolean(isValidMove(xCord,yCord,r,c)))
+						if(locationToBoolean(isValidMove(xCord,yCord,r,c)) && !putsKingInCheck(xCord,yCord,r,c))
 						{
 							return false;
 						}
@@ -689,7 +686,7 @@ public abstract class AbstractBoard implements Board {
 				{
 					for(int c = 0; c < 8; c++)
 					{
-						if(locationToBoolean(isValidMove(xCord,yCord,r,c)))
+						if(locationToBoolean(isValidMove(xCord,yCord,r,c)) && !putsKingInCheck(xCord,yCord,r,c))
 						{
 							return false;
 						}

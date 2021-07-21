@@ -113,6 +113,14 @@ public class CheckTests {
         assertTrue(chess.putsKingInCheck(2,1,3,2));
     }
 
+    @Test
+    public void putsKingInCheckKingMoveTest()
+    {
+        Board chess = new BoardImpl();
+        chess.forceMove(1,4,5,5);
+        assertFalse(chess.putsKingInCheck(0,4,1,4));
+    }
+
 
     //King move checkmate tests
     @Test
@@ -219,5 +227,34 @@ public class CheckTests {
         chess.forceMove(1,5,5,5);
         chess.forceMove(7,2,3,7);
         assertFalse(chess.isCheckmate(chess.isCheck(0,4).getXAxis(),chess.isCheck(0,4).getYAxis()));
+    }
+
+    //STALEMATE tests
+    @Test
+    public void StalemateFalseTest()
+    {
+        Board chess = new BoardImpl();
+        assertFalse(chess.isStalemate(Piece.Color.WHITE));
+        assertFalse(chess.isStalemate(Piece.Color.BLACK));
+    }
+    @Test
+    public void StalemateTrueTest()
+    {
+        Board chess = new BoardImpl();
+        for(int r = 0; r < 2;r++)
+        {
+            for(int c = 0; c < 8; c++)
+            {
+                if(r!=0 && c != 4)
+                {
+                    chess.deleteSquare(r,c);
+                }
+            }
+        }
+        chess.forceMove(7,0,5,3);
+        chess.forceMove(7,7,5,5);
+        chess.forceMove(7,2,5,0);
+        assertTrue(chess.isStalemate(Piece.Color.WHITE));
+        assertFalse(chess.isStalemate(Piece.Color.BLACK));
     }
 }
