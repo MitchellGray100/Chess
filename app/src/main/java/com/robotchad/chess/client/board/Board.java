@@ -147,6 +147,13 @@ public interface Board {
 	boolean isCheckmate(int x, int y);
 
 	/**
+	 * Checks to see if the specified color player is in stalemate.
+	 * @param color The color to check for stalemate.
+	 * @return Whether or not the player is in stalemate.
+	 */
+	boolean isStalemate(Piece.Color color);
+
+	/**
 	 * Returns the board's white points
 	 * @return the board's white points
 	 */
@@ -157,5 +164,7 @@ public interface Board {
 	 * @return the board's black points
 	 */
 	int getBlackPoints();
+
+
 }
 

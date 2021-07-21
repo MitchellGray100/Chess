@@ -656,6 +656,49 @@ public abstract class AbstractBoard implements Board {
 		return true;
 	}
 
+	public boolean isStalemate(Piece.Color color)
+	{
+		int xCord;
+		int yCord;
+
+		if(color == Piece.Color.WHITE)
+		{
+			for(int i = 0; i < 16; i++)
+			{
+				xCord = pieces[i].getLocation().getXAxis();
+				yCord = pieces[i].getLocation().getYAxis();
+				for(int r = 0; r < 8; r++)
+				{
+					for(int c = 0; c < 8; c++)
+					{
+						if(locationToBoolean(isValidMove(xCord,yCord,r,c)))
+						{
+							return false;
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			for(int i = 16; i < 32; i++)
+			{
+				xCord = pieces[i].getLocation().getXAxis();
+				yCord = pieces[i].getLocation().getYAxis();
+				for(int r = 0; r < 8; r++)
+				{
+					for(int c = 0; c < 8; c++)
+					{
+						if(locationToBoolean(isValidMove(xCord,yCord,r,c)))
+						{
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
 
 //OLD ISCHECK()
 //	public boolean isCheck(int x, int y) {
