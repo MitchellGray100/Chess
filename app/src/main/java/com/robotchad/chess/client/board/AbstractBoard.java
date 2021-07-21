@@ -662,13 +662,14 @@ public abstract class AbstractBoard implements Board {
 		{
 			for(int i = 0; i < 16; i++)
 			{
+
 				xCord = pieces[i].getLocation().getXAxis();
 				yCord = pieces[i].getLocation().getYAxis();
 				for(int r = 0; r < 8; r++)
 				{
 					for(int c = 0; c < 8; c++)
 					{
-						if(locationToBoolean(isValidMove(xCord,yCord,r,c)) && !putsKingInCheck(xCord,yCord,r,c))
+						if(locationToBoolean(isValidMove(xCord,yCord,r,c)) && !(putsKingInCheck(xCord,yCord,r,c)))
 						{
 							return false;
 						}
@@ -686,10 +687,9 @@ public abstract class AbstractBoard implements Board {
 				{
 					for(int c = 0; c < 8; c++)
 					{
-						if(locationToBoolean(isValidMove(xCord,yCord,r,c)) && !putsKingInCheck(xCord,yCord,r,c))
-						{
-							return false;
-						}
+						if (locationToBoolean(isValidMove(xCord, yCord, r, c)) && !putsKingInCheck(xCord, yCord, r, c)) {
+								return false;
+							}
 					}
 				}
 			}

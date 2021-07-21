@@ -121,6 +121,32 @@ public class CheckTests {
         assertFalse(chess.putsKingInCheck(0,4,1,4));
     }
 
+    @Test
+    public void putsKingInCheckSelfMove()
+    {
+        Board chess = new BoardImpl();
+        for(int r = 0; r < 2;r++)
+        {
+            for(int c = 0; c < 8; c++)
+            {
+                if(r!=0 && c != 4)
+                {
+                    chess.deleteSquare(r,c);
+                }
+            }
+        }
+        chess.forceMove(7,0,5,3);
+        chess.forceMove(7,7,5,5);
+        chess.forceMove(7,2,5,0);
+        assertTrue(chess.putsKingInCheck(0,4,0,3));
+        assertTrue(chess.putsKingInCheck(0,4,1,3));
+        assertTrue(chess.putsKingInCheck(0,4,1,4));
+        assertTrue(chess.putsKingInCheck(0,4,1,5));
+        assertTrue(chess.putsKingInCheck(0,4,0,5));
+        assertFalse(chess.locationToBoolean(chess.isValidMove(0,4,0,1)));
+        assertFalse(chess.putsKingInCheck(0,4,0,1));
+    }
+
 
     //King move checkmate tests
     @Test
@@ -245,12 +271,31 @@ public class CheckTests {
         {
             for(int c = 0; c < 8; c++)
             {
-                if(r!=0 && c != 4)
+                if(r==0 && c == 4)
+                {
+
+                }
+                else
                 {
                     chess.deleteSquare(r,c);
                 }
             }
         }
+//        chess.deleteSquare(0,0);
+//        chess.deleteSquare(0,1);
+//        chess.deleteSquare(0,2);
+//        chess.deleteSquare(0,3);
+//        chess.deleteSquare(0,5);
+//        chess.deleteSquare(0,6);
+//        chess.deleteSquare(0,7);
+//        chess.deleteSquare(1,0);
+//        chess.deleteSquare(1,1);
+//        chess.deleteSquare(1,2);
+//        chess.deleteSquare(1,3);
+//        chess.deleteSquare(1,4);
+//        chess.deleteSquare(1,5);
+//        chess.deleteSquare(1,6);
+//        chess.deleteSquare(1,7);
         chess.forceMove(7,0,5,3);
         chess.forceMove(7,7,5,5);
         chess.forceMove(7,2,5,0);
