@@ -208,7 +208,6 @@ public abstract class AbstractBoard implements Board {
 		if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0)) {
 			board[x][y].setLocation(new LocationImpl(r,c));
-			board[x][y].setMoved(true);
 			board[r][c] = board[x][y];
 			board[x][y] = null;
 		}

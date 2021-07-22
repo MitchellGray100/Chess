@@ -8,5 +8,6 @@ public class King extends AbstractPiece implements Piece {
 		setType(Type.KING);
 		setColor(pieceColor);
 		setValue(100);
+		setMoved(false);
 	}
 }

@@ -2,6 +2,9 @@ package com.robotchad.chess;
 
 import com.robotchad.chess.client.board.Board;
 import com.robotchad.chess.client.board.BoardImpl;
+import com.robotchad.chess.client.pieces.Piece;
+import com.robotchad.chess.client.pieces.PieceFactory;
+import com.robotchad.chess.client.pieces.Rook;
 
 import org.junit.Test;
 
@@ -659,6 +662,120 @@ public class MovementTests {
 		chess.forceMove(6,0,1,3);
 		//assertEquals(Piece.Type.PAWN, chess.squareInfo(1,3));
 		assertTrue(chess.locationToBoolean(chess.isValidMove(0, 3, 1, 3)));
+	}
+
+	@Test
+	public void whiteKingKingSideCastleMovementTest()
+	{
+		PieceFactory factory = new PieceFactory();
+		Board chess = new BoardImpl();
+		chess.deleteSquare(0,6);
+		assertFalse(chess.locationToBoolean(chess.isValidMove(0,4,0,6)));
+		chess.deleteSquare(0,5);
+		assertTrue(chess.locationToBoolean(chess.isValidMove(0,4,0,6)));
+		chess.forceMove(0,7,0,7);
+		assertFalse(chess.locationToBoolean(chess.isValidMove(0,4,0,6)));
+		chess.changeSquare(0,7, factory.getPiece(Piece.Type.ROOK, Piece.Color.WHITE));
+		assertTrue(chess.locationToBoolean(chess.isValidMove(0,4,0,6)));
+//		chess.forceMove(0,4,0,4);
+//		assertFalse(chess.locationToBoolean(chess.isValidMove(0,4,0,6)));
+//		chess.changeSquare(0,4, factory.getPiece(Piece.Type.KING, Piece.Color.WHITE));
+//		assertTrue(chess.locationToBoolean(chess.isValidMove(0,4,0,6)));
+		assertTrue(chess.move(0,4,0,6));
+		assertNull(chess.squareInfo(0, 4));
+		assertNull(chess.squareInfo(0, 7));
+		assertNotNull(chess.squareInfo(0, 5));
+		assertNotNull(chess.squareInfo(0, 6));
+		assertTrue(chess.piecesGetter(7).getLocation().getXAxis() == 0);
+		assertTrue(chess.piecesGetter(7).getLocation().getYAxis() == 5);
+		assertTrue(chess.piecesGetter(4).getLocation().getXAxis() == 0);
+		assertTrue(chess.piecesGetter(4).getLocation().getYAxis() == 6);
+	}
+
+	@Test
+	public void whiteKingQueenSideCastleMovementTest()
+	{
+		PieceFactory factory = new PieceFactory();
+		Board chess = new BoardImpl();
+		chess.deleteSquare(0,2);
+		assertFalse(chess.locationToBoolean(chess.isValidMove(0,4,0,2)));
+		chess.deleteSquare(0,3);
+		assertTrue(chess.locationToBoolean(chess.isValidMove(0,4,0,2)));
+		chess.forceMove(0,0,0,0);
+		assertFalse(chess.locationToBoolean(chess.isValidMove(0,4,0,2)));
+		chess.changeSquare(0,0, factory.getPiece(Piece.Type.ROOK, Piece.Color.WHITE));
+		assertTrue(chess.locationToBoolean(chess.isValidMove(0,4,0,2)));
+//		chess.forceMove(0,4,0,4);
+//		assertFalse(chess.locationToBoolean(chess.isValidMove(0,4,0,6)));
+//		chess.changeSquare(0,4, factory.getPiece(Piece.Type.KING, Piece.Color.WHITE));
+//		assertTrue(chess.locationToBoolean(chess.isValidMove(0,4,0,2)));
+		assertTrue(chess.move(0,4,0,2));
+		assertNull(chess.squareInfo(0, 4));
+		assertNull(chess.squareInfo(0, 0));
+		assertNotNull(chess.squareInfo(0, 2));
+		assertNotNull(chess.squareInfo(0, 3));
+		assertTrue(chess.piecesGetter(0).getLocation().getXAxis() == 0);
+		assertTrue(chess.piecesGetter(0).getLocation().getYAxis() == 3);
+		assertTrue(chess.piecesGetter(4).getLocation().getXAxis() == 0);
+		assertTrue(chess.piecesGetter(4).getLocation().getYAxis() == 2);
+	}
+
+	@Test
+	public void blackKingKingSideCastleMovementTest()
+	{
+		PieceFactory factory = new PieceFactory();
+		Board chess = new BoardImpl();
+		chess.deleteSquare(7,6);
+		assertFalse(chess.locationToBoolean(chess.isValidMove(7,4,7,6)));
+		chess.deleteSquare(7,5);
+		assertTrue(chess.locationToBoolean(chess.isValidMove(7,4,7,6)));
+		chess.forceMove(7,7,7,7);
+		assertFalse(chess.locationToBoolean(chess.isValidMove(7,4,7,6)));
+		chess.changeSquare(7,7, factory.getPiece(Piece.Type.ROOK, Piece.Color.WHITE));
+		assertTrue(chess.locationToBoolean(chess.isValidMove(7,4,7,6)));
+//		chess.forceMove(7,4,7,4);
+//		assertFalse(chess.locationToBoolean(chess.isValidMove(7,4,7,6)));
+//		chess.changeSquare(7,4, factory.getPiece(Piece.Type.KING, Piece.Color.BLACK));
+//
+//		assertEquals(chess.squareInfo(7,4), null);
+		assertTrue(chess.move(7,4,7,6));
+		assertNull(chess.squareInfo(7, 4));
+		assertNull(chess.squareInfo(7, 7));
+		assertNotNull(chess.squareInfo(7, 5));
+		assertNotNull(chess.squareInfo(7, 6));
+		assertTrue(chess.piecesGetter(23).getLocation().getXAxis() == 7);
+		assertTrue(chess.piecesGetter(23).getLocation().getYAxis() == 5);
+		assertTrue(chess.piecesGetter(20).getLocation().getXAxis() == 7);
+		assertTrue(chess.piecesGetter(20).getLocation().getYAxis() == 6);
+
+	}
+
+	@Test
+	public void blackKingQueenSideCastleMovementTest()
+	{
+		PieceFactory factory = new PieceFactory();
+		Board chess = new BoardImpl();
+		chess.deleteSquare(7,2);
+		assertFalse(chess.locationToBoolean(chess.isValidMove(7,4,7,2)));
+		chess.deleteSquare(7,3);
+		assertTrue(chess.locationToBoolean(chess.isValidMove(7,4,7,2)));
+		chess.forceMove(7,0,7,0);
+		assertFalse(chess.locationToBoolean(chess.isValidMove(7,4,7,2)));
+		chess.changeSquare(7,0, factory.getPiece(Piece.Type.ROOK, Piece.Color.BLACK));
+		assertTrue(chess.locationToBoolean(chess.isValidMove(7,4,7,2)));
+//		chess.forceMove(7,4,7,4);
+//		assertFalse(chess.locationToBoolean(chess.isValidMove(7,4,7,2)));
+//		chess.changeSquare(7,4, factory.getPiece(Piece.Type.KING, Piece.Color.BLACK));
+		assertTrue(chess.locationToBoolean(chess.isValidMove(7,4,7,2)));
+		assertTrue(chess.move(7,4,7,2));
+		assertNull(chess.squareInfo(7, 4));
+		assertNull(chess.squareInfo(7, 0));
+		assertNotNull(chess.squareInfo(7, 2));
+		assertNotNull(chess.squareInfo(7, 3));
+		assertTrue(chess.piecesGetter(16).getLocation().getXAxis() == 7);
+		assertTrue(chess.piecesGetter(16).getLocation().getYAxis() == 3);
+		assertTrue(chess.piecesGetter(20).getLocation().getXAxis() == 7);
+		assertTrue(chess.piecesGetter(20).getLocation().getYAxis() == 2);
 	}
 
 
