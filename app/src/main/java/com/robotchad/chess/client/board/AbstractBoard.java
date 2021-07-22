@@ -193,13 +193,16 @@ public abstract class AbstractBoard implements Board {
 	public void forceMove(int x, int y, int r, int c) {
 		if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0)) {
+			Piece holder;
 			board[x][y].setLocation(new LocationImpl(r,c));
+			holder = board[x][y];
 			board[x][y].setMoved(true);
 			if (board[r][c] != null) {
 				changeScore(r, c);
 			}
-			board[r][c] = board[x][y];
+
 			board[x][y] = null;
+			board[r][c] = holder;
 		}
 	}
 
@@ -207,9 +210,12 @@ public abstract class AbstractBoard implements Board {
 	public void forceMoveWithoutScore(int x, int y, int r, int c) {
 		if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0)) {
+			Piece holder;
 			board[x][y].setLocation(new LocationImpl(r,c));
-			board[r][c] = board[x][y];
+			holder = board[x][y];
+
 			board[x][y] = null;
+			board[r][c] = holder;
 		}
 	}
 
