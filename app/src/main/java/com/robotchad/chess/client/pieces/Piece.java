@@ -58,6 +58,10 @@ public interface Piece
 	 * returns the location of the piece
 	 */
 	public LocationImpl getLocation();
+
+	public void setMoved(boolean moved);
+
+	public boolean isMoved();
 	
 	/** An enumeration of all possible pieces */
 	public enum Type

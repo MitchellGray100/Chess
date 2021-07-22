@@ -114,24 +114,76 @@ public abstract class AbstractBoard implements Board {
 			if (board[r][c] != null) {
 				changeScore(r, c);
 			}
-			if(Math.abs(location.getXAxis()) != 100 && Math.abs(location.getYAxis()) != 100)
+			if(Math.abs(location.getXAxis()) != 100 && Math.abs(location.getYAxis()) != 100 &&
+					location.getXAxis() != 460 && location.getXAxis() != 420 &&
+					location.getXAxis() != 427 && location.getXAxis() != 467)
 			{
 				changeScore(location.getXAxis(),location.getYAxis());
 				board[location.getXAxis()][location.getYAxis()] = null;
 			}
 
-			if(board[x][y].getType() == Piece.Type.PAWN)
+			if(location.getXAxis() == 460 || location.getXAxis() == 420 ||
+					location.getXAxis() == 427 || location.getXAxis() == 467)
 			{
-				((Pawn)board[x][y]).setPrevLocation(new LocationImpl(x,y));
-				((Pawn)board[x][y]).setTurnMoved(turn);
+				if(location.getXAxis() == 460)
+				{
+					board[0][6] = board[0][4];
+					board[0][4] = null;
+					pieces[4].setLocation(new LocationImpl(0,6));
+					board[0][5] = board[0][7];
+					pieces[7].setLocation(new LocationImpl(0,5));
+					board[0][7] = null;
+					board[0][6].setMoved(true);
+					board[0][5].setMoved(true);
+				}
+				else if(location.getXAxis() == 420)
+				{
+					board[0][2] = board[0][4];
+					board[0][4] = null;
+					pieces[4].setLocation(new LocationImpl(0,2));
+					board[0][3] = board[0][0];
+					pieces[0].setLocation(new LocationImpl(0,3));
+					board[0][0] = null;
+					board[0][2].setMoved(true);
+					board[0][3].setMoved(true);
+				}
+				else if(location.getXAxis() == 427)
+				{
+					board[7][2] = board[7][4];
+					board[7][4] = null;
+					pieces[20].setLocation(new LocationImpl(7,2));
+					board[7][3] = board[7][0];
+					pieces[16].setLocation(new LocationImpl(7,3));
+					board[7][0] = null;
+					board[7][2].setMoved(true);
+					board[7][3].setMoved(true);
+				}
+				else if(location.getXAxis() == 467)
+				{
+					board[7][6] = board[7][4];
+					board[7][4] = null;
+					pieces[20].setLocation(new LocationImpl(7,6));
+					board[7][5] = board[7][7];
+					pieces[23].setLocation(new LocationImpl(7,5));
+					board[7][7] = null;
+					board[7][6].setMoved(true);
+					board[7][5].setMoved(true);
+				}
 			}
+			else {
+				if (board[x][y].getType() == Piece.Type.PAWN) {
+					((Pawn) board[x][y]).setPrevLocation(new LocationImpl(x, y));
+					((Pawn) board[x][y]).setTurnMoved(turn);
+				}
 
-			board[x][y].setLocation(new LocationImpl(r,c));
-			board[r][c] = board[x][y];
-			board[x][y] = null;
 
+				board[x][y].setMoved(true);
+				board[x][y].setLocation(new LocationImpl(r, c));
+				board[r][c] = board[x][y];
+				board[x][y] = null;
+
+			}
 			turn++;
-
 			return true;
 		}
 		return false;
@@ -142,14 +194,12 @@ public abstract class AbstractBoard implements Board {
 		if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0)) {
 			board[x][y].setLocation(new LocationImpl(r,c));
-			if (board[r][c] == null) {
-				board[r][c] = board[x][y];
-				board[x][y] = null;
-			} else {
+			board[x][y].setMoved(true);
+			if (board[r][c] != null) {
 				changeScore(r, c);
-				board[r][c] = board[x][y];
-				board[x][y] = null;
 			}
+			board[r][c] = board[x][y];
+			board[x][y] = null;
 		}
 	}
 
@@ -158,6 +208,7 @@ public abstract class AbstractBoard implements Board {
 		if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
 				x > 7 || x < 0 || y > 7 || y < 0)) {
 			board[x][y].setLocation(new LocationImpl(r,c));
+			board[x][y].setMoved(true);
 			board[r][c] = board[x][y];
 			board[x][y] = null;
 		}
@@ -448,6 +499,30 @@ public abstract class AbstractBoard implements Board {
 				return (new LocationImpl(100,100));
 			} else if (c == y && Math.abs(r - x) == 1) {
 				return (new LocationImpl(100,100));
+			}
+			else if(x == 0 && y == 4 && !board[x][y].isMoved() && r == 0 && c == 6 &&
+					board[0][7] != null && !board[0][7].isMoved() && board[0][5] == null &&
+					!putsKingInCheck(0,4,0,5))
+			{
+				return (new LocationImpl(460,460));
+			}
+			else if(x == 0 && y == 4 && !board[x][y].isMoved() && r == 0 && c == 2 &&
+					board[0][0] != null && !board[0][0].isMoved() && board[0][3] == null &&
+					!putsKingInCheck(0,4,0,3))
+			{
+				return (new LocationImpl(420,420));
+			}
+			else if(x == 7 && y == 4 && !board[x][y].isMoved() && r == 7 && c == 2 &&
+					board[7][0] != null && !board[7][0].isMoved() && board[7][3] == null &&
+					!putsKingInCheck(7,4,7,3))
+			{
+				return (new LocationImpl(427,427));
+			}
+			else if(x == 7 && y == 4 && !board[x][y].isMoved() && r == 7 && c == 6 &&
+					board[7][7] != null && !board[7][7].isMoved() && board[7][5] == null &&
+					!putsKingInCheck(7,4,7,5))
+			{
+				return (new LocationImpl(467,467));
 			}
 		}
 		return (new LocationImpl(-100,-100));

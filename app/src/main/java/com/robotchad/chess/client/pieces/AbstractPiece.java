@@ -8,6 +8,7 @@ public abstract class AbstractPiece implements Piece {
 	private Color pieceColor;
 	private int pieceValue;
 	private LocationImpl location;
+	private boolean moved;
 
 	//Thinking we can use a Location variable here so we can store all white pieces in an array and
 	// all black pieces in an array. Then when we need to know where each piece is we can just
@@ -54,5 +55,15 @@ public abstract class AbstractPiece implements Piece {
 	public void setLocation(LocationImpl loc) {
 		location = loc;
 
+	}
+
+	@Override
+	public boolean isMoved() {
+		return moved;
+	}
+
+	@Override
+	public void setMoved(boolean moved) {
+		this.moved = moved;
 	}
 }
