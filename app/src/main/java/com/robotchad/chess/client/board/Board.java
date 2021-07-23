@@ -47,7 +47,7 @@ public interface Board {
 	 * @param y The y coordinate of the pieces
 	 * @param r The proposed x coordinate of the move
 	 * @param c The proposed y coordinate of the move
-	 * @return a locationImpl. The output can be converted to boolean with isValidMoveConverter().
+	 * @return a locationImpl. The output can be converted to boolean with locationToBoolean().
 	 * 100,100 means true; -100,-100 means false; x,y (where x and y are coordinates of the chess
 	 * board) means there is an en passant and (x,y) is the location of the pawn. Kings trying to
 	 * castle will get 460, 420, 467,427 if successful.
@@ -57,6 +57,18 @@ public interface Board {
 	 * 427 -> black king queen-side castling
 	 */
 	LocationImpl isValidMove(int x, int y, int r, int c);
+
+
+	/**
+	 * Determines whether the given move is a valid move for the pieces
+	 * @param x The x coordinate of the pieces
+	 * @param y The y coordinate of the pieces
+	 * @param r The proposed x coordinate of the move
+	 * @param c The proposed y coordinate of the move
+	 * @return a locationImpl. The output can be converted to boolean with locationToBoolean().
+	 * 100,100 means true; -100,-100 means false;
+	 */
+	LocationImpl isValidProtect(int x, int y, int r, int c);
 
 
 	/**
@@ -109,6 +121,14 @@ public interface Board {
 	 * @return the location of the piece checking the (x,y) piece.
 	 */
 	LocationImpl isCheck(int x, int y);
+
+	/**
+	 * Checks if a piece if being protected (made for king but works for any piece).
+	 * @param x The x cord of piece
+	 * @param y The y cord of piece
+	 * @return the location of the piece checking the (x,y) piece.
+	 */
+	LocationImpl isProtect(int x, int y);
 
 	/**
 	 * Checks to see if a player's piece puts its own king in check
