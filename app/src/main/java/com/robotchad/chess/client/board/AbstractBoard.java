@@ -81,18 +81,31 @@ public abstract class AbstractBoard implements Board {
 	public LocationImpl[] aiMove(Piece.Color color)
 	{
 		int maxScore = 0;
-		LocationImpl maxLocation;
-		LocationImpl pieceLocation;
+		LocationImpl maxLocation = new LocationImpl(-100,-100);
+		LocationImpl pieceLocation = new LocationImpl(-100,-100);
 		LocationImpl[] returner = new LocationImpl[2];
+		int start;
+		int end;
 
-		if(color == Piece.Color.WHITE)
-		{
-			for(int i = 0; i < 16; i++)
+		if(color == Piece.Color.WHITE) {
+			start = 0;
+			end = 16;
+		}
+		else {
+			start = 16;
+			end = 32;
+		}
+
+			for(int i = start; i < end; i++)
 			{
 				for(int r = 0; r < 8; r++)
 				{
 					for(int c = 0; c < 8; c++)
 					{
+						if(maxScore == 200)
+						{
+							break;
+						}
 						if(pieces[i] != null && locationToBoolean(isValidMove(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c)) && !putsKingInCheck(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
 						{
 							if(board[r][c] == null)
@@ -106,7 +119,20 @@ public abstract class AbstractBoard implements Board {
 							}
 							else
 							{
-								if(putsOppositeKingInCheck(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+								if(putsEnemyKingInCheckmate(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+								{
+									maxScore = 200;
+									maxLocation = new LocationImpl(r,c);
+									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+								}
+								else if(putsOppositeKingInCheck(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c)
+										&& putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+								{
+									maxScore = 150;
+									maxLocation = new LocationImpl(r,c);
+									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+								}
+								else if(pieces[i].getValue() < board[r][c].getValue())
 								{
 									maxScore = 100;
 									maxLocation = new LocationImpl(r,c);
@@ -114,7 +140,20 @@ public abstract class AbstractBoard implements Board {
 								}
 								else if(board[r][c].getValue() > maxScore)
 								{
-									maxScore = board[r][c].getValue();
+									if(putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+									{
+										maxScore = board[r][c].getValue() + 1;
+									}
+									else
+									{
+										maxScore = board[r][c].getValue();
+									}
+									maxLocation = new LocationImpl(r,c);
+									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+								}
+								else if(board[r][c].getValue() == maxScore && putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+								{
+									maxScore = board[r][c].getValue() + 1;
 									maxLocation = new LocationImpl(r,c);
 									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
 								}
@@ -123,7 +162,9 @@ public abstract class AbstractBoard implements Board {
 					}
 				}
 			}
-		}
+
+		returner[0] = pieceLocation;
+		returner[1] = maxLocation;
 		return returner;
 	}
 								 @Override
@@ -654,6 +695,61 @@ public abstract class AbstractBoard implements Board {
 		return returner;
 	}
 
+
+	/**
+	 * Checks to see if the move puts own piece in protection
+	 *
+	 * @param x The row value of the piece
+	 * @param y The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move puts the king in check
+	 */
+	public boolean putsPieceInProtection(int x, int y, int r, int c) {
+		Piece temp1 = board[x][y];
+		Piece temp2 = board[r][c];
+		forceMoveWithoutScore(x,y,r,c);
+
+		boolean returner = false;
+		returner = locationToBoolean(isProtect(r,c));
+
+		board[x][y] = temp1;
+		board[r][c] = temp2;
+		board[x][y].setLocation(new LocationImpl(x,y));
+
+		return returner;
+	}
+
+	/**
+	 * Checks to see if the move puts enemy king in checkmate
+	 *
+	 * @param x The row value of the piece
+	 * @param y The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move puts the king in check
+	 */
+	public boolean putsEnemyKingInCheckmate(int x, int y, int r, int c) {
+		Piece.Color pieceColor = ((board[x][y])).getColor();
+		Piece temp1 = board[x][y];
+		Piece temp2 = board[r][c];
+		forceMoveWithoutScore(x,y,r,c);
+		boolean returner = false;
+		if(pieceColor == Piece.Color.WHITE)
+		{
+			returner = isCheckmate(pieces[20].getLocation().getXAxis(),pieces[20].getLocation().getYAxis());
+		}
+		else
+		{
+			returner = isCheckmate(pieces[4].getLocation().getXAxis(),pieces[4].getLocation().getYAxis());
+		}
+
+		board[x][y] = temp1;
+		board[r][c] = temp2;
+		board[x][y].setLocation(new LocationImpl(x,y));
+
+		return returner;
+	}
 
 	/**
 	 * Checks whether or not the king is in check.

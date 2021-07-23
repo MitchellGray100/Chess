@@ -141,6 +141,38 @@ public interface Board {
 	boolean putsKingInCheck(int x, int y, int r, int c);
 
 	/**
+	 * Checks to see if a player's piece puts enemy's king in check
+	 * @param x The x cord of the piece to move.
+	 * @param y the y cord of the piece to move.
+	 * @param r The proposed x cord of the move.
+	 * @param c The proposed y cord of the move.
+	 * @return Whether or not the player's king would be checked from their own move.
+	 */
+	boolean putsOppositeKingInCheck(int x, int y, int r, int c);
+
+
+	/**
+	 * Checks to see if a player's piece is protected after moving
+	 * @param x The x cord of the piece to move.
+	 * @param y the y cord of the piece to move.
+	 * @param r The proposed x cord of the move.
+	 * @param c The proposed y cord of the move.
+	 * @return Whether or not the player's king would be checked from their own move.
+	 */
+	boolean putsPieceInProtection(int x, int y, int r, int c);
+
+
+	/**
+	 * Checks to see if a player's piece is protected after moving
+	 * @param x The x cord of the piece to move.
+	 * @param y the y cord of the piece to move.
+	 * @param r The proposed x cord of the move.
+	 * @param c The proposed y cord of the move.
+	 * @return Whether or not the player's king would be checked from their own move.
+	 */
+	boolean putsEnemyKingInCheckmate(int x, int y, int r, int c);
+
+	/**
 	 * Checks if a king can move itself out of check.
 	 * @param color The color of the king to check is checkmated
 	 * @return whether or not the king can move away from the checker
