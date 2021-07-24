@@ -128,13 +128,37 @@ public abstract class AbstractBoard implements Board {
 								else if(putsOppositeKingInCheck(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c)
 										&& putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
 								{
-									maxScore = 150;
+									if(putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c)) {
+										maxScore = 151;
+									}
+									else
+									{
+										maxScore = 150;
+									}
 									maxLocation = new LocationImpl(r,c);
 									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
 								}
 								else if(pieces[i].getValue() < board[r][c].getValue())
 								{
-									maxScore = 100;
+									if(putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+									{
+										maxScore = 101;
+									}
+									else {
+										maxScore = 100;
+									}
+									maxLocation = new LocationImpl(r,c);
+									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+								}
+								else if(pieces[i].getValue() == board[r][c].getValue())
+								{
+									if(putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+									{
+										maxScore =51;
+									}
+									else {
+										maxScore = 50;
+									}
 									maxLocation = new LocationImpl(r,c);
 									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
 								}
@@ -148,6 +172,12 @@ public abstract class AbstractBoard implements Board {
 									{
 										maxScore = board[r][c].getValue();
 									}
+									maxLocation = new LocationImpl(r,c);
+									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+								}
+								else if(pieces[i].getType() == Piece.Type.PAWN && Math.abs(r - pieces[i].getLocation().getXAxis()) == 2 && maxScore <= 1)
+								{
+									maxScore = 1;
 									maxLocation = new LocationImpl(r,c);
 									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
 								}
