@@ -131,6 +131,12 @@ public interface Board {
 	LocationImpl isProtect(int x, int y);
 
 	/**
+	 * Determines if the given piece location's piece is protecting another piece.
+	 * @return Whether or not the piece is protecting another piece.
+	 */
+	boolean isProtecting(int x, int y);
+
+	/**
 	 * Checks to see if a player's piece puts its own king in check
 	 * @param x The x cord of the piece to move.
 	 * @param y the y cord of the piece to move.

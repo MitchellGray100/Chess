@@ -98,94 +98,113 @@ public abstract class AbstractBoard implements Board {
 
 			for(int i = start; i < end; i++)
 			{
+
+				int xAXis = pieces[i].getLocation().getXAxis();
+				int yAxis = pieces[i].getLocation().getYAxis();
+				int pieceValue = pieces[i].getValue();
 				for(int r = 0; r < 8; r++)
 				{
 					for(int c = 0; c < 8; c++)
 					{
+
 						if(maxScore == 200)
 						{
 							break;
 						}
-						if(pieces[i] != null && locationToBoolean(isValidMove(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c)) && !putsKingInCheck(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+
+						if(pieces[i] != null && locationToBoolean(isValidMove(xAXis,yAxis,r,c)) && !putsKingInCheck(xAXis,yAxis,r,c))
 						{
+
+							int adder = 0;
+							if(putsPieceInProtection(xAXis,yAxis,r,c))
+							{
+								adder++;
+							}
+							if(locationToBoolean(isProtect(xAXis,yAxis)))
+							{
+								adder--;
+							}
+							if(isProtecting(xAXis,yAxis))
+							{
+								adder--;
+							}
+							if(putsPieceInProtecting(xAXis,yAxis,r,c))
+							{
+								adder++;
+							}
+							if(r >= 2 && c >= 2 && r <= 5 && c <= 5)
+							{
+								adder++;
+							}
+
+
 							if(board[r][c] == null)
 							{
+
 								if(maxScore == 0)
 								{
-									maxScore = -1;
+									maxScore = adder;
 									maxLocation = new LocationImpl(r,c);
-									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+									pieceLocation = new LocationImpl(xAXis,yAxis);
+								}
+								else if(pieces[i].getType() == Piece.Type.PAWN && Math.abs(r - xAXis) == 2 && maxScore <= 1)
+								{
+									maxScore = 1 + adder;
+									maxLocation = new LocationImpl(r,c);
+									pieceLocation = new LocationImpl(xAXis,yAxis);
+								}
+								else if(maxScore <= adder)
+								{
+									maxScore = adder;
+									maxLocation = new LocationImpl(r,c);
+									pieceLocation = new LocationImpl(xAXis,yAxis);
 								}
 							}
 							else
 							{
-								if(putsEnemyKingInCheckmate(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+								int oppositePieceValue = board[r][c].getValue();
+								if(isProtecting(r,c))
+								{
+									adder++;
+								}
+								if(locationToBoolean(isProtect(r,c)))
+								{
+									adder--;
+								}
+
+								if(putsEnemyKingInCheckmate(xAXis,yAxis,r,c))
 								{
 									maxScore = 200;
 									maxLocation = new LocationImpl(r,c);
-									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+									pieceLocation = new LocationImpl(xAXis,yAxis);
 								}
-								else if(putsOppositeKingInCheck(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c)
-										&& putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
+								else if(putsOppositeKingInCheck(xAXis,yAxis,r,c)
+										&& putsPieceInProtection(xAXis,yAxis,r,c))
 								{
-									if(putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c)) {
-										maxScore = 151;
-									}
-									else
-									{
-										maxScore = 150;
-									}
+									maxScore = 150 + adder;
+
 									maxLocation = new LocationImpl(r,c);
-									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+									pieceLocation = new LocationImpl(xAXis,yAxis);
 								}
-								else if(pieces[i].getValue() < board[r][c].getValue())
+								else if(pieceValue + adder < oppositePieceValue)
 								{
-									if(putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
-									{
-										maxScore = 101;
-									}
-									else {
-										maxScore = 100;
-									}
+									maxScore = 100 + adder;
+
 									maxLocation = new LocationImpl(r,c);
-									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+									pieceLocation = new LocationImpl(xAXis,yAxis);
 								}
-								else if(pieces[i].getValue() == board[r][c].getValue())
+								else if(pieceValue <= oppositePieceValue)
 								{
-									if(putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
-									{
-										maxScore =51;
-									}
-									else {
-										maxScore = 50;
-									}
+										maxScore = 50 + adder;
+
 									maxLocation = new LocationImpl(r,c);
-									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+									pieceLocation = new LocationImpl(xAXis,yAxis);
 								}
-								else if(board[r][c].getValue() > maxScore)
+								else if(oppositePieceValue + adder >= maxScore)
 								{
-									if(putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
-									{
-										maxScore = board[r][c].getValue() + 1;
-									}
-									else
-									{
-										maxScore = board[r][c].getValue();
-									}
+									maxScore = oppositePieceValue + adder;
 									maxLocation = new LocationImpl(r,c);
-									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
-								}
-								else if(pieces[i].getType() == Piece.Type.PAWN && Math.abs(r - pieces[i].getLocation().getXAxis()) == 2 && maxScore <= 1)
-								{
-									maxScore = 1;
-									maxLocation = new LocationImpl(r,c);
-									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
-								}
-								else if(board[r][c].getValue() == maxScore && putsPieceInProtection(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),r,c))
-								{
-									maxScore = board[r][c].getValue() + 1;
-									maxLocation = new LocationImpl(r,c);
-									pieceLocation = new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
+									pieceLocation = new LocationImpl(xAXis,yAxis);
 								}
 							}
 						}
@@ -373,6 +392,57 @@ public abstract class AbstractBoard implements Board {
 		} catch (NullPointerException e) {
 			return (new LocationImpl(-100,-100));
 		}
+	}
+
+	/**
+	 * Determines if the given piece location's piece is protecting another piece.
+	 * @return Whether or not the piece is protecting another piece.
+	 */
+	public boolean isProtecting(int x,int y)
+	{
+		if(board[x][y].getColor() == Piece.Color.WHITE)
+		{
+			for(int i = 0; i < 16; i ++)
+			{
+				if(locationToBoolean(isValidProtect(x,y,pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis())))
+				{
+					return true;
+				}
+			}
+		}
+		else
+		{
+			for(int i = 16; i < 32; i ++)
+			{
+				if(locationToBoolean(isValidProtect(x,y,pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis())))
+				{
+					return true;
+				}
+			}
+
+		}
+		return false;
+	}
+
+	/**
+	 * Determines if the move puts a piece in a spot that protects an ally piece.
+	 * @return whether or not it does.
+	 */
+	public boolean putsPieceInProtecting(int x, int y, int r, int c)
+	{
+		Piece temp1 = board[x][y];
+		Piece temp2 = board[r][c];
+		forceMoveWithoutScore(x,y,r,c);
+
+		boolean returner;
+
+		returner = isProtecting(r,c);
+
+		board[x][y] = temp1;
+		board[r][c] = temp2;
+		board[x][y].setLocation(new LocationImpl(x,y));
+
+		return returner;
 	}
 
 	/**
