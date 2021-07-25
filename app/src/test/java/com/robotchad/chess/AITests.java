@@ -247,4 +247,16 @@ public class AITests {
 
 
     }
+
+    @Test
+    public void aiMoveSpeedTests()
+    {
+        Board chess = new BoardImpl();
+        LocationImpl[] returned = chess.aiMove(Piece.Color.BLACK);
+        assertTrue(returned[0].getXAxis() >0);
+        assertTrue(returned[0].getYAxis() >0);
+        assertTrue(returned[1].getXAxis() >0);
+        assertTrue(returned[1].getYAxis() >0);
+
+    }
 }
