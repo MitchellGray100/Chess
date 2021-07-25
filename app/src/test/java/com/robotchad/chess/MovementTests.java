@@ -84,6 +84,38 @@ public class MovementTests {
 		assertFalse(chess.locationToBoolean(chess.isValidMove(6, 0, 6, 0)));
 	}
 
+	@Test
+	public void pawnPromotionWhite()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(1,1,5,1);
+		assertTrue(chess.squareInfo(5,1).getType() == Piece.Type.PAWN);
+		chess.move(5,1,6,0);
+		assertTrue(chess.squareInfo(6,0).getType() == Piece.Type.PAWN);
+		chess.move(6,0,7,1);
+		assertEquals(chess.squareInfo(7,1).getType(), Piece.Type.QUEEN);
+		chess.forceMove(1,3,6,3);
+		chess.deleteSquare(7,3);
+		chess.move(6,3,7,3);
+		assertEquals(chess.squareInfo(7,3).getType(),Piece.Type.QUEEN);
+	}
+
+	@Test
+	public void pawnPromotionBlack()
+	{
+		Board chess = new BoardImpl();
+		chess.forceMove(6,1,2,1);
+		assertTrue(chess.squareInfo(1,1).getType() == Piece.Type.PAWN);
+		chess.move(2,1,1,0);
+		assertTrue(chess.squareInfo(1,0).getType() == Piece.Type.PAWN);
+		chess.move(1,0,0,1);
+		assertEquals(chess.squareInfo(0,1).getType(), Piece.Type.QUEEN);
+		chess.forceMove(6,3,1,3);
+		chess.deleteSquare(0,3);
+		chess.move(1,3,0,3);
+		assertEquals(chess.squareInfo(0,3).getType(),Piece.Type.QUEEN);
+	}
+
 
 	//KNIGHT TESTS
 	@Test
@@ -143,6 +175,7 @@ public class MovementTests {
 		Board chess = new BoardImpl();
 		assertFalse(chess.locationToBoolean(chess.isValidMove(7, 1, 7, 1)));
 	}
+
 
 	@Test
 	public void knightMultipleMovementTest()

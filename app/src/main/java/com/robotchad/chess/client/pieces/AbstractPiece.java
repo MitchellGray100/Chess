@@ -9,6 +9,17 @@ public abstract class AbstractPiece implements Piece {
 	private int pieceValue;
 	private LocationImpl location;
 	private boolean moved;
+	private int arrayLocation;
+
+
+	public int getArrayLocation() {
+		return arrayLocation;
+	}
+
+	public void setArrayLocation(int arrayLocation) {
+		this.arrayLocation = arrayLocation;
+	}
+
 
 	//Thinking we can use a Location variable here so we can store all white pieces in an array and
 	// all black pieces in an array. Then when we need to know where each piece is we can just

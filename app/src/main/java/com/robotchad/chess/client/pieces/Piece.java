@@ -62,6 +62,10 @@ public interface Piece
 	public void setMoved(boolean moved);
 
 	public boolean isMoved();
+
+	public void setArrayLocation(int arrayLocation);
+
+	public int getArrayLocation();
 	
 	/** An enumeration of all possible pieces */
 	public enum Type

@@ -6,10 +6,12 @@ import com.robotchad.chess.client.location.LocationImpl;
 import com.robotchad.chess.client.pieces.AbstractPiece;
 import com.robotchad.chess.client.pieces.Pawn;
 import com.robotchad.chess.client.pieces.Piece;
+import com.robotchad.chess.client.pieces.PieceFactory;
+import com.robotchad.chess.client.pieces.Queen;
 
 import java.util.ArrayList;
 
-//@TODO
+//@TODO Upgrading Pawns
 
 
 /** An abstract implementation of the chess board */
@@ -48,6 +50,16 @@ public abstract class AbstractBoard implements Board {
 	public Piece piecesGetter(int num)
 	{
 		return pieces[num];
+	}
+
+	/**
+	 *Setter for the pieces array
+	 * @param num The pos in the pieces array needed
+	 * @return The piece at the pieces[num]
+	 */
+	public void piecesSetter(int num, Piece piece)
+	{
+		pieces[num] = piece;
 	}
 
 	public int getWhitePoints() {
@@ -150,6 +162,10 @@ public abstract class AbstractBoard implements Board {
 							if(r >= 2 && c >= 2 && r <= 5 && c <= 5)
 							{
 								adder++;
+							}
+							if(pieces[i].getType() == Piece.Type.PAWN && (r == 0 || r == 7))
+							{
+								adder+= 50;
 							}
 
 
@@ -359,7 +375,10 @@ public abstract class AbstractBoard implements Board {
 						{
 							adder++;
 						}
-
+						if(pieces[i].getType() == Piece.Type.PAWN && (r == 0 || r == 7))
+						{
+							adder+= 50;
+						}
 //						if(r >= 2 && c >= 2 && r <= 5 && c <= 5)
 //						{
 //							adder++;
@@ -436,9 +455,11 @@ public abstract class AbstractBoard implements Board {
 								 @Override
 	public boolean move(int x, int y, int r, int c) {
 		LocationImpl location = isValidMove(x, y, r, c);
+
 		if (locationToBoolean(location) && !putsKingInCheck(x, y, r, c)) {
 			if (board[r][c] != null) {
 				changeScore(r, c);
+				pieces[board[r][c].getArrayLocation()] = null;
 			}
 			if(Math.abs(location.getXAxis()) != 100 && Math.abs(location.getYAxis()) != 100 &&
 					location.getXAxis() != 460 && location.getXAxis() != 420 &&
@@ -507,6 +528,17 @@ public abstract class AbstractBoard implements Board {
 				board[x][y].setLocation(new LocationImpl(r, c));
 				board[r][c] = board[x][y];
 				board[x][y] = null;
+
+				//Promoting
+				if((r == 0 || r == 7) && board[r][c].getType() == Piece.Type.PAWN)
+				{
+					PieceFactory factory = new PieceFactory();
+					int arrayLocation = board[r][c].getArrayLocation();
+					board[r][c] = factory.getPiece(Piece.Type.QUEEN,board[r][c].getColor());
+					board[r][c].setMoved(true);
+					board[r][c].setArrayLocation(arrayLocation);
+					board[r][c].setLocation(new LocationImpl(r,c));
+				}
 
 			}
 			turn++;
