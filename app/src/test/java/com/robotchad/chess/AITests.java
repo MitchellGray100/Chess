@@ -7,6 +7,7 @@ import com.robotchad.chess.client.pieces.Piece;
 
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -197,17 +198,16 @@ public class AITests {
         assertTrue(returned[1].getXAxis() == 5);
         assertTrue(returned[1].getYAxis() == 4);
         chess.move(7,3,3,7);
-        chess.move(7,5,3,1);
+        chess.move(7,5,4,2);
         returned = chess.aiMove(Piece.Color.BLACK);
         assertTrue(returned[0].getXAxis() >0);
         assertTrue(returned[0].getYAxis() >0);
         assertTrue(returned[1].getXAxis() >0);
         assertTrue(returned[1].getYAxis() >0);
-        assertNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
         chess.move(returned[0].getXAxis(),returned[0].getYAxis(),returned[1].getXAxis(),returned[1].getYAxis());
         assertNull(chess.squareInfo(returned[0].getXAxis(),returned[0].getYAxis()));
         assertNotNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
-        assertTrue(returned[1].getXAxis() == 1);
+        assertEquals(returned[1].getXAxis(),1);
         assertTrue(returned[1].getYAxis() == 5);
 
 
