@@ -106,16 +106,31 @@ public abstract class AbstractBoard implements Board {
 				{
 					for(int c = 0; c < 8; c++)
 					{
+						int adder = 0;
 
-						if(maxScore == 200)
+						if(maxScore >= 300)
 						{
 							break;
+						}
+
+						if(color == Piece.Color.WHITE) {
+							if (putsEnemyInStalemate(xAXis, yAxis, r, c)) {
+								if (whitePoints < blackPoints)
+									maxScore = 250;
+							}
+						}
+						else {
+							if (putsEnemyInStalemate(xAXis, yAxis, r, c)) {
+								if (blackPoints < whitePoints) {
+									maxScore = 250;
+								}
+							}
 						}
 
 						if(pieces[i] != null && locationToBoolean(isValidMove(xAXis,yAxis,r,c)) && !putsKingInCheck(xAXis,yAxis,r,c))
 						{
 
-							int adder = 0;
+
 							if(putsPieceInProtection(xAXis,yAxis,r,c))
 							{
 								adder++;
@@ -168,7 +183,31 @@ public abstract class AbstractBoard implements Board {
 
 								if(maxScore == 0)
 								{
+
 									maxScore = adder;
+									if(putsEnemyKingInCheckmate(xAXis,yAxis,r,c))
+									{
+										maxScore+=300;
+									}
+									else if(putsOppositeKingInCheck(xAXis,yAxis,r,c)
+											&& putsPieceInProtection(xAXis,yAxis,r,c))
+									{
+										maxScore += 150;
+									}
+									maxLocation = new LocationImpl(r,c);
+									pieceLocation = new LocationImpl(xAXis,yAxis);
+								}
+								else if(putsEnemyKingInCheckmate(xAXis,yAxis,r,c))
+								{
+									maxScore = 300;
+									maxLocation = new LocationImpl(r,c);
+									pieceLocation = new LocationImpl(xAXis,yAxis);
+								}
+								else if(putsOppositeKingInCheck(xAXis,yAxis,r,c)
+										&& putsPieceInProtection(xAXis,yAxis,r,c))
+								{
+									maxScore = 150 + adder;
+
 									maxLocation = new LocationImpl(r,c);
 									pieceLocation = new LocationImpl(xAXis,yAxis);
 								}
@@ -199,7 +238,7 @@ public abstract class AbstractBoard implements Board {
 
 								if(putsEnemyKingInCheckmate(xAXis,yAxis,r,c))
 								{
-									maxScore = 200;
+									maxScore = 300;
 									maxLocation = new LocationImpl(r,c);
 									pieceLocation = new LocationImpl(xAXis,yAxis);
 								}
@@ -269,9 +308,23 @@ public abstract class AbstractBoard implements Board {
 				for(int c = 0; c < 8; c++)
 				{
 
-					if(maxScore == 200)
+					if(maxScore == 250)
 					{
 						break;
+					}
+
+					if(color == Piece.Color.WHITE) {
+						if (putsEnemyInStalemate(xAXis, yAxis, r, c)) {
+							if (whitePoints < blackPoints)
+								maxScore = 250;
+						}
+					}
+					else {
+						if (putsEnemyInStalemate(xAXis, yAxis, r, c)) {
+							if (blackPoints < whitePoints) {
+								maxScore = 250;
+							}
+						}
 					}
 
 					if(pieces[i] != null && locationToBoolean(isValidMove(xAXis,yAxis,r,c)) && !putsKingInCheck(xAXis,yAxis,r,c))
@@ -306,6 +359,16 @@ public abstract class AbstractBoard implements Board {
 							if(maxScore <= 0)
 							{
 								maxScore = adder;
+
+								if(putsEnemyKingInCheckmate(xAXis,yAxis,r,c))
+								{
+									maxScore += 250;
+								}
+								else if(putsOppositeKingInCheck(xAXis,yAxis,r,c)
+										&& putsPieceInProtection(xAXis,yAxis,r,c))
+								{
+									maxScore += 150;
+								}
 							}
 							else if(pieces[i].getType() == Piece.Type.PAWN && Math.abs(r - xAXis) == 2 && maxScore <= 1)
 							{
@@ -330,7 +393,7 @@ public abstract class AbstractBoard implements Board {
 
 							if(putsEnemyKingInCheckmate(xAXis,yAxis,r,c))
 							{
-								maxScore = 300;
+								maxScore = 250;
 							}
 							else if(putsOppositeKingInCheck(xAXis,yAxis,r,c)
 									&& putsPieceInProtection(xAXis,yAxis,r,c))
@@ -984,6 +1047,37 @@ public abstract class AbstractBoard implements Board {
 		else
 		{
 			returner = isCheckmate(pieces[4].getLocation().getXAxis(),pieces[4].getLocation().getYAxis());
+		}
+
+		board[x][y] = temp1;
+		board[r][c] = temp2;
+		board[x][y].setLocation(new LocationImpl(x,y));
+
+		return returner;
+	}
+
+	/**
+	 * Checks to see if the move puts enemy in stalemate
+	 *
+	 * @param x The row value of the piece
+	 * @param y The column value of the piece
+	 * @param r The proposed row value of the move
+	 * @param c The proposed column value of the move
+	 * @return Whether or not the move puts the enemy in stalemate
+	 */
+	public boolean putsEnemyInStalemate(int x, int y, int r, int c) {
+		Piece.Color pieceColor = ((board[x][y])).getColor();
+		Piece temp1 = board[x][y];
+		Piece temp2 = board[r][c];
+		forceMoveWithoutScore(x,y,r,c);
+		boolean returner = false;
+		if(pieceColor == Piece.Color.WHITE)
+		{
+			returner = isStalemate(Piece.Color.BLACK);
+		}
+		else
+		{
+			returner = isStalemate(Piece.Color.WHITE);
 		}
 
 		board[x][y] = temp1;
