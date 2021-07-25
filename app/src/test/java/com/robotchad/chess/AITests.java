@@ -179,4 +179,37 @@ public class AITests {
         assertTrue(returned[1].getXAxis() == 2);
         assertTrue(returned[1].getYAxis() == 4);
     }
+
+    @Test
+    public void aiCheckmateMoveTests()
+    {
+        Board chess = new BoardImpl();
+        chess.move(6,3,4,3);
+        LocationImpl[] returned = chess.aiMove(Piece.Color.BLACK);
+        assertTrue(returned[0].getXAxis() >0);
+        assertTrue(returned[0].getYAxis() >0);
+        assertTrue(returned[1].getXAxis() >0);
+        assertTrue(returned[1].getYAxis() >0);
+        assertNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        chess.move(returned[0].getXAxis(),returned[0].getYAxis(),returned[1].getXAxis(),returned[1].getYAxis());
+        assertNull(chess.squareInfo(returned[0].getXAxis(),returned[0].getYAxis()));
+        assertNotNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        assertTrue(returned[1].getXAxis() == 5);
+        assertTrue(returned[1].getYAxis() == 4);
+        chess.move(7,3,3,7);
+        chess.move(7,5,3,1);
+        returned = chess.aiMove(Piece.Color.BLACK);
+        assertTrue(returned[0].getXAxis() >0);
+        assertTrue(returned[0].getYAxis() >0);
+        assertTrue(returned[1].getXAxis() >0);
+        assertTrue(returned[1].getYAxis() >0);
+        assertNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        chess.move(returned[0].getXAxis(),returned[0].getYAxis(),returned[1].getXAxis(),returned[1].getYAxis());
+        assertNull(chess.squareInfo(returned[0].getXAxis(),returned[0].getYAxis()));
+        assertNotNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        assertTrue(returned[1].getXAxis() == 1);
+        assertTrue(returned[1].getYAxis() == 5);
+
+
+    }
 }

@@ -923,11 +923,11 @@ public abstract class AbstractBoard implements Board {
 		boolean returner = false;
 		if (pieceColor == Piece.Color.WHITE) {
 
-			returner = locationToBoolean(isCheck((pieces[20]).getLocation().getXAxis(),((LocationImpl)(pieces[4]).getLocation()).getYAxis()));
+			returner = locationToBoolean(isCheck((pieces[20]).getLocation().getXAxis(),((LocationImpl)(pieces[20]).getLocation()).getYAxis()));
 			//board[r][c].setLocation(new LocationImpl(r,c));
 			//pieces[4].setLocation(new LocationImpl(x,y));
 		} else {
-			returner = locationToBoolean(isCheck((pieces[4]).getLocation().getXAxis(),((LocationImpl)(pieces[20]).getLocation()).getYAxis()));
+			returner = locationToBoolean(isCheck((pieces[4]).getLocation().getXAxis(),((LocationImpl)(pieces[4]).getLocation()).getYAxis()));
 			//pieces[20].setLocation(new LocationImpl(x,y));
 		}
 		board[x][y] = temp1;
