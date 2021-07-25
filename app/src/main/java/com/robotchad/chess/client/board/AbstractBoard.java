@@ -1043,13 +1043,12 @@ public abstract class AbstractBoard implements Board {
 			{
 				if(pieces[i] != null)
 				{
-					if(locationToBoolean(isValidMove(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),x,y)))
+					if(locationToBoolean(isValidProtect(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),x,y)))
 					{
 						return new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
 					}
 				}
 			}
-			return new LocationImpl(-100,-100);
 		}
 		else
 		{
@@ -1057,14 +1056,14 @@ public abstract class AbstractBoard implements Board {
 			{
 				if(pieces[i] != null)
 				{
-					if(locationToBoolean(isValidMove(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),x,y)))
+					if(locationToBoolean(isValidProtect(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis(),x,y)))
 					{
 						return new LocationImpl(pieces[i].getLocation().getXAxis(),pieces[i].getLocation().getYAxis());
 					}
 				}
 			}
-			return new LocationImpl(-100,-100);
 		}
+		return new LocationImpl(-100,-100);
 	}
 
 	public boolean isCheckmateKingMove(Piece.Color color)
