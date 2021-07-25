@@ -1303,6 +1303,11 @@ public abstract class AbstractBoard implements Board {
 		return true;
 	}
 
+	public boolean isStalemateHelper(int xCord, int yCord,int r,int c)
+	{
+		return locationToBoolean(isValidMove(xCord,yCord,r,c)) && (!putsKingInCheck(xCord,yCord,r,c));
+	}
+
 	public boolean isStalemate(Piece.Color color)
 	{
 		int xCord;
@@ -1315,16 +1320,71 @@ public abstract class AbstractBoard implements Board {
 
 				xCord = pieces[i].getLocation().getXAxis();
 				yCord = pieces[i].getLocation().getYAxis();
-				for(int r = 0; r < 8; r++)
+
+				if(pieces[i].getType() == Piece.Type.ROOK)
 				{
-					for(int c = 0; c < 8; c++)
+					if(isStalemateHelper(xCord,yCord,xCord-1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord,yCord -1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord,yCord+1))
 					{
-						if(locationToBoolean(isValidMove(xCord,yCord,r,c)) && !(putsKingInCheck(xCord,yCord,r,c)))
-						{
-							return false;
-						}
+						return false;
 					}
 				}
+				else if(pieces[i].getType() == Piece.Type.BISHOP)
+				{
+					if(isStalemateHelper(xCord,yCord,xCord+1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord+1))
+					{
+						return false;
+					}
+				}
+				else if(pieces[i].getType() == Piece.Type.QUEEN || pieces[i].getType() == Piece.Type.KING)
+				{
+					if(isStalemateHelper(xCord,yCord,xCord+1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord,yCord -1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord,yCord+1))
+					{
+						return false;
+					}
+				}
+				else if(pieces[i].getType() == Piece.Type.PAWN)
+				{
+					if(isStalemateHelper(xCord,yCord,xCord+1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord))
+					{
+						return false;
+					}
+				}
+				else if(pieces[i].getType() == Piece.Type.KNIGHT)
+				{
+					if(isStalemateHelper(xCord,yCord,xCord-2,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord-2,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord+2)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord-2)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord-2)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord+2)
+							|| isStalemateHelper(xCord,yCord,xCord+2,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord+2,yCord-1)
+					)
+					{
+						return false;
+					}
+				}
+
+
+
 			}
 		}
 		else
@@ -1333,13 +1393,66 @@ public abstract class AbstractBoard implements Board {
 			{
 				xCord = pieces[i].getLocation().getXAxis();
 				yCord = pieces[i].getLocation().getYAxis();
-				for(int r = 0; r < 8; r++)
+
+				if(pieces[i].getType() == Piece.Type.ROOK)
 				{
-					for(int c = 0; c < 8; c++)
+					if(isStalemateHelper(xCord,yCord,xCord-1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord,yCord -1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord,yCord+1))
 					{
-						if (locationToBoolean(isValidMove(xCord, yCord, r, c)) && !putsKingInCheck(xCord, yCord, r, c)) {
-								return false;
-							}
+						return false;
+					}
+				}
+				else if(pieces[i].getType() == Piece.Type.BISHOP)
+				{
+					if(isStalemateHelper(xCord,yCord,xCord+1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord+1))
+					{
+						return false;
+					}
+				}
+				else if(pieces[i].getType() == Piece.Type.QUEEN || pieces[i].getType() == Piece.Type.KING)
+				{
+					if(isStalemateHelper(xCord,yCord,xCord+1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord,yCord -1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord,yCord+1))
+					{
+						return false;
+					}
+				}
+				else if(pieces[i].getType() == Piece.Type.PAWN)
+				{
+					if(isStalemateHelper(xCord,yCord,xCord+1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord))
+					{
+						return false;
+					}
+				}
+				else if(pieces[i].getType() == Piece.Type.KNIGHT)
+				{
+					if(isStalemateHelper(xCord,yCord,xCord-2,yCord-1)
+							|| isStalemateHelper(xCord,yCord,xCord-2,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord+2)
+							|| isStalemateHelper(xCord,yCord,xCord-1,yCord-2)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord-2)
+							|| isStalemateHelper(xCord,yCord,xCord+1,yCord+2)
+							|| isStalemateHelper(xCord,yCord,xCord+2,yCord+1)
+							|| isStalemateHelper(xCord,yCord,xCord+2,yCord-1)
+					)
+					{
+						return false;
 					}
 				}
 			}
