@@ -80,7 +80,7 @@ public abstract class AbstractBoard implements Board {
 	@Override
 	public LocationImpl[] aiMove(Piece.Color color)
 	{
-		int maxScore = 0;
+		int maxScore = -1000;
 		LocationImpl maxLocation = new LocationImpl(-100,-100);
 		LocationImpl pieceLocation = new LocationImpl(-100,-100);
 		LocationImpl[] returner = new LocationImpl[2];
@@ -181,7 +181,7 @@ public abstract class AbstractBoard implements Board {
 							if(board[r][c] == null)
 							{
 
-								if(maxScore == 0)
+								if(maxScore == -1000)
 								{
 
 									maxScore = adder;
@@ -219,7 +219,19 @@ public abstract class AbstractBoard implements Board {
 								}
 								else if(maxScore <= adder)
 								{
+
 									maxScore = adder;
+
+									if(putsEnemyKingInCheckmate(xAXis,yAxis,r,c))
+									{
+										maxScore+=300;
+									}
+									else if(putsOppositeKingInCheck(xAXis,yAxis,r,c)
+											&& putsPieceInProtection(xAXis,yAxis,r,c))
+									{
+										maxScore += 150;
+									}
+
 									maxLocation = new LocationImpl(r,c);
 									pieceLocation = new LocationImpl(xAXis,yAxis);
 								}

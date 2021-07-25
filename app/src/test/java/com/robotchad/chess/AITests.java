@@ -242,6 +242,8 @@ public class AITests {
         assertNotNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
         assertEquals(returned[1].getXAxis(),1);
         assertEquals(returned[1].getYAxis(), 5);
+        assertEquals(chess.piecesGetter(21).getLocation().getXAxis(),1);
+        assertEquals(chess.piecesGetter(21).getLocation().getYAxis(),5);
 
 
     }
