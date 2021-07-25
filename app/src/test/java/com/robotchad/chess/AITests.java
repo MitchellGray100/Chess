@@ -2,10 +2,14 @@ package com.robotchad.chess;
 
 import com.robotchad.chess.client.board.Board;
 import com.robotchad.chess.client.board.BoardImpl;
+import com.robotchad.chess.client.location.LocationImpl;
+import com.robotchad.chess.client.pieces.Piece;
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class AITests {
@@ -135,5 +139,44 @@ public class AITests {
         assertTrue(chess.locationToBoolean(chess.isValidProtect(7,3,7,4)));
         assertFalse(chess.locationToBoolean(chess.isValidProtect(7,3,0,0)));
         assertFalse(chess.locationToBoolean(chess.isValidProtect(7,3,5,5)));
+    }
+
+    @Test
+    public void aiMoveTests()
+    {
+        Board chess = new BoardImpl();
+        LocationImpl[] returned = chess.aiMove(Piece.Color.WHITE);
+        assertTrue(returned[0].getXAxis() >0);
+        assertTrue(returned[0].getYAxis() >0);
+        assertTrue(returned[1].getXAxis() >0);
+        assertTrue(returned[1].getYAxis() >0);
+        assertNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        chess.move(returned[0].getXAxis(),returned[0].getYAxis(),returned[1].getXAxis(),returned[1].getYAxis());
+        assertNull(chess.squareInfo(returned[0].getXAxis(),returned[0].getYAxis()));
+        assertNotNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        assertTrue(returned[1].getXAxis() == 3);
+        assertTrue(returned[1].getYAxis() == 3);
+        returned = chess.aiMove(Piece.Color.BLACK);
+        assertTrue(returned[0].getXAxis() >0);
+        assertTrue(returned[0].getYAxis() >0);
+        assertTrue(returned[1].getXAxis() >0);
+        assertTrue(returned[1].getYAxis() >0);
+        assertNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        chess.move(returned[0].getXAxis(),returned[0].getYAxis(),returned[1].getXAxis(),returned[1].getYAxis());
+        assertNull(chess.squareInfo(returned[0].getXAxis(),returned[0].getYAxis()));
+        assertNotNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        assertTrue(returned[1].getXAxis() == 4);
+        assertTrue(returned[1].getYAxis() == 3);
+        returned = chess.aiMove(Piece.Color.WHITE);
+        assertTrue(returned[0].getXAxis() >0);
+        assertTrue(returned[0].getYAxis() >0);
+        assertTrue(returned[1].getXAxis() >0);
+        assertTrue(returned[1].getYAxis() >0);
+        assertNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        chess.move(returned[0].getXAxis(),returned[0].getYAxis(),returned[1].getXAxis(),returned[1].getYAxis());
+        assertNull(chess.squareInfo(returned[0].getXAxis(),returned[0].getYAxis()));
+        assertNotNull(chess.squareInfo(returned[1].getXAxis(),returned[1].getYAxis()));
+        assertTrue(returned[1].getXAxis() == 2);
+        assertTrue(returned[1].getYAxis() == 4);
     }
 }

@@ -294,10 +294,11 @@ public abstract class AbstractBoard implements Board {
 						{
 							adder++;
 						}
-						if(r >= 2 && c >= 2 && r <= 5 && c <= 5)
-						{
-							adder++;
-						}
+
+//						if(r >= 2 && c >= 2 && r <= 5 && c <= 5)
+//						{
+//							adder++;
+//						}
 
 
 						if(board[r][c] == null)
