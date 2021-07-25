@@ -9,7 +9,7 @@ import com.robotchad.chess.client.pieces.Piece;
 
 import java.util.ArrayList;
 
-//@TODO AI and Castleing
+//@TODO
 
 
 /** An abstract implementation of the chess board */
