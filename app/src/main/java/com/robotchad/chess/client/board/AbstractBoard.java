@@ -300,7 +300,6 @@ public abstract class AbstractBoard implements Board {
 //							adder++;
 //						}
 
-
 						if(board[r][c] == null)
 						{
 
