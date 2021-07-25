@@ -13,6 +13,14 @@ public interface Board {
 	 */
 	LocationImpl[] aiMove(Piece.Color color);
 
+
+	/**
+	 * Finds how valuable the enemy's move is after the proposed aiMove
+	 * @param color The color of the enemy ai playing.
+	 * @return maxScore The maximum score possible for the ai.
+	 */
+	int enemyAiMove(Piece.Color color);
+
 	/**
 	 * Moves the piece from one spot to another if valid
 	 * @param x the x coordinate of the piece

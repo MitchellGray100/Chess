@@ -138,6 +138,31 @@ public abstract class AbstractBoard implements Board {
 							}
 
 
+							Piece temp1 = board[xAXis][yAxis];
+							Piece temp2 = board[r][c];
+							forceMoveWithoutScore(xAXis,yAxis,r,c);
+
+							Piece.Color enemyColor;
+
+							if(color == Piece.Color.WHITE)
+							{
+								enemyColor = Piece.Color.BLACK;
+							}
+							else
+							{
+								enemyColor = Piece.Color.WHITE;
+							}
+
+							int enemyAIScore;
+							enemyAIScore = enemyAiMove(enemyColor);
+
+							board[xAXis][yAxis] = temp1;
+							board[r][c] = temp2;
+							board[xAXis][yAxis].setLocation(new LocationImpl(xAXis,yAxis));
+
+							adder-= enemyAIScore;
+
+
 							if(board[r][c] == null)
 							{
 
@@ -215,6 +240,123 @@ public abstract class AbstractBoard implements Board {
 		returner[0] = pieceLocation;
 		returner[1] = maxLocation;
 		return returner;
+	}
+
+	@Override
+	public int enemyAiMove(Piece.Color color)
+	{
+		int maxScore = 0;
+		int start;
+		int end;
+
+		if(color == Piece.Color.WHITE) {
+			start = 0;
+			end = 16;
+		}
+		else {
+			start = 16;
+			end = 32;
+		}
+
+		for(int i = start; i < end; i++)
+		{
+
+			int xAXis = pieces[i].getLocation().getXAxis();
+			int yAxis = pieces[i].getLocation().getYAxis();
+			int pieceValue = pieces[i].getValue();
+			for(int r = 0; r < 8; r++)
+			{
+				for(int c = 0; c < 8; c++)
+				{
+
+					if(maxScore == 200)
+					{
+						break;
+					}
+
+					if(pieces[i] != null && locationToBoolean(isValidMove(xAXis,yAxis,r,c)) && !putsKingInCheck(xAXis,yAxis,r,c))
+					{
+
+						int adder = 0;
+						if(putsPieceInProtection(xAXis,yAxis,r,c))
+						{
+							adder++;
+						}
+						if(locationToBoolean(isProtect(xAXis,yAxis)))
+						{
+							adder--;
+						}
+						if(isProtecting(xAXis,yAxis))
+						{
+							adder--;
+						}
+						if(putsPieceInProtecting(xAXis,yAxis,r,c))
+						{
+							adder++;
+						}
+						if(r >= 2 && c >= 2 && r <= 5 && c <= 5)
+						{
+							adder++;
+						}
+
+
+						if(board[r][c] == null)
+						{
+
+							if(maxScore <= 0)
+							{
+								maxScore = adder;
+							}
+							else if(pieces[i].getType() == Piece.Type.PAWN && Math.abs(r - xAXis) == 2 && maxScore <= 1)
+							{
+								maxScore = 1 + adder;
+							}
+							else if(maxScore <= adder)
+							{
+								maxScore = adder;
+							}
+						}
+						else
+						{
+							int oppositePieceValue = board[r][c].getValue();
+							if(isProtecting(r,c))
+							{
+								adder++;
+							}
+							if(locationToBoolean(isProtect(r,c)))
+							{
+								adder--;
+							}
+
+							if(putsEnemyKingInCheckmate(xAXis,yAxis,r,c))
+							{
+								maxScore = 300;
+							}
+							else if(putsOppositeKingInCheck(xAXis,yAxis,r,c)
+									&& putsPieceInProtection(xAXis,yAxis,r,c))
+							{
+								maxScore = 150 + adder;
+
+							}
+							else if(pieceValue + adder < oppositePieceValue)
+							{
+								maxScore = 100 + adder;
+							}
+							else if(pieceValue <= oppositePieceValue)
+							{
+								maxScore = 50 + adder;
+							}
+							else if(oppositePieceValue + adder >= maxScore)
+							{
+								maxScore = oppositePieceValue + adder;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return maxScore;
 	}
 								 @Override
 	public boolean move(int x, int y, int r, int c) {
