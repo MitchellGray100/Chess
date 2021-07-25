@@ -11,7 +11,7 @@ import com.robotchad.chess.client.pieces.Queen;
 
 import java.util.ArrayList;
 
-//@TODO Upgrading Pawns
+//@TODO
 
 
 /** An abstract implementation of the chess board */
