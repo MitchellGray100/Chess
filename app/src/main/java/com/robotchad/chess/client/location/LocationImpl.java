@@ -1,7 +1,6 @@
 package com.robotchad.chess.client.location;
 
-public class LocationImpl
-{
+public class LocationImpl {
     int xAxis;
     int yAxis;
 
@@ -10,23 +9,19 @@ public class LocationImpl
         setYAxis(yCord);
     }
 
-    public int getXAxis()
-    {
+    public int getXAxis() {
         return xAxis;
     }
 
-    public int getYAxis()
-    {
+    public int getYAxis() {
         return yAxis;
     }
 
-    public void setXAxis(int x)
-    {
+    public void setXAxis(int x) {
         xAxis = x;
     }
 
-    public void setYAxis(int y)
-    {
+    public void setYAxis(int y) {
         yAxis = y;
     }
 }
