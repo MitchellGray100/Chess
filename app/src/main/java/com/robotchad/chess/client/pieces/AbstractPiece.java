@@ -1,6 +1,5 @@
 package com.robotchad.chess.client.pieces;
 
-import com.robotchad.chess.client.location.Location;
 import com.robotchad.chess.client.location.LocationImpl;
 
 public abstract class AbstractPiece implements Piece {
@@ -70,7 +69,7 @@ public abstract class AbstractPiece implements Piece {
 
     @Override
     public boolean isMoved() {
-        return moved;
+        return !moved;
     }
 
     @Override

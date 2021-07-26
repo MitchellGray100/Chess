@@ -4,11 +4,15 @@ import com.robotchad.chess.client.board.Board;
 import com.robotchad.chess.client.board.BoardImpl;
 import com.robotchad.chess.client.pieces.Piece;
 import com.robotchad.chess.client.pieces.PieceFactory;
-import com.robotchad.chess.client.pieces.Rook;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class MovementTests {
 
@@ -79,9 +83,9 @@ public class MovementTests {
     public void pawnPromotionWhite() {
         Board chess = new BoardImpl();
         chess.forceMove(1, 1, 5, 1);
-        assertTrue(chess.squareInfo(5, 1).getType() == Piece.Type.PAWN);
+        assertSame(chess.squareInfo(5, 1).getType(), Piece.Type.PAWN);
         chess.move(5, 1, 6, 0);
-        assertTrue(chess.squareInfo(6, 0).getType() == Piece.Type.PAWN);
+        assertSame(chess.squareInfo(6, 0).getType(), Piece.Type.PAWN);
         chess.move(6, 0, 7, 1);
         assertEquals(chess.squareInfo(7, 1).getType(), Piece.Type.QUEEN);
         chess.forceMove(1, 3, 6, 3);
@@ -94,9 +98,9 @@ public class MovementTests {
     public void pawnPromotionBlack() {
         Board chess = new BoardImpl();
         chess.forceMove(6, 1, 2, 1);
-        assertTrue(chess.squareInfo(1, 1).getType() == Piece.Type.PAWN);
+        assertSame(chess.squareInfo(1, 1).getType(), Piece.Type.PAWN);
         chess.move(2, 1, 1, 0);
-        assertTrue(chess.squareInfo(1, 0).getType() == Piece.Type.PAWN);
+        assertSame(chess.squareInfo(1, 0).getType(), Piece.Type.PAWN);
         chess.move(1, 0, 0, 1);
         assertEquals(chess.squareInfo(0, 1).getType(), Piece.Type.QUEEN);
         chess.forceMove(6, 3, 1, 3);
@@ -658,10 +662,10 @@ public class MovementTests {
         assertNull(chess.squareInfo(0, 7));
         assertNotNull(chess.squareInfo(0, 5));
         assertNotNull(chess.squareInfo(0, 6));
-        assertTrue(chess.piecesGetter(7).getLocation().getXAxis() == 0);
-        assertTrue(chess.piecesGetter(7).getLocation().getYAxis() == 5);
-        assertTrue(chess.piecesGetter(4).getLocation().getXAxis() == 0);
-        assertTrue(chess.piecesGetter(4).getLocation().getYAxis() == 6);
+        assertEquals(0, chess.piecesGetter(7).getLocation().getXAxis());
+        assertEquals(5, chess.piecesGetter(7).getLocation().getYAxis());
+        assertEquals(0, chess.piecesGetter(4).getLocation().getXAxis());
+        assertEquals(6, chess.piecesGetter(4).getLocation().getYAxis());
     }
 
     @Test
@@ -686,10 +690,10 @@ public class MovementTests {
         assertNull(chess.squareInfo(0, 0));
         assertNotNull(chess.squareInfo(0, 2));
         assertNotNull(chess.squareInfo(0, 3));
-        assertTrue(chess.piecesGetter(0).getLocation().getXAxis() == 0);
-        assertTrue(chess.piecesGetter(0).getLocation().getYAxis() == 3);
-        assertTrue(chess.piecesGetter(4).getLocation().getXAxis() == 0);
-        assertTrue(chess.piecesGetter(4).getLocation().getYAxis() == 2);
+        assertEquals(0, chess.piecesGetter(0).getLocation().getXAxis());
+        assertEquals(3, chess.piecesGetter(0).getLocation().getYAxis());
+        assertEquals(0, chess.piecesGetter(4).getLocation().getXAxis());
+        assertEquals(2, chess.piecesGetter(4).getLocation().getYAxis());
     }
 
     @Test
@@ -712,10 +716,10 @@ public class MovementTests {
         assertNull(chess.squareInfo(7, 7));
         assertNotNull(chess.squareInfo(7, 5));
         assertNotNull(chess.squareInfo(7, 6));
-        assertTrue(chess.piecesGetter(23).getLocation().getXAxis() == 7);
-        assertTrue(chess.piecesGetter(23).getLocation().getYAxis() == 5);
-        assertTrue(chess.piecesGetter(20).getLocation().getXAxis() == 7);
-        assertTrue(chess.piecesGetter(20).getLocation().getYAxis() == 6);
+        assertEquals(7, chess.piecesGetter(23).getLocation().getXAxis());
+        assertEquals(5, chess.piecesGetter(23).getLocation().getYAxis());
+        assertEquals(7, chess.piecesGetter(20).getLocation().getXAxis());
+        assertEquals(6, chess.piecesGetter(20).getLocation().getYAxis());
 
     }
 
@@ -740,10 +744,10 @@ public class MovementTests {
         assertNull(chess.squareInfo(7, 0));
         assertNotNull(chess.squareInfo(7, 2));
         assertNotNull(chess.squareInfo(7, 3));
-        assertTrue(chess.piecesGetter(16).getLocation().getXAxis() == 7);
-        assertTrue(chess.piecesGetter(16).getLocation().getYAxis() == 3);
-        assertTrue(chess.piecesGetter(20).getLocation().getXAxis() == 7);
-        assertTrue(chess.piecesGetter(20).getLocation().getYAxis() == 2);
+        assertEquals(7, chess.piecesGetter(16).getLocation().getXAxis());
+        assertEquals(3, chess.piecesGetter(16).getLocation().getYAxis());
+        assertEquals(7, chess.piecesGetter(20).getLocation().getXAxis());
+        assertEquals(2, chess.piecesGetter(20).getLocation().getYAxis());
     }
 
 
@@ -787,9 +791,9 @@ public class MovementTests {
         chess.forceMove(1, 5, 4, 5);
         chess.move(6, 4, 4, 4);
         assertTrue(chess.move(4, 5, 5, 4));
-        assertTrue(chess.getBlackPoints() == 0);
-        assertTrue(chess.getWhitePoints() == 1);
-        assertTrue(chess.squareInfo(4, 4) == null);
+        assertEquals(0, chess.getBlackPoints());
+        assertEquals(1, chess.getWhitePoints());
+        assertNull(chess.squareInfo(4, 4));
     }
 
     @Test
@@ -798,9 +802,9 @@ public class MovementTests {
         chess.forceMove(1, 5, 4, 5);
         chess.move(6, 6, 4, 6);
         assertTrue(chess.move(4, 5, 5, 6));
-        assertTrue(chess.getBlackPoints() == 0);
-        assertTrue(chess.getWhitePoints() == 1);
-        assertTrue(chess.squareInfo(4, 6) == null);
+        assertEquals(0, chess.getBlackPoints());
+        assertEquals(1, chess.getWhitePoints());
+        assertNull(chess.squareInfo(4, 6));
     }
 
     @Test
@@ -809,9 +813,9 @@ public class MovementTests {
         chess.forceMove(6, 2, 3, 2);
         chess.move(1, 3, 3, 3);
         assertTrue(chess.move(3, 2, 2, 3));
-        assertTrue(chess.getBlackPoints() == 1);
-        assertTrue(chess.getWhitePoints() == 0);
-        assertTrue(chess.squareInfo(3, 3) == null);
+        assertEquals(1, chess.getBlackPoints());
+        assertEquals(0, chess.getWhitePoints());
+        assertNull(chess.squareInfo(3, 3));
     }
 
     @Test
@@ -820,9 +824,9 @@ public class MovementTests {
         chess.forceMove(6, 2, 3, 2);
         chess.move(1, 1, 3, 1);
         assertTrue(chess.move(3, 2, 2, 1));
-        assertTrue(chess.getBlackPoints() == 1);
-        assertTrue(chess.getWhitePoints() == 0);
-        assertTrue(chess.squareInfo(3, 1) == null);
+        assertEquals(1, chess.getBlackPoints());
+        assertEquals(0, chess.getWhitePoints());
+        assertNull(chess.squareInfo(3, 1));
     }
 
     @Test
@@ -833,10 +837,10 @@ public class MovementTests {
         chess.move(1, 0, 2, 0);
         chess.move(5, 6, 4, 6);
         assertFalse(chess.move(4, 5, 5, 6));
-        assertTrue(chess.getBlackPoints() == 0);
-        assertTrue(chess.getWhitePoints() == 0);
+        assertEquals(0, chess.getBlackPoints());
+        assertEquals(0, chess.getWhitePoints());
 
-        assertFalse(chess.squareInfo(4, 6) == null);
+        assertNotNull(chess.squareInfo(4, 6));
     }
 
     @Test
@@ -847,9 +851,9 @@ public class MovementTests {
         chess.move(0, 6, 2, 5);
         chess.move(2, 1, 3, 1);
         assertFalse(chess.move(3, 2, 2, 1));
-        assertTrue(chess.getBlackPoints() == 0);
-        assertTrue(chess.getWhitePoints() == 0);
-        assertFalse(chess.squareInfo(3, 1) == null);
+        assertEquals(0, chess.getBlackPoints());
+        assertEquals(0, chess.getWhitePoints());
+        assertNotNull(chess.squareInfo(3, 1));
     }
 
     @Test

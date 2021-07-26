@@ -2,11 +2,11 @@ package com.robotchad.chess.client.location;
 
 public interface Location {
 
-    public int getXAxis();
+    int getXAxis();
 
-    public int getYAxis();
+    int getYAxis();
 
-    public void setXAxis(int x);
+    void setXAxis(int x);
 
-    public void setYAxis(int y);
+    void setYAxis(int y);
 }

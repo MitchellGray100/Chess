@@ -149,8 +149,8 @@ public class AITests {
         chess.move(returned[0].getXAxis(), returned[0].getYAxis(), returned[1].getXAxis(), returned[1].getYAxis());
         assertNull(chess.squareInfo(returned[0].getXAxis(), returned[0].getYAxis()));
         assertNotNull(chess.squareInfo(returned[1].getXAxis(), returned[1].getYAxis()));
-        assertTrue(returned[1].getXAxis() == 3);
-        assertTrue(returned[1].getYAxis() == 3);
+        assertEquals(3, returned[1].getXAxis());
+        assertEquals(3, returned[1].getYAxis());
         returned = chess.aiMove(Piece.Color.BLACK);
         assertTrue(returned[0].getXAxis() > 0);
         assertTrue(returned[0].getYAxis() > 0);
@@ -160,8 +160,8 @@ public class AITests {
         chess.move(returned[0].getXAxis(), returned[0].getYAxis(), returned[1].getXAxis(), returned[1].getYAxis());
         assertNull(chess.squareInfo(returned[0].getXAxis(), returned[0].getYAxis()));
         assertNotNull(chess.squareInfo(returned[1].getXAxis(), returned[1].getYAxis()));
-        assertTrue(returned[1].getXAxis() == 4);
-        assertTrue(returned[1].getYAxis() == 3);
+        assertEquals(4, returned[1].getXAxis());
+        assertEquals(3, returned[1].getYAxis());
         returned = chess.aiMove(Piece.Color.WHITE);
         assertTrue(returned[0].getXAxis() > 0);
         assertTrue(returned[0].getYAxis() > 0);
@@ -171,8 +171,8 @@ public class AITests {
         chess.move(returned[0].getXAxis(), returned[0].getYAxis(), returned[1].getXAxis(), returned[1].getYAxis());
         assertNull(chess.squareInfo(returned[0].getXAxis(), returned[0].getYAxis()));
         assertNotNull(chess.squareInfo(returned[1].getXAxis(), returned[1].getYAxis()));
-        assertTrue(returned[1].getXAxis() == 2);
-        assertTrue(returned[1].getYAxis() == 4);
+        assertEquals(2, returned[1].getXAxis());
+        assertEquals(4, returned[1].getYAxis());
     }
 
     @Test
@@ -188,8 +188,8 @@ public class AITests {
         chess.move(returned[0].getXAxis(), returned[0].getYAxis(), returned[1].getXAxis(), returned[1].getYAxis());
         assertNull(chess.squareInfo(returned[0].getXAxis(), returned[0].getYAxis()));
         assertNotNull(chess.squareInfo(returned[1].getXAxis(), returned[1].getYAxis()));
-        assertTrue(returned[1].getXAxis() == 5);
-        assertTrue(returned[1].getYAxis() == 4);
+        assertEquals(5, returned[1].getXAxis());
+        assertEquals(4, returned[1].getYAxis());
         chess.move(7, 3, 3, 7);
         chess.move(7, 5, 4, 2);
         returned = chess.aiMove(Piece.Color.BLACK);
@@ -219,8 +219,8 @@ public class AITests {
         chess.move(returned[0].getXAxis(), returned[0].getYAxis(), returned[1].getXAxis(), returned[1].getYAxis());
         assertNull(chess.squareInfo(returned[0].getXAxis(), returned[0].getYAxis()));
         assertNotNull(chess.squareInfo(returned[1].getXAxis(), returned[1].getYAxis()));
-        assertTrue(returned[1].getXAxis() == 5);
-        assertTrue(returned[1].getYAxis() == 4);
+        assertEquals(5, returned[1].getXAxis());
+        assertEquals(4, returned[1].getYAxis());
         chess.move(7, 3, 3, 7);
         chess.move(7, 5, 4, 2);
         chess.move(1, 5, 3, 5);

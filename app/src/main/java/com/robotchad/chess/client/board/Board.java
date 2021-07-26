@@ -94,7 +94,16 @@ public interface Board {
      * @param num The index of the pieces array to grab
      * @return The piece in the pieces array at index num
      */
-    public Piece piecesGetter(int num);
+    Piece piecesGetter(int num);
+
+
+    /**
+     * Returns the specified piece at the index in the pieces array
+     *
+     * @param num The index of the pieces array to grab
+     * @return The piece in the pieces array at index num
+     */
+    void piecesSetter(int num, Piece piece);
 
     /**
      * Checks to see if the location is not -100,-100. If it is -100 -100 then false, otherwise true;

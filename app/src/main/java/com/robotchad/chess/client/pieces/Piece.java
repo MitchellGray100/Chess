@@ -13,14 +13,14 @@ public interface Piece {
      *
      * @return The Type of the pieces
      */
-    public Type getType();
+    Type getType();
 
     /**
      * Sets the Type of pieces
      *
      * @param pieceType The pieceType of the pieces
      */
-    public void setType(Type pieceType);
+    void setType(Type pieceType);
 
 
     /**
@@ -28,67 +28,67 @@ public interface Piece {
      *
      * @return The Color of the pieces
      */
-    public Color getColor();
+    Color getColor();
 
     /**
      * Sets the Color of the pieces
      *
      * @param pieceColor The Color of the pieces
      */
-    public void setColor(Color pieceColor);
+    void setColor(Color pieceColor);
 
     /**
      * Gets the value of the pieces
      * returns the value of the pieces
      */
-    public int getValue();
+    int getValue();
 
     /**
      * Sets the value of the pieces
      *
      * @param value the value to set
      */
-    public void setValue(int value);
+    void setValue(int value);
 
     /**
      * Sets the location of the piece
      *
      * @param loc the location to set
      */
-    public void setLocation(LocationImpl loc);
+    void setLocation(LocationImpl loc);
 
     /**
      * Gets the location of the piece
      * returns the location of the piece
      */
-    public LocationImpl getLocation();
+    LocationImpl getLocation();
 
-    public void setMoved(boolean moved);
+    void setMoved(boolean moved);
 
-    public boolean isMoved();
+    boolean isMoved();
 
-    public void setArrayLocation(int arrayLocation);
+    void setArrayLocation(int arrayLocation);
 
-    public int getArrayLocation();
+    int getArrayLocation();
 
     /**
      * An enumeration of all possible pieces
      */
-    public enum Type {
+    enum Type {
         PAWN,
         KNIGHT,
         BISHOP,
         ROOK,
         QUEEN,
-        KING;
+        KING
     }
 
     /**
      * An enumeration of the team colors
      */
-    public enum Color {
+    enum Color {
         BLACK,
-        WHITE;
+        WHITE
     }
 
 }

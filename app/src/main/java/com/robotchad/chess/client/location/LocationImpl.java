@@ -1,6 +1,6 @@
 package com.robotchad.chess.client.location;
 
-public class LocationImpl {
+public class LocationImpl implements Location {
     int xAxis;
     int yAxis;
 

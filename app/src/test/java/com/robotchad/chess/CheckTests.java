@@ -240,9 +240,7 @@ public class CheckTests {
         Board chess = new BoardImpl();
         for (int r = 0; r < 2; r++) {
             for (int c = 0; c < 8; c++) {
-                if (r == 0 && c == 4) {
-
-                } else {
+                if ((r != 0 || c != 4)) {
                     chess.deleteSquare(r, c);
                 }
             }
