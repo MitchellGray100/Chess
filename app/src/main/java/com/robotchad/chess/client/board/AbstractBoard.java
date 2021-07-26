@@ -68,25 +68,23 @@ public abstract class AbstractBoard implements Board {
     }
 
 
-    @Override
     public Piece squareInfo(int x, int y) {
         if (x < 0 || x > 7 || y < 0 || y > 7)
             return null;
         return board[x][y];
     }
 
-    @Override
+
     public void deleteSquare(int x, int y) {
         board[x][y] = null;
     }
 
-    @Override
+
     public void changeSquare(int x, int y, Piece piece) {
         board[x][y] = piece;
     }
 
 
-    @Override
     public LocationImpl[] aiMove(Piece.Color color) {
         int maxScore = -1000;
         LocationImpl maxLocation = new LocationImpl(-100, -100);
@@ -260,7 +258,7 @@ public abstract class AbstractBoard implements Board {
         return returner;
     }
 
-    @Override
+
     public int enemyAiMove(Piece.Color color) {
         int maxScore = 0;
         int start;
@@ -369,7 +367,7 @@ public abstract class AbstractBoard implements Board {
         return maxScore;
     }
 
-    @Override
+
     public boolean move(int x, int y, int r, int c) {
         LocationImpl location = isValidMove(x, y, r, c);
 
@@ -453,7 +451,7 @@ public abstract class AbstractBoard implements Board {
         return false;
     }
 
-    @Override
+
     public void forceMove(int x, int y, int r, int c) {
         if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
                 x > 7 || x < 0 || y > 7 || y < 0)) {
@@ -470,7 +468,7 @@ public abstract class AbstractBoard implements Board {
         }
     }
 
-    @Override
+
     public void forceMoveWithoutScore(int x, int y, int r, int c) {
         if (!(r > 7 || r < 0 || c > 7 || c < 0 ||
                 x > 7 || x < 0 || y > 7 || y < 0)) {
@@ -483,7 +481,7 @@ public abstract class AbstractBoard implements Board {
         }
     }
 
-    @Override
+
     public LocationImpl isValidMove(int x, int y, int r, int c) {
         if (r > 7 || r < 0 || c > 7 || c < 0 ||
                 x > 7 || x < 0 || y > 7 || y < 0) return (new LocationImpl(-100, -100));
@@ -515,7 +513,7 @@ public abstract class AbstractBoard implements Board {
         }
     }
 
-    @Override
+
     public LocationImpl isValidProtect(int x, int y, int r, int c) {
         if (r > 7 || r < 0 || c > 7 || c < 0 ||
                 x > 7 || x < 0 || y > 7 || y < 0) return (new LocationImpl(-100, -100));
@@ -601,21 +599,21 @@ public abstract class AbstractBoard implements Board {
         return input.getXAxis() >= 0;
     }
 
-    @Override
+
     public void changeScore(int r, int c) {
         if (whitePoints == blackPoints) {
-            if (( (board[r][c])).getColor().equals(Piece.Color.BLACK)) {
-                whitePoints += ( (board[r][c])).getValue();
+            if (((board[r][c])).getColor().equals(Piece.Color.BLACK)) {
+                whitePoints += ((board[r][c])).getValue();
             }
-            if (( (board[r][c])).getColor().equals(Piece.Color.WHITE)) {
-                blackPoints += ( (board[r][c])).getValue();
+            if (((board[r][c])).getColor().equals(Piece.Color.WHITE)) {
+                blackPoints += ((board[r][c])).getValue();
             }
         } else if (board[r][c].getColor().equals(Piece.Color.BLACK)) {
             if (whitePoints > blackPoints) {
-                whitePoints += ( (board[r][c])).getValue();
+                whitePoints += ((board[r][c])).getValue();
             } else if ((whitePoints < blackPoints) && (whitePoints + ((board[r][c])).getValue() > blackPoints)) {
                 blackPoints = 0;
-                whitePoints += ( (board[r][c])).getValue();
+                whitePoints += ((board[r][c])).getValue();
             } else if ((whitePoints < blackPoints) && (whitePoints + ((board[r][c])).getValue() < blackPoints)) {
                 blackPoints -= board[r][c].getValue();
             } else if ((whitePoints < blackPoints) && (whitePoints + ((board[r][c])).getValue() == blackPoints)) {
@@ -624,10 +622,10 @@ public abstract class AbstractBoard implements Board {
             }
         } else if (board[r][c].getColor().equals(Piece.Color.WHITE)) {
             if (blackPoints > whitePoints) {
-                blackPoints += ( (board[r][c])).getValue();
+                blackPoints += ((board[r][c])).getValue();
             } else if ((blackPoints < whitePoints) && (blackPoints + board[r][c].getValue() > whitePoints)) {
                 whitePoints = 0;
-                blackPoints += ( (board[r][c])).getValue();
+                blackPoints += ((board[r][c])).getValue();
             } else if ((blackPoints < whitePoints) && (blackPoints + ((board[r][c])).getValue() < whitePoints)) {
                 whitePoints -= board[r][c].getValue();
             } else if ((blackPoints < whitePoints) && (blackPoints + ((board[r][c])).getValue() == whitePoints)) {
