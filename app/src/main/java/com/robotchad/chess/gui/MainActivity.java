@@ -15,7 +15,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.robotchad.chess.client.board.Board;
 import com.robotchad.chess.client.board.BoardImpl;
-import com.robotchad.chess.gui.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,7 +22,6 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
 
     /** The instance of the board used for all game activities */
     private Board board;
