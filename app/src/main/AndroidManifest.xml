@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Chess">
         <activity
-            android:name=".MainActivity"
+            android:name="com.robotchad.chess.gui.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.Chess.NoActionBar">
             <intent-filter>
