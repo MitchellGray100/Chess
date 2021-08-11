@@ -3,7 +3,6 @@ package com.robotchad.chess.client.controller;
 import com.robotchad.chess.client.board.BoardImpl;
 import com.robotchad.chess.client.location.Location;
 import com.robotchad.chess.client.pieces.Piece;
-import com.robotchad.chess.client.pieces.Queen;
 
 import java.util.Scanner;
 
