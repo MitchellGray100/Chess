@@ -16,10 +16,10 @@ public class CheckTests {
     @Test
     public void isCheckNullPieceTest() {
         Board chess = new BoardImpl();
-        chess.move(6, 2, 4, 2);
-        chess.move(1, 1, 3, 1);
-        chess.move(3, 1, 4, 2);
-        chess.move(1, 3, 3, 3);
+        chess.move(6, 2, 4, 2,Piece.Type.QUEEN);
+        chess.move(1, 1, 3, 1,Piece.Type.QUEEN);
+        chess.move(3, 1, 4, 2,Piece.Type.QUEEN);
+        chess.move(1, 3, 3, 3,Piece.Type.QUEEN);
         assertFalse(chess.locationToBoolean(chess.isCheck(3, 3)));
     }
 

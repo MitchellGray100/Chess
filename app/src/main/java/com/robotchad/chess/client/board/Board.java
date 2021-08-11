@@ -34,7 +34,7 @@ public interface Board {
      * @param c The y coordinate to move to
      * @return whether or not the move is valid
      */
-    boolean move(int x, int y, int r, int c);
+    boolean move(int x, int y, int r, int c, Piece.Type type);
 
     /**
      * Moves the piece from one spot to another even if not valid. Only used for testing.

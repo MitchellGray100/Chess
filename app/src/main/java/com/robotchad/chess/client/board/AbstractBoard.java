@@ -368,7 +368,7 @@ public abstract class AbstractBoard implements Board {
     }
 
 
-    public boolean move(int x, int y, int r, int c) {
+    public boolean move(int x, int y, int r, int c, Piece.Type type) {
         LocationImpl location = isValidMove(x, y, r, c);
 
         if (locationToBoolean(location) && !putsKingInCheck(x, y, r, c)) {
@@ -438,7 +438,7 @@ public abstract class AbstractBoard implements Board {
                 if ((r == 0 || r == 7) && board[r][c].getType() == Piece.Type.PAWN) {
                     PieceFactory factory = new PieceFactory();
                     int arrayLocation = board[r][c].getArrayLocation();
-                    board[r][c] = factory.getPiece(Piece.Type.QUEEN, board[r][c].getColor());
+                    board[r][c] = factory.getPiece(type, board[r][c].getColor());
                     board[r][c].setMoved(true);
                     board[r][c].setArrayLocation(arrayLocation);
                     board[r][c].setLocation(new LocationImpl(r, c));
