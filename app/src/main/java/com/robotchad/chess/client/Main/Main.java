@@ -17,7 +17,10 @@ public class Main {
 
             if(controller.isCheckmate(player))
             {
-                end = player.toString();
+                if(player == Piece.Color.WHITE)
+                    end = "BLACK";
+                else
+                    end = "WHITE";
             }
             else if(controller.isStalemate(player))
             {

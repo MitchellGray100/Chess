@@ -32,6 +32,7 @@ public interface Board {
      * @param y the y coordinate of the piece
      * @param r The x coordinate to move to
      * @param c The y coordinate to move to
+     * @param type The type of piece the player wants to promote to if a promotion
      * @return whether or not the move is valid
      */
     boolean move(int x, int y, int r, int c, Piece.Type type);
