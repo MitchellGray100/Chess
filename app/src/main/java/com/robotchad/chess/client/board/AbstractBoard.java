@@ -7,8 +7,6 @@ import com.robotchad.chess.client.pieces.PieceFactory;
 
 import java.util.ArrayList;
 
-//@TODO
-
 
 /**
  * An abstract implementation of the chess board
