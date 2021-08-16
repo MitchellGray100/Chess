@@ -19,12 +19,12 @@ public abstract class AbstractBoard implements Board {
     Piece[][] board = new Piece[8][8];
     /**
      * Number of points for white
-     * Invariant: nonnegative
+     * Invariant: non negative
      */
     int whitePoints = 0;
     /**
      * Number of points for black
-     * Invariant: nonnegative
+     * Invariant: non negative
      */
     int blackPoints = 0;
 
@@ -313,10 +313,6 @@ public abstract class AbstractBoard implements Board {
                         if (pieces[i].getType() == Piece.Type.PAWN && (r == 0 || r == 7)) {
                             adder += 50;
                         }
-//						if(r >= 2 && c >= 2 && r <= 5 && c <= 5)
-//						{
-//							adder++;
-//						}
 
                         if (board[r][c] == null) {
 
@@ -591,7 +587,7 @@ public abstract class AbstractBoard implements Board {
      * Converts the output of isValidMove to boolean
      *
      * @param input Location
-     * @return whether or not the move was valid or not. All negative locations are invalid and all postiive locations are positive
+     * @return whether or not the move was valid or not. All negative locations are invalid and all positive locations are positive
      */
     public boolean locationToBoolean(LocationImpl input) {
         return input.getXAxis() >= 0;
@@ -884,11 +880,10 @@ public abstract class AbstractBoard implements Board {
         if (pieceColor == Piece.Color.WHITE) {
 
             returner = locationToBoolean(isCheck((pieces[4]).getLocation().getXAxis(), (pieces[4]).getLocation().getYAxis()));
-            //board[r][c].setLocation(new LocationImpl(r,c));
-            //pieces[4].setLocation(new LocationImpl(x,y));
+
         } else {
             returner = locationToBoolean(isCheck((pieces[20]).getLocation().getXAxis(), (pieces[20]).getLocation().getYAxis()));
-            //pieces[20].setLocation(new LocationImpl(x,y));
+
         }
         board[x][y] = temp1;
         board[r][c] = temp2;
@@ -916,11 +911,10 @@ public abstract class AbstractBoard implements Board {
         if (pieceColor == Piece.Color.WHITE) {
 
             returner = locationToBoolean(isCheck((pieces[20]).getLocation().getXAxis(), (pieces[20]).getLocation().getYAxis()));
-            //board[r][c].setLocation(new LocationImpl(r,c));
-            //pieces[4].setLocation(new LocationImpl(x,y));
+
         } else {
             returner = locationToBoolean(isCheck((pieces[4]).getLocation().getXAxis(), (pieces[4]).getLocation().getYAxis()));
-            //pieces[20].setLocation(new LocationImpl(x,y));
+
         }
         board[x][y] = temp1;
         board[r][c] = temp2;
@@ -1285,19 +1279,6 @@ public abstract class AbstractBoard implements Board {
         return true;
     }
 
-//OLD ISCHECK()
-//	public boolean isCheck(int x, int y) {
-//		for (int r = 0; r < board.length; r++) {
-//			for (int c = 0; c < board[0].length; c++) {
-//				if (board[r][c] != null && board[r][c].getColor() != board[x][y].getColor()) {
-//					if (locationToBoolean(isValidMove(r, c, x, y))) {
-//						return true;
-//					}
-//				}
-//			}
-//		}
-//		return false;
-//	}
 
 
 }
