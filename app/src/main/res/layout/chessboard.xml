@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--    <ImageView-->
+<!--        android:id="@+id/boardImageView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:contentDescription="@string/chess_board_description"-->
+<!--        app:srcCompat="@drawable/chess_board_with_background" />-->
+
+
+<androidx.gridlayout.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
+    android:id="@+id/boardLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    app:columnCount="8"
+    app:columnOrderPreserved="true"
+    app:rowCount="8"
+    app:rowOrderPreserved="true">
 
-    <ImageView
-        android:id="@+id/boardImageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/chess_board_description"
-        app:srcCompat="@drawable/chess_board_with_background" />
-
-</RelativeLayout>
+</androidx.gridlayout.widget.GridLayout>
