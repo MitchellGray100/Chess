@@ -24,4 +24,12 @@ public class LocationImpl implements Location {
     public void setYAxis(int y) {
         yAxis = y;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof LocationImpl)) {
+            return false;
+        }
+        return xAxis == ((LocationImpl) obj).getXAxis() && yAxis == ((LocationImpl) obj).getYAxis();
+    }
 }
