@@ -2,8 +2,10 @@ package com.robotchad.chess.client.controller;
 
 import com.robotchad.chess.client.board.BoardImpl;
 import com.robotchad.chess.client.location.Location;
+import com.robotchad.chess.client.location.LocationImpl;
 import com.robotchad.chess.client.pieces.Piece;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /** Implementation of a controller for the chess game */
@@ -182,6 +184,35 @@ public class ControllerImpl implements Controller {
 			return board.getBlackPoints();
 		}
 	}
+
+	public Piece squareInfo(int x, int y)
+	{
+		return board.squareInfo(x,y);
+	}
+
+	public ArrayList<LocationImpl> validMoveList(int x, int y)
+	{
+		ArrayList<LocationImpl> list = new ArrayList<>();
+
+		for(int r = 0; r < 8; r++)
+		{
+			for(int c= 0; c < 8; c++)
+			{
+				if(board.locationToBoolean(isValidMove(x,y,r,c)))
+				{
+					list.add(new LocationImpl(r,c));
+				}
+			}
+		}
+		return list;
+	}
+
+	public LocationImpl isValidMove(int x, int y, int r, int c)
+	{
+		return board.isValidMove(x,y,r,c);
+	}
+
+
 
 
 }

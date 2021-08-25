@@ -1,6 +1,9 @@
 package com.robotchad.chess.client.controller;
 
+import com.robotchad.chess.client.location.LocationImpl;
 import com.robotchad.chess.client.pieces.Piece;
+
+import java.util.ArrayList;
 
 /** The controller of the chess game */
 public interface Controller {
@@ -58,5 +61,25 @@ public interface Controller {
      * @return the score of the specified player
      */
     int getScore(Piece.Color color);
-	
+
+    /**
+     * Returns the piece at the specified square or null if the square is empty
+     *
+     * @param x - x coordinate of the square
+     * @param y - y coordinate of the square
+     * @return the piece at the specified square, null if square is empty
+     */
+    Piece squareInfo(int x, int y);
+
+    /**
+     * Precondition: x and y making a valid location of a piece, not an empty square.
+     * validMoveList returns an arraylist of all valid moves of the indicated pieces as LocationImpl's
+     * @param x The x coordinate of the piece
+     * @param y The y coordinate of the piece
+     * @return An ArrayList of all valid moves of a piece.
+     */
+    ArrayList<LocationImpl> validMoveList(int x, int y);
+
+    LocationImpl isValidMove(int x, int y, int r, int c);
+
 }
