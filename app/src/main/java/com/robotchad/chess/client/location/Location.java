@@ -9,4 +9,6 @@ public interface Location {
     void setXAxis(int x);
 
     void setYAxis(int y);
+
+    boolean toBoolean();
 }

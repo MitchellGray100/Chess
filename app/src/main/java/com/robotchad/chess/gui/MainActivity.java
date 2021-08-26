@@ -46,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton[][] buttons;
     /** The location of the last clicked square */
     private LastLocation lastloc;
+    /** The piece color of the player */
+    public static Piece.Color PLAYERCOLOR = Piece.Color.WHITE;
+    /** The piece color of the AI */
+    public static Piece.Color AICOLOR = Piece.Color.BLACK;
 
 
     @Override
@@ -74,56 +78,155 @@ public class MainActivity extends AppCompatActivity {
                 int finalJ = j;
                 myButton.setOnClickListener(new View.OnClickListener() {
 
-                    /** The location of the space the button represents in the chess board */
+                    /**
+                     * The location of the space the button represents in the chess board
+                     */
                     public final Location location = new LocationImpl(finalI, finalJ);
-                    /** The controller used for the chess game
+                    /**
+                     * The controller used for the chess game
                      * NOTE: This is the same controller as the controller used in the top level
-                     * class */
+                     * class
+                     */
                     public final Controller con = controller;
 
-                    /** The location of the last clicked square */
+                    /**
+                     * The location of the last clicked square
+                     */
                     public final LastLocation lastLocation = lastloc;
 
                     // Main driver of buttons
                     @Override
-                    public void onClick (View v) {
+                    public void onClick(View v) {
                         ImageButton b = (ImageButton) v;
+                        // If last location exists and either square is empty or contains piece of
+                        // Different color
+                            // Attempt to make a move
+                        // Else
+                            // Attempt to select piece
+                        if (lastLocation.isValid() && (con.squareInfo(location.getXAxis(),location.getYAxis()) == null || con.squareInfo(location.getXAxis(),location.getYAxis()).getColor() != PLAYERCOLOR)) {
+                            // Check if move is valid and not same square
+                            // If move is valid and not same square
+                                // Make move
+                                // Update graphics
+                            // Else if piece same color as player
+                                // Return
+                            // Else
+                                // Invalidate last location (deselect piece)
+                            if (!lastLocation.equals(location) &&
+                                    con.isValidMove(lastLocation.getLocation().getXAxis(),
+                                    lastLocation.getLocation().getYAxis(), location.getXAxis(),
+                                    location.getYAxis()).toBoolean()) {
+                                    makeMove();
+
+                            } else if (con.squareInfo(location.getXAxis(),
+                                    location.getYAxis()).getColor() == PLAYERCOLOR) {
+                                return;
+                            } else {
+                                lastLocation.invalidateLocation();
+                            }
+                        } else {
+                            // Check if piece on space
+                            // If piece on space
+                                // Validate location
+                                // Display moves
+                            // Else
+                                // Return
+                            if (con.squareInfo(location.getXAxis(),location.getYAxis()) != null) {
+                                lastLocation.validateLocation(location);
+                                displayMoves();
+                            }
+                        }
+                    }
+
+                    /**
+                     * Makes the player's move, redraws board, checks for end of game, moves the AI,
+                     * and checks for end of game
+                     */
+                    private void makeMove() {
+                        // Player move
+                        con.move(lastLocation.getLocation().getXAxis(),
+                                lastLocation.getLocation().getYAxis(),
+                                location.getXAxis(), location.getYAxis());
+                        redrawBoard();
+                        // Check for end conditions
+                        if (con.isStalemate(PLAYERCOLOR) || con.isStalemate(AICOLOR)) {
+                            onStalemate();
+                        } else if (con.isCheckmate(AICOLOR)) {
+                            onWin(AICOLOR);
+                            return;
+                        } else if (con.isCheckmate(PLAYERCOLOR)) {
+                            onWin(PLAYERCOLOR);
+                            return;
+                        }
+                        // AI move
+                        con.aiMove(AICOLOR);
+                        redrawBoard();
+                        // Check for end conditions
+                        if (con.isStalemate(PLAYERCOLOR) || con.isStalemate(AICOLOR)) {
+                            onStalemate();
+                        } else if (con.isCheckmate(AICOLOR)) {
+                            onWin(AICOLOR);
+                            return;
+                        } else if (con.isCheckmate(PLAYERCOLOR)) {
+                            onWin(PLAYERCOLOR);
+                            return;
+                        }
                     }
 
                     /**
                      * The series of events taken if a winner is found after a move is taken
+                     * TODO
                      * @param winner - the color of the winner
                      */
-                    private void onWin (Piece.Color winner) {}
+                    private void onWin(Piece.Color winner) {
+                    }
 
                     /**
                      * The series of events taken if a stalemate is found after a move is taken
+                     * TODO
                      */
-                    private void onStalemate() {}
+                    private void onStalemate() {
+                    }
 
                     /**
                      * Displays the list of valid moves for the piece located on this space
+                     * TODO
                      */
-                    private void displayMoves() {}
-
-                    /**
-                     * Attempts to move the piece found on this space to the given new space and
-                     * returns if successful
-                     * @param newLoc - new location of the piece
-                     * @return true if the move was successful, false otherwise
-                     */
-                    private boolean makeMove(Location newLoc) {
-                        return false;
+                    private void displayMoves() {
+                        ArrayList<LocationImpl> moves = con.validMoveList(location.getXAxis(),location.getYAxis());
                     }
 
                 });
                 buttons[i][j] = myButton;
                 ll.addView(myButton);
-                myButton.getLayoutParams().height = ll.getHeight() / 8 - 2;
-                myButton.getLayoutParams().width = ll.getWidth() / 8 - 2;
+                myButton.getLayoutParams().height = ll.getHeight() / 8;
+                myButton.getLayoutParams().width = ll.getWidth() / 8;
             }
         }
-        //myButton.bringToFront();
-        //findViewById(R.id.boardImageView).
+        redrawBoard();
+    }
+
+    /**
+     * Redraws the bopard given the current state of the game
+     */
+    public void redrawBoard() {
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[0].length; j++) {
+                Piece piece = controller.squareInfo(i,j);
+                int imageID;
+                if (piece == null) {
+                    if ((i + j) % 2 == 0) {
+                        imageID = R.drawable.white_square;
+                    } else {
+                        imageID = R.drawable.black_square;
+                    }
+                } else {
+                    // TODO
+                    imageID = 0;
+                }
+                buttons[i][j].setImageResource(imageID);
+                buttons[i][j].setBackgroundColor(R.color.transparent);
+            }
+        }
     }
 }

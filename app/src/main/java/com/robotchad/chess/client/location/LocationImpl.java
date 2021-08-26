@@ -25,6 +25,10 @@ public class LocationImpl implements Location {
         yAxis = y;
     }
 
+    public boolean toBoolean() {
+        return getXAxis() >= 0;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof LocationImpl)) {
