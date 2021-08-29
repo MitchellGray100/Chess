@@ -203,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 myButton.getLayoutParams().width = ll.getWidth() / 8;
             }
         }
-        redrawBoard();
+        // redrawBoard();
     }
 
     /**
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     // TODO
-                    imageID = 0;
+                    imageID = R.drawable.placeholder;
                 }
                 buttons[i][j].setImageResource(imageID);
                 buttons[i][j].setBackgroundColor(R.color.transparent);
