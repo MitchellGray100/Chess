@@ -20,24 +20,33 @@ import location.LocationImpl;
 public class Main extends Application {
 	private Controller game = new ControllerImpl();
 	private Pane root = new Pane();
-	private Tile[][] tileBoard = new Tile[8][8];
+	private Piece[][] pieceBoard = new Piece[8][8];
 	private DropShadow borderGlow = new DropShadow();
+	private boolean clicked = false;
+	private int movingPieceX = -1;
+	private int movingPieceY = -1;
 
 	private Parent createContent() {
 		root.setPrefSize(800, 800);
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
+				Piece piece;
 				Tile tile;
 				if ((i + j) % 2 == 0) {
-					tile = new Tile(Color.WHITE, new LocationImpl(i, j));
+					piece = new Piece(Color.WHITE, new LocationImpl(i, j));
+					tile = new Tile(Color.WHITE);
 				} else {
-					tile = new Tile(Color.BLACK, new LocationImpl(i, j));
+					piece = new Piece(Color.BLACK, new LocationImpl(i, j));
+					tile = new Tile(Color.BLACK);
 				}
 
+				piece.setTranslateX(j * 100);
+				piece.setTranslateY(i * 100);
 				tile.setTranslateX(j * 100);
 				tile.setTranslateY(i * 100);
-				tileBoard[i][j] = tile;
-				root.getChildren().add(tile);
+				pieceBoard[i][j] = piece;
+				root.getChildren().addAll(tile, piece);
+
 			}
 		}
 		drawBoardPieces();
@@ -45,15 +54,38 @@ public class Main extends Application {
 	}
 
 	private class Tile extends StackPane {
+		private Color color;
+
+		public Tile(Color color) {
+			this.color = color;
+			Rectangle border = new Rectangle(100, 100);
+			border.setFill(color);
+			border.setStroke(null);
+			setAlignment(Pos.CENTER);
+			getChildren().addAll(border);
+			borderGlow.setOffsetY(0f);
+			borderGlow.setOffsetX(0f);
+			borderGlow.setColor(Color.DARKGREEN);
+			borderGlow.setWidth(110);
+			borderGlow.setHeight(110);
+
+		};
+	}
+
+	private class Piece extends StackPane {
 		private Text text = new Text();
 		private LocationImpl location;
+		private Color color;
 
-		public Tile(Color color, LocationImpl location) {
+		public Piece(Color color, LocationImpl location) {
+			this.color = color;
 			this.location = location;
 			Rectangle border = new Rectangle(100, 100);
 			border.setFill(color);
-			border.setStroke(Color.BLACK);
+			border.setStroke(null);
 			text.setFont(Font.font(12));
+			text.setX(this.getLayoutX());
+			text.setY(this.getLayoutY());
 			setAlignment(Pos.CENTER);
 			getChildren().addAll(border, text);
 			borderGlow.setOffsetY(0f);
@@ -64,8 +96,32 @@ public class Main extends Application {
 			setOnMouseClicked(event -> {
 
 				if (event.getButton() == MouseButton.PRIMARY) {
-					if (game.squareInfo(location.getXAxis(), location.getYAxis()) != null) {
+					if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null) {
 						displayValidMoves(location);
+						movingPieceX = location.getXAxis();
+						movingPieceY = location.getYAxis();
+						clicked = true;
+					} else if (clicked
+							&& game.isValidMove(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis())
+									.toBoolean()) {
+						removeValidMoves();
+						game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis());
+						Text temp = pieceBoard[location.getXAxis()][location.getYAxis()].text;
+
+						pieceBoard[location.getXAxis()][location.getYAxis()] = pieceBoard[movingPieceX][movingPieceY];
+						pieceBoard[movingPieceX][movingPieceY] = new Piece(pieceBoard[movingPieceX][movingPieceY].color,
+								new LocationImpl(movingPieceX, movingPieceY));
+						temp.setX(pieceBoard[location.getXAxis()][location.getYAxis()].getLayoutX());
+						temp.setY(pieceBoard[location.getXAxis()][location.getYAxis()].getLayoutY());
+						drawBoardPieces();
+						clicked = false;
+						movingPieceX = -1;
+						movingPieceY = -1;
+					} else {
+						removeValidMoves();
+						clicked = false;
+						movingPieceX = -1;
+						movingPieceY = -1;
 					}
 				}
 			});
@@ -79,24 +135,25 @@ public class Main extends Application {
 				try {
 					switch (game.squareInfo(r, c).getType()) {
 					case BISHOP:
-						tileBoard[r][c].text.setText("Bishop");
+						pieceBoard[r][c].text.setText("Bishop");
 						break;
 					case KING:
-						tileBoard[r][c].text.setText("King");
+						pieceBoard[r][c].text.setText("King");
 						break;
 					case KNIGHT:
-						tileBoard[r][c].text.setText("Knight");
+						pieceBoard[r][c].text.setText("Knight");
 						break;
 					case PAWN:
-						tileBoard[r][c].text.setText("Pawn");
+						pieceBoard[r][c].text.setText("Pawn");
 						break;
 					case QUEEN:
-						tileBoard[r][c].text.setText("Queen");
+						pieceBoard[r][c].text.setText("Queen");
 						break;
 					case ROOK:
-						tileBoard[r][c].text.setText("Rook");
+						pieceBoard[r][c].text.setText("Rook");
 						break;
 					default:
+						pieceBoard[r][c].text.setText("");
 						break;
 					}
 				} catch (NullPointerException ex) {
@@ -105,10 +162,10 @@ public class Main extends Application {
 				try {
 					switch (game.squareInfo(r, c).getColor()) {
 					case BLACK:
-						tileBoard[r][c].text.setStroke(Color.RED);
+						pieceBoard[r][c].text.setStroke(Color.RED);
 						break;
 					case WHITE:
-						tileBoard[r][c].text.setStroke(Color.BLUE);
+						pieceBoard[r][c].text.setStroke(Color.BLUE);
 						break;
 					default:
 						break;
@@ -122,11 +179,21 @@ public class Main extends Application {
 		}
 	}
 
+	public void removeValidMoves() {
+		for (int r = 0; r < 8; r++) {
+			for (int c = 0; c < 8; c++) {
+				{
+					pieceBoard[r][c].setEffect(null);
+				}
+			}
+		}
+	}
+
 	public void displayValidMoves(LocationImpl location) {
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				if (game.isValidMove(location.getXAxis(), location.getYAxis(), r, c).toBoolean()) {
-					tileBoard[r][c].setEffect(borderGlow);
+					pieceBoard[r][c].setEffect(borderGlow);
 				}
 			}
 		}
