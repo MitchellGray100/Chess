@@ -93,7 +93,9 @@ public abstract class AbstractBoard implements Board {
 		}
 
 		for (int i = start; i < end; i++) {
-
+			if (pieces[i] == null) {
+				continue;
+			}
 			int xAXis = pieces[i].getLocation().getXAxis();
 			int yAxis = pieces[i].getLocation().getYAxis();
 			int pieceValue = pieces[i].getValue();
@@ -262,7 +264,9 @@ public abstract class AbstractBoard implements Board {
 		}
 
 		for (int i = start; i < end; i++) {
-
+			if (pieces[i] == null) {
+				continue;
+			}
 			int xAXis = pieces[i].getLocation().getXAxis();
 			int yAxis = pieces[i].getLocation().getYAxis();
 			int pieceValue = pieces[i].getValue();
@@ -532,14 +536,14 @@ public abstract class AbstractBoard implements Board {
 	public boolean isProtecting(int x, int y) {
 		if (board[x][y].getColor() == Piece.Color.WHITE) {
 			for (int i = 0; i < 16; i++) {
-				if (locationToBoolean(
+				if (pieces[i] != null && locationToBoolean(
 						isValidProtect(x, y, pieces[i].getLocation().getXAxis(), pieces[i].getLocation().getYAxis()))) {
 					return true;
 				}
 			}
 		} else {
 			for (int i = 16; i < 32; i++) {
-				if (locationToBoolean(
+				if (pieces[i] != null && locationToBoolean(
 						isValidProtect(x, y, pieces[i].getLocation().getXAxis(), pieces[i].getLocation().getYAxis()))) {
 					return true;
 				}
@@ -642,7 +646,7 @@ public abstract class AbstractBoard implements Board {
 			}
 		} else {
 			if (((board[x][y])).getColor() == Piece.Color.WHITE) {
-				if (((r == x + 1) || (x == 1 && c == y && r == x + 2)) && c == y) {
+				if (((r == x + 1) || (x == 1 && c == y && r == x + 2 && board[2][y] == null)) && c == y) {
 					return (new LocationImpl(100, 100));
 				}
 				if ((calc)) {
@@ -654,7 +658,7 @@ public abstract class AbstractBoard implements Board {
 				}
 			}
 			if (((board[x][y])).getColor() == Piece.Color.BLACK) {
-				if (((r == x - 1) || (x == 6 && c == y && r == x - 2)) && c == y) {
+				if (((r == x - 1) || (x == 6 && c == y && r == x - 2 && board[5][y] == null)) && c == y) {
 					return (new LocationImpl(100, 100));
 				}
 				if (((r == x - 1) && (c == y - 1 || c == y + 1))) {
@@ -1160,7 +1164,9 @@ public abstract class AbstractBoard implements Board {
 
 		if (color == Piece.Color.WHITE) {
 			for (int i = 0; i < 16; i++) {
-
+				if (pieces[i] == null) {
+					continue;
+				}
 				xCord = pieces[i].getLocation().getXAxis();
 				yCord = pieces[i].getLocation().getYAxis();
 
@@ -1214,6 +1220,9 @@ public abstract class AbstractBoard implements Board {
 			}
 		} else {
 			for (int i = 16; i < 32; i++) {
+				if (pieces[i] == null) {
+					continue;
+				}
 				xCord = pieces[i].getLocation().getXAxis();
 				yCord = pieces[i].getLocation().getYAxis();
 

@@ -31,6 +31,13 @@ public class MovementTests {
 	}
 
 	@Test
+	public void pawnObstacleDoubleMovementTest() {
+		Board chess = new BoardImpl();
+		chess.forceMove(1, 1, 2, 0);
+		assertFalse(chess.locationToBoolean(chess.isValidMove(1, 0, 3, 0)));
+	}
+
+	@Test
 	public void pawnEnemyMovementTest() {
 		Board chess = new BoardImpl();
 		chess.forceMove(6, 0, 2, 1);

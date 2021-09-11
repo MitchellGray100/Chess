@@ -15,6 +15,12 @@ public interface Controller {
 	 */
 	void printBoard();
 
+	public int getTurns();
+
+	public void setTurns(int turns);
+
+	public void incrementTurns();
+
 	/**
 	 * Move the piece and if not return false.
 	 * 
@@ -99,5 +105,7 @@ public interface Controller {
 	 *         king king-side castling 427 -> black king queen-side castling
 	 */
 	LocationImpl isValidMove(int x, int y, int r, int c);
+
+	public boolean putsKingInCheck(int x, int y, int r, int c);
 
 }

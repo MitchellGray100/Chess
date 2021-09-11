@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -27,6 +28,7 @@ public class Main extends Application {
 	private int movingPieceY = -1;
 
 	private Parent createContent() {
+		GridPane grid = new GridPane();
 		root.setPrefSize(800, 800);
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -40,6 +42,9 @@ public class Main extends Application {
 					tile = new Tile(Color.BLACK);
 				}
 
+				grid.add(piece, i, j);
+
+				grid.add(tile, i, j);
 				piece.setTranslateX(j * 100);
 				piece.setTranslateY(i * 100);
 				tile.setTranslateX(j * 100);
@@ -93,36 +98,49 @@ public class Main extends Application {
 			borderGlow.setColor(Color.DARKGREEN);
 			borderGlow.setWidth(110);
 			borderGlow.setHeight(110);
+
 			setOnMouseClicked(event -> {
 
-				if (event.getButton() == MouseButton.PRIMARY) {
-					if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null) {
-						displayValidMoves(location);
-						movingPieceX = location.getXAxis();
-						movingPieceY = location.getYAxis();
-						clicked = true;
-					} else if (clicked
-							&& game.isValidMove(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis())
-									.toBoolean()) {
-						removeValidMoves();
-						game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis());
-						Text temp = pieceBoard[location.getXAxis()][location.getYAxis()].text;
+				if (game.getTurns() % 2 != 0) {
+					if (event.getButton() == MouseButton.PRIMARY) {
 
-						pieceBoard[location.getXAxis()][location.getYAxis()] = pieceBoard[movingPieceX][movingPieceY];
-						pieceBoard[movingPieceX][movingPieceY] = new Piece(pieceBoard[movingPieceX][movingPieceY].color,
-								new LocationImpl(movingPieceX, movingPieceY));
-						temp.setX(pieceBoard[location.getXAxis()][location.getYAxis()].getLayoutX());
-						temp.setY(pieceBoard[location.getXAxis()][location.getYAxis()].getLayoutY());
-						drawBoardPieces();
-						clicked = false;
-						movingPieceX = -1;
-						movingPieceY = -1;
-					} else {
+						if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null) {
+							displayValidMoves(location);
+							movingPieceX = location.getXAxis();
+							movingPieceY = location.getYAxis();
+							clicked = true;
+						} else if (clicked && game
+								.isValidMove(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis())
+								.toBoolean()) {
+							game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis());
+
+//						pieceBoard[location.getXAxis()][location.getYAxis()] = pieceBoard[movingPieceX][movingPieceY];
+//						pieceBoard[location.getXAxis()][location.getYAxis()].setEffect(null);
+//						pieceBoard[movingPieceX][movingPieceY] = new Piece(pieceBoard[movingPieceX][movingPieceY].color,
+//								new LocationImpl(movingPieceX, movingPieceY));
+
+							drawBoardPieces();
+							removeValidMoves();
+							clicked = false;
+							movingPieceX = -1;
+							movingPieceY = -1;
+							game.incrementTurns();
+						} else {
+							removeValidMoves();
+							clicked = false;
+							movingPieceX = -1;
+							movingPieceY = -1;
+						}
+					} else if (event.getButton() == MouseButton.SECONDARY) {
 						removeValidMoves();
 						clicked = false;
 						movingPieceX = -1;
 						movingPieceY = -1;
 					}
+				} else {
+					game.aiMove(piecesPackage.Piece.Color.WHITE);
+					drawBoardPieces();
+					game.incrementTurns();
 				}
 			});
 		};
@@ -190,9 +208,11 @@ public class Main extends Application {
 	}
 
 	public void displayValidMoves(LocationImpl location) {
+		int x = location.getXAxis();
+		int y = location.getYAxis();
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
-				if (game.isValidMove(location.getXAxis(), location.getYAxis(), r, c).toBoolean()) {
+				if (game.isValidMove(x, y, r, c).toBoolean() && !game.putsKingInCheck(x, y, r, c)) {
 					pieceBoard[r][c].setEffect(borderGlow);
 				}
 			}

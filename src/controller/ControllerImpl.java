@@ -4,9 +4,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import board.BoardImpl;
+import location.Location;
+import location.LocationImpl;
+import piecesPackage.Piece;
 
 /** Implementation of a controller for the chess game */
 public class ControllerImpl implements Controller {
+	int turns = 0;
+
+	public int getTurns() {
+		return turns;
+	}
+
+	public void setTurns(int turns) {
+		this.turns = turns;
+	}
+
+	public void incrementTurns() {
+		turns++;
+	}
+
 	/** The representation of the chess board */
 	BoardImpl board;
 
@@ -68,19 +85,19 @@ public class ControllerImpl implements Controller {
 
 				switch (scan.nextLine().toLowerCase()) {
 				case "knight":
-					type = piecesPackage.Piece.Type.KNIGHT;
+					type = Piece.Type.KNIGHT;
 					repeat = false;
 					break;
 				case "bishop":
-					type = piecesPackage.Piece.Type.BISHOP;
+					type = Piece.Type.BISHOP;
 					repeat = false;
 					break;
 				case "rook":
-					type = piecesPackage.Piece.Type.ROOK;
+					type = Piece.Type.ROOK;
 					repeat = false;
 					break;
 				case "queen":
-					type = piecesPackage.Piece.Type.QUEEN;
+					type = Piece.Type.QUEEN;
 					repeat = false;
 					break;
 				default:
@@ -117,11 +134,11 @@ public class ControllerImpl implements Controller {
 		}
 	}
 
-	public boolean isStalemate(piecesPackage.Piece.Color color) {
+	public boolean isStalemate(Piece.Color color) {
 		return board.isStalemate(color);
 	}
 
-	public boolean isCheckmate(piecesPackage.Piece.Color color) {
+	public boolean isCheckmate(Piece.Color color) {
 		int x;
 		int y;
 		if (color == piecesPackage.Piece.Color.WHITE) {
@@ -134,26 +151,26 @@ public class ControllerImpl implements Controller {
 		return board.isCheckmate(x, y);
 	}
 
-	public void aiMove(piecesPackage.Piece.Color color) {
-		location.Location[] locations = board.aiMove(color);
+	public void aiMove(Piece.Color color) {
+		Location[] locations = board.aiMove(color);
 		board.move(locations[0].getXAxis(), locations[0].getYAxis(), locations[1].getXAxis(), locations[1].getYAxis(),
-				piecesPackage.Piece.Type.QUEEN);
+				Piece.Type.QUEEN);
 	}
 
-	public int getScore(piecesPackage.Piece.Color color) {
-		if (color == piecesPackage.Piece.Color.WHITE) {
+	public int getScore(Piece.Color color) {
+		if (color == Piece.Color.WHITE) {
 			return board.getWhitePoints();
 		} else {
 			return board.getBlackPoints();
 		}
 	}
 
-	public piecesPackage.Piece squareInfo(int x, int y) {
+	public Piece squareInfo(int x, int y) {
 		return board.squareInfo(x, y);
 	}
 
-	public ArrayList<location.LocationImpl> validMoveList(int x, int y) {
-		ArrayList<location.LocationImpl> list = new ArrayList<>();
+	public ArrayList<LocationImpl> validMoveList(int x, int y) {
+		ArrayList<LocationImpl> list = new ArrayList<>();
 
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
@@ -165,8 +182,12 @@ public class ControllerImpl implements Controller {
 		return list;
 	}
 
-	public location.LocationImpl isValidMove(int x, int y, int r, int c) {
+	public LocationImpl isValidMove(int x, int y, int r, int c) {
 		return board.isValidMove(x, y, r, c);
+	}
+
+	public boolean putsKingInCheck(int x, int y, int r, int c) {
+		return board.putsKingInCheck(x, y, r, c);
 	}
 
 }
