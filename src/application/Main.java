@@ -104,7 +104,9 @@ public class Main extends Application {
 				if (game.getTurns() % 2 != 0) {
 					if (event.getButton() == MouseButton.PRIMARY) {
 
-						if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null) {
+						if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null
+								&& game.squareInfo(location.getXAxis(), location.getYAxis())
+										.getColor() != piecesPackage.Piece.Color.WHITE) {
 							displayValidMoves(location);
 							movingPieceX = location.getXAxis();
 							movingPieceY = location.getYAxis();
