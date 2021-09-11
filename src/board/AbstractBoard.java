@@ -431,6 +431,7 @@ public abstract class AbstractBoard implements Board {
 					board[r][c].setMoved(true);
 					board[r][c].setArrayLocation(arrayLocation);
 					board[r][c].setLocation(new LocationImpl(r, c));
+					pieces[arrayLocation] = board[r][c];
 				}
 
 			}
@@ -976,22 +977,27 @@ public abstract class AbstractBoard implements Board {
 	 * @return Whether or not the move puts the enemy in stalemate
 	 */
 	public boolean putsEnemyInStalemate(int x, int y, int r, int c) {
-		Piece.Color pieceColor = ((board[x][y])).getColor();
-		Piece temp1 = board[x][y];
-		Piece temp2 = board[r][c];
-		forceMoveWithoutScore(x, y, r, c);
-		boolean returner;
-		if (pieceColor == Piece.Color.WHITE) {
-			returner = isStalemate(Piece.Color.BLACK);
+		if (board[x][y] != null) {
+
+			Piece.Color pieceColor = ((board[x][y])).getColor();
+			Piece temp1 = board[x][y];
+			Piece temp2 = board[r][c];
+			forceMoveWithoutScore(x, y, r, c);
+			boolean returner;
+			if (pieceColor == Piece.Color.WHITE) {
+				returner = isStalemate(Piece.Color.BLACK);
+			} else {
+				returner = isStalemate(Piece.Color.WHITE);
+			}
+
+			board[x][y] = temp1;
+			board[r][c] = temp2;
+			board[x][y].setLocation(new LocationImpl(x, y));
+
+			return returner;
 		} else {
-			returner = isStalemate(Piece.Color.WHITE);
+			return false;
 		}
-
-		board[x][y] = temp1;
-		board[r][c] = temp2;
-		board[x][y].setLocation(new LocationImpl(x, y));
-
-		return returner;
 	}
 
 	/**

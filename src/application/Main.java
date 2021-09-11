@@ -111,9 +111,11 @@ public class Main extends Application {
 							movingPieceX = location.getXAxis();
 							movingPieceY = location.getYAxis();
 							clicked = true;
-						} else if (clicked && game
-								.isValidMove(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis())
-								.toBoolean()) {
+						} else if (clicked
+								&& game.isValidMove(movingPieceX, movingPieceY, location.getXAxis(),
+										location.getYAxis()).toBoolean()
+								&& !game.putsKingInCheck(movingPieceX, movingPieceY, location.getXAxis(),
+										location.getYAxis())) {
 							game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis());
 							game.setSquareInfo(movingPieceX, movingPieceY, null);
 //							pieceBoard[location.getXAxis()][location
@@ -194,7 +196,7 @@ public class Main extends Application {
 
 					}
 				} catch (NullPointerException ex) {
-					pieceBoard[r][c].text.setText("");
+					pieceBoard[r][c].text.setStroke(Color.PURPLE);
 				}
 			}
 
