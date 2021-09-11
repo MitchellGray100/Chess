@@ -30,7 +30,11 @@ public class Main extends Application {
 
 	private Parent createContent() {
 		GridPane grid = new GridPane();
-		root.setPrefSize(800, 800);
+		GridPane gridWithFrame = new GridPane();
+		GridPane frameWithIndexes = new GridPane();
+		root.setPrefSize(1000, 1000);
+
+		// GRID BUILDING
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				Piece piece;
@@ -43,18 +47,48 @@ public class Main extends Application {
 					tile = new Tile(Color.BLACK);
 				}
 
-				grid.add(piece, i, j);
-
-				grid.add(tile, i, j);
-				piece.setTranslateX(j * 100);
-				piece.setTranslateY(i * 100);
-				tile.setTranslateX(j * 100);
-				tile.setTranslateY(i * 100);
+				grid.add(tile, j * 100, i * 100);
+				grid.add(piece, j * 100, i * 100);
+//				piece.setTranslateX(j * 100);
+//				piece.setTranslateY(i * 100);
+//				tile.setTranslateX(j * 100);
+//				tile.setTranslateY(i * 100);
 				pieceBoard[i][j] = piece;
-				root.getChildren().addAll(tile, piece);
+				// root.getChildren().addAll(tile, piece);
 
 			}
 		}
+
+		// FRAME BUILDING
+		gridWithFrame.add(grid, 1, 1, 9, 9);
+		for (int i = 1; i < 9; i++) {
+			gridWithFrame.add(new HorizontalBorderTile(Color.GRAY), i, 0);
+		}
+		for (int i = 1; i < 9; i++) {
+			gridWithFrame.add(new HorizontalBorderTile(Color.GRAY), i, 10);
+		}
+		for (int i = 1; i < 9; i++) {
+			gridWithFrame.add(new VerticalBorderTile(Color.GRAY), 0, i);
+		}
+		for (int i = 1; i < 9; i++) {
+			gridWithFrame.add(new VerticalBorderTile(Color.GRAY), 10, i);
+		}
+
+		// NUMBER BUILDING
+
+		// frameWithIndexes.add(new ScoreTile(Color.RED), 0, 0);
+		for (int i = 1; i < 9; i++) {
+			frameWithIndexes.add(new LeftTextTile(Integer.toString(i)), 0, i + 1);
+		}
+		int counter = 1;
+		for (int i = 104; i >= 97; i--) {
+			frameWithIndexes.add(new TopTextTile(Character.toString(i)), counter, 0);
+			counter++;
+		}
+		frameWithIndexes.add(gridWithFrame, 1, 1, 9, 9);
+		// frameWithIndexes.setGridLinesVisible(true);
+		// frameWithIndexes.add(new ScoreTile(Color.BLUE), 0, 2);
+		root.getChildren().addAll(frameWithIndexes);
 		drawBoardPieces();
 		return root;
 	}
@@ -66,7 +100,7 @@ public class Main extends Application {
 			this.color = color;
 			Rectangle border = new Rectangle(100, 100);
 			border.setFill(color);
-			border.setStroke(null);
+			border.setStroke(color.WHITE);
 			setAlignment(Pos.CENTER);
 			getChildren().addAll(border);
 			borderGlow.setOffsetY(0f);
@@ -74,6 +108,94 @@ public class Main extends Application {
 			borderGlow.setColor(Color.DARKGREEN);
 			borderGlow.setWidth(110);
 			borderGlow.setHeight(110);
+
+		};
+	}
+
+	private class HorizontalBorderTile extends StackPane {
+		private Color color;
+
+		public HorizontalBorderTile(Color color) {
+			this.color = color;
+			Rectangle border = new Rectangle(100, 10);
+			border.setFill(color);
+			border.setStroke(color.SADDLEBROWN);
+			setAlignment(Pos.TOP_CENTER);
+			getChildren().addAll(border);
+			borderGlow.setOffsetY(0f);
+			borderGlow.setOffsetX(0f);
+			borderGlow.setColor(Color.DARKGREEN);
+			borderGlow.setWidth(110);
+			borderGlow.setHeight(110);
+
+		};
+	}
+
+	private class VerticalBorderTile extends StackPane {
+		private Color color;
+
+		public VerticalBorderTile(Color color) {
+			this.color = color;
+			Rectangle border = new Rectangle(10, 100);
+			border.setFill(color);
+			border.setStroke(color.SADDLEBROWN);
+			setAlignment(Pos.CENTER_RIGHT);
+			getChildren().addAll(border);
+			borderGlow.setOffsetY(0f);
+			borderGlow.setOffsetX(0f);
+			borderGlow.setColor(Color.DARKGREEN);
+			borderGlow.setWidth(110);
+			borderGlow.setHeight(110);
+
+		};
+	}
+
+	private class ScoreTile extends StackPane {
+		private Color color;
+
+		public ScoreTile(Color color) {
+			this.color = color;
+			Rectangle border = new Rectangle(800, 100);
+			border.setFill(color);
+			border.setStroke(color.RED);
+			setAlignment(Pos.CENTER_RIGHT);
+			getChildren().addAll(border);
+
+		};
+	}
+
+	private class LeftTextTile extends StackPane {
+		private Color color;
+		private Text text = new Text();
+
+		public LeftTextTile(String textInput) {
+			Rectangle border = new Rectangle(100, 100);
+			border.setFill(null);
+			border.setStroke(color.WHITE);
+			text.setText(textInput);
+			text.setFont(Font.font(60));
+			text.setX(this.getLayoutX());
+			text.setY(this.getLayoutY());
+			setAlignment(Pos.CENTER_RIGHT);
+			getChildren().addAll(border, text);
+
+		};
+	}
+
+	private class TopTextTile extends StackPane {
+		private Color color;
+		private Text text = new Text();
+
+		public TopTextTile(String textInput) {
+			Rectangle border = new Rectangle(100, 100);
+			border.setFill(null);
+			border.setStroke(color.WHITE);
+			text.setText(textInput);
+			text.setFont(Font.font(60));
+			text.setX(this.getLayoutX());
+			text.setY(this.getLayoutY());
+			setAlignment(Pos.BASELINE_CENTER);
+			getChildren().addAll(border, text);
 
 		};
 	}

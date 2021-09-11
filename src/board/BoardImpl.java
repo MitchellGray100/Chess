@@ -20,8 +20,8 @@ public class BoardImpl extends AbstractBoard implements Board {
 		board[0][0] = factory.getPiece(piecesPackage.Piece.Type.ROOK, piecesPackage.Piece.Color.WHITE);
 		board[0][1] = factory.getPiece(piecesPackage.Piece.Type.KNIGHT, piecesPackage.Piece.Color.WHITE);
 		board[0][2] = factory.getPiece(piecesPackage.Piece.Type.BISHOP, piecesPackage.Piece.Color.WHITE);
-		board[0][3] = factory.getPiece(piecesPackage.Piece.Type.QUEEN, piecesPackage.Piece.Color.WHITE);
-		board[0][4] = factory.getPiece(piecesPackage.Piece.Type.KING, piecesPackage.Piece.Color.WHITE);
+		board[0][3] = factory.getPiece(piecesPackage.Piece.Type.KING, piecesPackage.Piece.Color.WHITE);
+		board[0][4] = factory.getPiece(piecesPackage.Piece.Type.QUEEN, piecesPackage.Piece.Color.WHITE);
 		board[0][5] = factory.getPiece(piecesPackage.Piece.Type.BISHOP, piecesPackage.Piece.Color.WHITE);
 		board[0][6] = factory.getPiece(piecesPackage.Piece.Type.KNIGHT, piecesPackage.Piece.Color.WHITE);
 		board[0][7] = factory.getPiece(piecesPackage.Piece.Type.ROOK, piecesPackage.Piece.Color.WHITE);
@@ -30,8 +30,8 @@ public class BoardImpl extends AbstractBoard implements Board {
 		board[7][0] = factory.getPiece(piecesPackage.Piece.Type.ROOK, piecesPackage.Piece.Color.BLACK);
 		board[7][1] = factory.getPiece(piecesPackage.Piece.Type.KNIGHT, piecesPackage.Piece.Color.BLACK);
 		board[7][2] = factory.getPiece(piecesPackage.Piece.Type.BISHOP, piecesPackage.Piece.Color.BLACK);
-		board[7][3] = factory.getPiece(piecesPackage.Piece.Type.QUEEN, piecesPackage.Piece.Color.BLACK);
-		board[7][4] = factory.getPiece(piecesPackage.Piece.Type.KING, piecesPackage.Piece.Color.BLACK);
+		board[7][3] = factory.getPiece(piecesPackage.Piece.Type.KING, piecesPackage.Piece.Color.BLACK);
+		board[7][4] = factory.getPiece(piecesPackage.Piece.Type.QUEEN, piecesPackage.Piece.Color.BLACK);
 		board[7][5] = factory.getPiece(piecesPackage.Piece.Type.BISHOP, piecesPackage.Piece.Color.BLACK);
 		board[7][6] = factory.getPiece(piecesPackage.Piece.Type.KNIGHT, piecesPackage.Piece.Color.BLACK);
 		board[7][7] = factory.getPiece(piecesPackage.Piece.Type.ROOK, piecesPackage.Piece.Color.BLACK);
@@ -46,10 +46,10 @@ public class BoardImpl extends AbstractBoard implements Board {
 		pieces[2] = board[0][2];// Left White Bishop
 		pieces[2].setLocation(new LocationImpl(0, 2));
 		pieces[2].setArrayLocation(2);
-		pieces[3] = board[0][3];// White Queen
+		pieces[3] = board[0][3];// White King
 		pieces[3].setLocation(new LocationImpl(0, 3));
 		pieces[3].setArrayLocation(3);
-		pieces[4] = board[0][4];// White King
+		pieces[4] = board[0][4];// White Queen
 		pieces[4].setLocation(new LocationImpl(0, 4));
 		pieces[4].setArrayLocation(4);
 		pieces[5] = board[0][5];// Right White Bishop
@@ -94,10 +94,10 @@ public class BoardImpl extends AbstractBoard implements Board {
 		pieces[18] = board[7][2];// Left Black Bishop
 		pieces[18].setLocation(new LocationImpl(7, 2));
 		pieces[18].setArrayLocation(18);
-		pieces[19] = board[7][3];// Black Queen
+		pieces[19] = board[7][3];// Black King
 		pieces[19].setLocation(new LocationImpl(7, 3));
 		pieces[19].setArrayLocation(19);
-		pieces[20] = board[7][4];// Black King
+		pieces[20] = board[7][4];// Black Queen
 		pieces[20].setLocation(new LocationImpl(7, 4));
 		pieces[20].setArrayLocation(20);
 		pieces[21] = board[7][5];// Right Black Bishop

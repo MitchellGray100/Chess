@@ -34,15 +34,15 @@ public class PiecesArrayTests {
 	@Test
 	public void WhiteQueenPosTest() {
 		Board chess = new BoardImpl();
-		assertSame((chess.piecesGetter(3)).getType(), Piece.Type.QUEEN);
-		assertSame((chess.piecesGetter(3)).getColor(), Piece.Color.WHITE);
+		assertSame((chess.piecesGetter(4)).getType(), Piece.Type.QUEEN);
+		assertSame((chess.piecesGetter(4)).getColor(), Piece.Color.WHITE);
 	}
 
 	@Test
 	public void WhiteKingPosTest() {
 		Board chess = new BoardImpl();
-		assertSame((chess.piecesGetter(4)).getType(), Piece.Type.KING);
-		assertSame((chess.piecesGetter(4)).getColor(), Piece.Color.WHITE);
+		assertSame((chess.piecesGetter(3)).getType(), Piece.Type.KING);
+		assertSame((chess.piecesGetter(3)).getColor(), Piece.Color.WHITE);
 	}
 
 	@Test
@@ -99,15 +99,15 @@ public class PiecesArrayTests {
 	@Test
 	public void BlackQueenPosTest() {
 		Board chess = new BoardImpl();
-		assertSame((chess.piecesGetter(19)).getType(), Piece.Type.QUEEN);
-		assertSame((chess.piecesGetter(19)).getColor(), Piece.Color.BLACK);
+		assertSame((chess.piecesGetter(20)).getType(), Piece.Type.QUEEN);
+		assertSame((chess.piecesGetter(20)).getColor(), Piece.Color.BLACK);
 	}
 
 	@Test
 	public void BlackKingPosTest() {
 		Board chess = new BoardImpl();
-		assertSame((chess.piecesGetter(20)).getType(), Piece.Type.KING);
-		assertSame((chess.piecesGetter(20)).getColor(), Piece.Color.BLACK);
+		assertSame((chess.piecesGetter(19)).getType(), Piece.Type.KING);
+		assertSame((chess.piecesGetter(19)).getColor(), Piece.Color.BLACK);
 	}
 
 	@Test

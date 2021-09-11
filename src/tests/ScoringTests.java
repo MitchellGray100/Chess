@@ -75,7 +75,7 @@ public class ScoringTests {
 	@Test
 	public void scoringWhiteQueenTest() {
 		Board chess = new BoardImpl();
-		chess.changeScore(0, 3);
+		chess.changeScore(0, 4);
 		assertEquals(0, chess.getWhitePoints());
 		assertEquals(9, chess.getBlackPoints());
 	}
@@ -83,7 +83,7 @@ public class ScoringTests {
 	@Test
 	public void scoringBlacQueenTest() {
 		Board chess = new BoardImpl();
-		chess.changeScore(7, 3);
+		chess.changeScore(7, 4);
 		assertEquals(9, chess.getWhitePoints());
 		assertEquals(0, chess.getBlackPoints());
 	}
@@ -91,7 +91,7 @@ public class ScoringTests {
 	@Test
 	public void scoringWhiteKingTest() {
 		Board chess = new BoardImpl();
-		chess.changeScore(0, 4);
+		chess.changeScore(0, 3);
 		assertEquals(0, chess.getWhitePoints());
 		assertEquals(100, chess.getBlackPoints());
 	}
@@ -99,7 +99,7 @@ public class ScoringTests {
 	@Test
 	public void scoringBlackKingTest() {
 		Board chess = new BoardImpl();
-		chess.changeScore(7, 4);
+		chess.changeScore(7, 3);
 		assertEquals(100, chess.getWhitePoints());
 		assertEquals(0, chess.getBlackPoints());
 	}
