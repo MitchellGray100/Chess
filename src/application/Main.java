@@ -115,11 +115,13 @@ public class Main extends Application {
 								.isValidMove(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis())
 								.toBoolean()) {
 							game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis());
-
-//						pieceBoard[location.getXAxis()][location.getYAxis()] = pieceBoard[movingPieceX][movingPieceY];
+							game.setSquareInfo(movingPieceX, movingPieceY, null);
+//							pieceBoard[location.getXAxis()][location
+//									.getYAxis()] = pieceBoard[movingPieceX][movingPieceY];
 //						pieceBoard[location.getXAxis()][location.getYAxis()].setEffect(null);
-//						pieceBoard[movingPieceX][movingPieceY] = new Piece(pieceBoard[movingPieceX][movingPieceY].color,
-//								new LocationImpl(movingPieceX, movingPieceY));
+//							pieceBoard[movingPieceX][movingPieceY] = new Piece(
+//									pieceBoard[movingPieceX][movingPieceY].color,
+//									new LocationImpl(movingPieceX, movingPieceY));
 
 							drawBoardPieces();
 							removeValidMoves();
@@ -177,7 +179,7 @@ public class Main extends Application {
 						break;
 					}
 				} catch (NullPointerException ex) {
-
+					pieceBoard[r][c].text.setText("");
 				}
 				try {
 					switch (game.squareInfo(r, c).getColor()) {
@@ -192,7 +194,7 @@ public class Main extends Application {
 
 					}
 				} catch (NullPointerException ex) {
-
+					pieceBoard[r][c].text.setText("");
 				}
 			}
 

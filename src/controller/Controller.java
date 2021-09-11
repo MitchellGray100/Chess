@@ -108,4 +108,6 @@ public interface Controller {
 
 	public boolean putsKingInCheck(int x, int y, int r, int c);
 
+	public void setSquareInfo(int x, int y, Piece piece);
+
 }

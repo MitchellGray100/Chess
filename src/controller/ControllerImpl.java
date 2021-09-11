@@ -169,6 +169,10 @@ public class ControllerImpl implements Controller {
 		return board.squareInfo(x, y);
 	}
 
+	public void setSquareInfo(int x, int y, Piece piece) {
+		board.changeSquare(x, y, piece);
+	}
+
 	public ArrayList<LocationImpl> validMoveList(int x, int y) {
 		ArrayList<LocationImpl> list = new ArrayList<>();
 
