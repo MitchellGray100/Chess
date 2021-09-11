@@ -1,6 +1,0 @@
-<resources>
-    <string name="app_name">Chess</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="chess_board_description">Chess Board></string>
-</resources>
