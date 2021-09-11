@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -81,23 +82,26 @@ public class Main extends Application {
 		private Text text = new Text();
 		private LocationImpl location;
 		private Color color;
+		private Circle indicator = new Circle(50, 50, 20, null);
 
 		public Piece(Color color, LocationImpl location) {
 			this.color = color;
 			this.location = location;
 			Rectangle border = new Rectangle(100, 100);
+
+//			indicator.setFill(Color.GREEN);
 			border.setFill(color);
-			border.setStroke(null);
+//			border.setStroke(null);
 			text.setFont(Font.font(12));
 			text.setX(this.getLayoutX());
 			text.setY(this.getLayoutY());
 			setAlignment(Pos.CENTER);
-			getChildren().addAll(border, text);
-			borderGlow.setOffsetY(0f);
-			borderGlow.setOffsetX(0f);
-			borderGlow.setColor(Color.DARKGREEN);
-			borderGlow.setWidth(110);
-			borderGlow.setHeight(110);
+			getChildren().addAll(border, indicator, text);
+//			borderGlow.setOffsetY(0f);
+//			borderGlow.setOffsetX(0f);
+//			borderGlow.setColor(Color.DARKGREEN);
+//			borderGlow.setWidth(110);
+//			borderGlow.setHeight(110);
 
 			setOnMouseClicked(event -> {
 
@@ -207,7 +211,7 @@ public class Main extends Application {
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				{
-					pieceBoard[r][c].setEffect(null);
+					pieceBoard[r][c].indicator.setFill(null);
 				}
 			}
 		}
@@ -219,7 +223,8 @@ public class Main extends Application {
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				if (game.isValidMove(x, y, r, c).toBoolean() && !game.putsKingInCheck(x, y, r, c)) {
-					pieceBoard[r][c].setEffect(borderGlow);
+					pieceBoard[r][c].indicator.setFill(Color.LIME);
+					;
 				}
 			}
 		}
