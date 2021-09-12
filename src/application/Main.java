@@ -27,12 +27,16 @@ public class Main extends Application {
 	private boolean clicked = false;
 	private int movingPieceX = -1;
 	private int movingPieceY = -1;
+	private int blackScore = game.getScore(piecesPackage.Piece.Color.BLACK);
+	private int whiteScore = game.getScore(piecesPackage.Piece.Color.WHITE);
+	private ScoreTile[] scores = new ScoreTile[2];
 
 	private Parent createContent() {
 		GridPane grid = new GridPane();
 		GridPane gridWithFrame = new GridPane();
 		GridPane frameWithIndexes = new GridPane();
-		root.setPrefSize(1000, 1000);
+		GridPane indexesWithScore = new GridPane();
+		root.setPrefSize(1200, 1200);
 
 		// GRID BUILDING
 		for (int i = 0; i < 8; i++) {
@@ -87,8 +91,15 @@ public class Main extends Application {
 		}
 		frameWithIndexes.add(gridWithFrame, 1, 1, 9, 9);
 		// frameWithIndexes.setGridLinesVisible(true);
-		// frameWithIndexes.add(new ScoreTile(Color.BLUE), 0, 2);
-		root.getChildren().addAll(frameWithIndexes);
+		frameWithIndexes.setAlignment(Pos.CENTER_LEFT);
+		// SCORE BUILDING
+		scores[0] = new ScoreTile(Color.GRAY, "Black Score: " + blackScore);
+		scores[1] = new ScoreTile(Color.GRAY, "White Score: " + whiteScore);
+		indexesWithScore.add(frameWithIndexes, 0, 0, 2, 2);
+		indexesWithScore.add(scores[0], 0, 2);
+		indexesWithScore.add(scores[1], 1, 2);
+		indexesWithScore.setGridLinesVisible(true);
+		root.getChildren().addAll(indexesWithScore);
 		drawBoardPieces();
 		return root;
 	}
@@ -152,14 +163,20 @@ public class Main extends Application {
 
 	private class ScoreTile extends StackPane {
 		private Color color;
+		private Text score = new Text();
 
-		public ScoreTile(Color color) {
+		public ScoreTile(Color color, String input) {
 			this.color = color;
-			Rectangle border = new Rectangle(800, 100);
+			Rectangle border = new Rectangle(450, 100);
+			score.setText(input);
+			score.setX(this.getLayoutX());
+			score.setY(this.getLayoutY());
+			score.setFont(Font.font(40));
 			border.setFill(color);
 			border.setStroke(color.RED);
-			setAlignment(Pos.CENTER_RIGHT);
-			getChildren().addAll(border);
+			setAlignment(Pos.CENTER);
+
+			getChildren().addAll(border, score);
 
 		};
 	}
@@ -250,7 +267,7 @@ public class Main extends Application {
 //							pieceBoard[movingPieceX][movingPieceY] = new Piece(
 //									pieceBoard[movingPieceX][movingPieceY].color,
 //									new LocationImpl(movingPieceX, movingPieceY));
-
+							updateScores();
 							drawBoardPieces();
 							removeValidMoves();
 							clicked = false;
@@ -271,6 +288,7 @@ public class Main extends Application {
 					}
 				} else {
 					game.aiMove(piecesPackage.Piece.Color.WHITE);
+					updateScores();
 					drawBoardPieces();
 					game.incrementTurns();
 				}
@@ -337,6 +355,11 @@ public class Main extends Application {
 				}
 			}
 		}
+	}
+
+	public void updateScores() {
+		scores[0].score.setText("Black Score: " + Integer.toString(game.getScore(piecesPackage.Piece.Color.BLACK)));
+		scores[1].score.setText("White Score: " + Integer.toString(game.getScore(piecesPackage.Piece.Color.WHITE)));
 	}
 
 	public void displayValidMoves(LocationImpl location) {

@@ -598,8 +598,8 @@ public abstract class AbstractBoard implements Board {
 			if (whitePoints > blackPoints) {
 				whitePoints += ((board[r][c])).getValue();
 			} else if ((whitePoints < blackPoints) && (whitePoints + ((board[r][c])).getValue() > blackPoints)) {
+				whitePoints += ((board[r][c])).getValue() - blackPoints;
 				blackPoints = 0;
-				whitePoints += ((board[r][c])).getValue();
 			} else if ((whitePoints < blackPoints) && (whitePoints + ((board[r][c])).getValue() < blackPoints)) {
 				blackPoints -= board[r][c].getValue();
 			} else if ((whitePoints < blackPoints) && (whitePoints + ((board[r][c])).getValue() == blackPoints)) {
@@ -610,8 +610,8 @@ public abstract class AbstractBoard implements Board {
 			if (blackPoints > whitePoints) {
 				blackPoints += ((board[r][c])).getValue();
 			} else if ((blackPoints < whitePoints) && (blackPoints + board[r][c].getValue() > whitePoints)) {
+				blackPoints += ((board[r][c])).getValue() - whitePoints;
 				whitePoints = 0;
-				blackPoints += ((board[r][c])).getValue();
 			} else if ((blackPoints < whitePoints) && (blackPoints + ((board[r][c])).getValue() < whitePoints)) {
 				whitePoints -= board[r][c].getValue();
 			} else if ((blackPoints < whitePoints) && (blackPoints + ((board[r][c])).getValue() == whitePoints)) {
