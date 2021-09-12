@@ -372,8 +372,8 @@ public class Main extends Application {
 	}
 
 	public void lastPieceColor() {
-		pieceBoard[lastMovementX][lastMovementY].indicator.setFill(Color.YELLOW);
-		pieceBoard[movedPieceX][movedPieceY].indicator.setFill(Color.YELLOW);
+		pieceBoard[lastMovementX][lastMovementY].indicator.setFill(Color.GOLD);
+		pieceBoard[movedPieceX][movedPieceY].indicator.setFill(Color.GOLD);
 	}
 
 	public void removeLastPieceColor() {
