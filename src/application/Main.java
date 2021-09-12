@@ -36,7 +36,7 @@ public class Main extends Application {
 		GridPane gridWithFrame = new GridPane();
 		GridPane frameWithIndexes = new GridPane();
 		GridPane indexesWithScore = new GridPane();
-		root.setPrefSize(1200, 1200);
+		root.setPrefSize(1400, 1050);
 
 		// GRID BUILDING
 		for (int i = 0; i < 8; i++) {
@@ -92,13 +92,14 @@ public class Main extends Application {
 		frameWithIndexes.add(gridWithFrame, 1, 1, 9, 9);
 		// frameWithIndexes.setGridLinesVisible(true);
 		frameWithIndexes.setAlignment(Pos.CENTER_LEFT);
+
 		// SCORE BUILDING
 		scores[0] = new ScoreTile(Color.GRAY, "Black Score: " + blackScore);
 		scores[1] = new ScoreTile(Color.GRAY, "White Score: " + whiteScore);
 		indexesWithScore.add(frameWithIndexes, 0, 0, 2, 2);
-		indexesWithScore.add(scores[0], 0, 2);
-		indexesWithScore.add(scores[1], 1, 2);
-		indexesWithScore.setGridLinesVisible(true);
+		indexesWithScore.add(scores[0], 2, 4);
+		indexesWithScore.add(scores[1], 2, 0);
+		// indexesWithScore.setGridLinesVisible(true);
 		root.getChildren().addAll(indexesWithScore);
 		drawBoardPieces();
 		return root;

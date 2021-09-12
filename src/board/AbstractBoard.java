@@ -431,6 +431,14 @@ public abstract class AbstractBoard implements Board {
 					board[r][c].setMoved(true);
 					board[r][c].setArrayLocation(arrayLocation);
 					board[r][c].setLocation(new LocationImpl(r, c));
+					if (board[r][c].getColor() == Piece.Color.WHITE) {
+						whitePoints--;
+					} else {
+						blackPoints--;
+					}
+					board[r][c].setValue(-board[r][c].getValue());
+					changeScore(r, c);
+					board[r][c].setValue(-board[r][c].getValue());
 					pieces[arrayLocation] = board[r][c];
 				}
 
