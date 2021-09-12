@@ -40,6 +40,7 @@ public class Main extends Application {
 	private int lastMovementY = -1;
 	private int movedPieceX = -1;
 	private int movedPieceY = -1;
+	private Image image = null;
 
 	private Parent createContent() {
 		GridPane grid = new GridPane();
@@ -225,8 +226,7 @@ public class Main extends Application {
 
 	private class Piece extends StackPane {
 		// private Text text = new Text();
-		private Image image = null;
-		private ImageView imageView = new ImageView(image);
+		private ImageView imageView = null;
 		private LocationImpl location;
 		private Color color;
 		private Circle indicator = new Circle(70, 70, 32, null);
@@ -267,7 +267,14 @@ public class Main extends Application {
 				if (game.getTurns() % 2 != 0) {
 					if (event.getButton() == MouseButton.PRIMARY) {
 
-						if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null
+						if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
+							System.out.println("White Won The Game!");
+						} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
+							System.out.println("Black Won The Game!");
+						} else if (game.isStalemate(piecesPackage.Piece.Color.BLACK)
+								|| game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
+							System.out.println("STALEMATE. Tie Game");
+						} else if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null
 								&& game.squareInfo(location.getXAxis(), location.getYAxis())
 										.getColor() != piecesPackage.Piece.Color.WHITE) {
 							displayValidMoves(location);
@@ -287,10 +294,12 @@ public class Main extends Application {
 //							pieceBoard[movingPieceX][movingPieceY] = new Piece(
 //									pieceBoard[movingPieceX][movingPieceY].color,
 //									new LocationImpl(movingPieceX, movingPieceY));
+
 							updateScores();
 							drawBoardPieces();
 							removeValidMoves();
 							removeLastPieceColor();
+
 							movedPieceX = location.getXAxis();
 							movedPieceY = location.getYAxis();
 							lastMovementX = movingPieceX;
@@ -313,14 +322,16 @@ public class Main extends Application {
 						movingPieceY = -1;
 					}
 				} else {
-					LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
+
 					removeLastPieceColor();
+					LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
 					movedPieceX = returner[0].getXAxis();
 					movedPieceY = returner[0].getYAxis();
 					lastMovementX = returner[1].getXAxis();
 					lastMovementY = returner[1].getYAxis();
 					lastPieceColor();
 					game.aiMove(piecesPackage.Piece.Color.WHITE);
+
 					updateScores();
 					drawBoardPieces();
 					game.incrementTurns();
@@ -331,12 +342,6 @@ public class Main extends Application {
 	}
 
 	public void drawBoardPieces() {
-		FileInputStream pawnImage = null;
-		try {
-			pawnImage = new FileInputStream("src/White Pawn.png");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				try {
@@ -496,7 +501,6 @@ public class Main extends Application {
 
 		primaryStage.show();
 		primaryStage.setScene(new Scene(createContent()));
-
 	}
 
 	public static void main(String[] args) {

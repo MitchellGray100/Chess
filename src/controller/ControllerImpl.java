@@ -142,11 +142,11 @@ public class ControllerImpl implements Controller {
 		int x;
 		int y;
 		if (color == piecesPackage.Piece.Color.WHITE) {
-			x = board.piecesGetter(4).getLocation().getXAxis();
-			y = board.piecesGetter(4).getLocation().getYAxis();
+			x = board.piecesGetter(3).getLocation().getXAxis();
+			y = board.piecesGetter(3).getLocation().getYAxis();
 		} else {
-			x = board.piecesGetter(24).getLocation().getXAxis();
-			y = board.piecesGetter(24).getLocation().getYAxis();
+			x = board.piecesGetter(19).getLocation().getXAxis();
+			y = board.piecesGetter(19).getLocation().getYAxis();
 		}
 		return board.isCheckmate(x, y);
 	}
