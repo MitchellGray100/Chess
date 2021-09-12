@@ -1,5 +1,8 @@
 package application;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import controller.Controller;
 import controller.ControllerImpl;
 import javafx.application.Application;
@@ -7,6 +10,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -219,12 +224,24 @@ public class Main extends Application {
 	}
 
 	private class Piece extends StackPane {
-		private Text text = new Text();
+		// private Text text = new Text();
+		private Image image = null;
+		private ImageView imageView = new ImageView(image);
 		private LocationImpl location;
 		private Color color;
-		private Circle indicator = new Circle(50, 50, 20, null);
+		private Circle indicator = new Circle(70, 70, 32, null);
 
 		public Piece(Color color, LocationImpl location) {
+			FileInputStream pawnImage = null;
+			try {
+				pawnImage = new FileInputStream("src/Black Pawn.png");
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			imageView = new ImageView(image);
+			imageView.setFitHeight(50);
+			imageView.setFitWidth(50);
 			this.color = color;
 			this.location = location;
 			Rectangle border = new Rectangle(100, 100);
@@ -232,11 +249,13 @@ public class Main extends Application {
 //			indicator.setFill(Color.GREEN);
 			border.setFill(color);
 //			border.setStroke(null);
-			text.setFont(Font.font(12));
-			text.setX(this.getLayoutX());
-			text.setY(this.getLayoutY());
+//			text.setFont(Font.font(12));
+			imageView.setX(this.getLayoutX());
+			imageView.setY(this.getLayoutY());
+//			text.setX(this.getLayoutX());
+//			text.setY(this.getLayoutY());
 			setAlignment(Pos.CENTER);
-			getChildren().addAll(border, indicator, text);
+			getChildren().addAll(border, indicator, imageView);
 //			borderGlow.setOffsetY(0f);
 //			borderGlow.setOffsetX(0f);
 //			borderGlow.setColor(Color.DARKGREEN);
@@ -307,55 +326,61 @@ public class Main extends Application {
 					game.incrementTurns();
 				}
 			});
-		};
 
+		};
 	}
 
 	public void drawBoardPieces() {
+		FileInputStream pawnImage = null;
+		try {
+			pawnImage = new FileInputStream("src/White Pawn.png");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		for (int r = 0; r < 8; r++) {
 			for (int c = 0; c < 8; c++) {
 				try {
 					switch (game.squareInfo(r, c).getType()) {
 					case BISHOP:
-						pieceBoard[r][c].text.setText("Bishop");
+						// pieceBoard[r][c].text.setText("Bishop");
 						break;
 					case KING:
-						pieceBoard[r][c].text.setText("King");
+						// pieceBoard[r][c].text.setText("King");
 						break;
 					case KNIGHT:
-						pieceBoard[r][c].text.setText("Knight");
+						// pieceBoard[r][c].text.setText("Knight");
 						break;
 					case PAWN:
-						pieceBoard[r][c].text.setText("Pawn");
+
+						try {
+							switch (game.squareInfo(r, c).getColor()) {
+							case BLACK:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/Black Pawn.png")));
+								break;
+							case WHITE:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/White Pawn.png")));
+								break;
+							}
+						} catch (NullPointerException | FileNotFoundException ex) {
+
+						}
 						break;
 					case QUEEN:
-						pieceBoard[r][c].text.setText("Queen");
+						// pieceBoard[r][c].text.setText("Queen");
 						break;
 					case ROOK:
-						pieceBoard[r][c].text.setText("Rook");
+						// pieceBoard[r][c].text.setText("Rook");
 						break;
 					default:
-						pieceBoard[r][c].text.setText("");
+						// pieceBoard[r][c].text.setText("");
 						break;
 					}
 				} catch (NullPointerException ex) {
-					pieceBoard[r][c].text.setText("");
+					pieceBoard[r][c].imageView.setImage(null);
 				}
-				try {
-					switch (game.squareInfo(r, c).getColor()) {
-					case BLACK:
-						pieceBoard[r][c].text.setStroke(Color.RED);
-						break;
-					case WHITE:
-						pieceBoard[r][c].text.setStroke(Color.BLUE);
-						break;
-					default:
-						break;
 
-					}
-				} catch (NullPointerException ex) {
-					pieceBoard[r][c].text.setStroke(Color.PURPLE);
-				}
 			}
 
 		}
