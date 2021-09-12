@@ -7,6 +7,7 @@ import controller.Controller;
 import controller.ControllerImpl;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.CacheHint;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.effect.DropShadow;
@@ -40,15 +41,46 @@ public class Main extends Application {
 	private int lastMovementY = -1;
 	private int movedPieceX = -1;
 	private int movedPieceY = -1;
-	private Image image = null;
+	private Image blackBishopImage;
+	private Image whiteBishopImage;
+	private Image blackKnightImage;
+	private Image whiteKnightImage;
+	private Image blackRookImage;
+	private Image whiteRookImage;
+	private Image blackPawnImage;
+	private Image whitePawnImage;
+	private Image blackQueenImage;
+	private Image whiteQueenImage;
+	private Image blackKingImage;
+	private Image whiteKingImage;
+	private Image image;
 
-	private Parent createContent() {
+	private Parent createContent() throws FileNotFoundException {
+		blackBishopImage = new Image(new FileInputStream("src/Black Bishop.png"));
+		whiteBishopImage = new Image(new FileInputStream("src/White Bishop.png"));
+		blackKnightImage = new Image(new FileInputStream("src/Black Knight.png"));
+		whiteKnightImage = new Image(new FileInputStream("src/White Knight.png"));
+		blackRookImage = new Image(new FileInputStream("src/Black Rook.png"));
+		whiteRookImage = new Image(new FileInputStream("src/White Rook.png"));
+		blackPawnImage = new Image(new FileInputStream("src/Black Pawn.png"));
+		whitePawnImage = new Image(new FileInputStream("src/White Pawn.png"));
+		blackQueenImage = new Image(new FileInputStream("src/Black Queen.png"));
+		whiteQueenImage = new Image(new FileInputStream("src/White Queen.png"));
+		blackKingImage = new Image(new FileInputStream("src/Black King.png"));
+		whiteKingImage = new Image(new FileInputStream("src/White King.png"));
 		GridPane grid = new GridPane();
 		GridPane gridWithFrame = new GridPane();
 		GridPane frameWithIndexes = new GridPane();
 		GridPane indexesWithScore = new GridPane();
 		root.setPrefSize(1400, 1050);
-
+		grid.setCache(true);
+		gridWithFrame.setCache(true);
+		frameWithIndexes.setCache(true);
+		indexesWithScore.setCache(true);
+		grid.setCacheHint(CacheHint.SPEED);
+		gridWithFrame.setCacheHint(CacheHint.SPEED);
+		frameWithIndexes.setCacheHint(CacheHint.SPEED);
+		indexesWithScore.setCacheHint(CacheHint.SPEED);
 		// GRID BUILDING
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -61,7 +93,8 @@ public class Main extends Application {
 					piece = new Piece(Color.BLACK, new LocationImpl(i, j));
 					tile = new Tile(Color.BLACK);
 				}
-
+				tile.setCache(true);
+				tile.setCacheHint(CacheHint.SPEED);
 				grid.add(tile, j * 100, i * 100);
 				grid.add(piece, j * 100, i * 100);
 //				piece.setTranslateX(j * 100);
@@ -227,23 +260,17 @@ public class Main extends Application {
 	private class Piece extends StackPane {
 		// private Text text = new Text();
 		private ImageView imageView = null;
-		private LocationImpl location;
-		private Color color;
+		// private LocationImpl location;
+		// private Color color;
 		private Circle indicator = new Circle(70, 70, 32, null);
 
 		public Piece(Color color, LocationImpl location) {
-			FileInputStream pawnImage = null;
-			try {
-				pawnImage = new FileInputStream("src/Black Pawn.png");
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
 
 			imageView = new ImageView(image);
 			imageView.setFitHeight(50);
 			imageView.setFitWidth(50);
-			this.color = color;
-			this.location = location;
+			// this.color = color;
+			// this.location = location;
 			Rectangle border = new Rectangle(100, 100);
 
 //			indicator.setFill(Color.GREEN);
@@ -350,15 +377,13 @@ public class Main extends Application {
 						try {
 							switch (game.squareInfo(r, c).getColor()) {
 							case BLACK:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/Black Bishop.png")));
+								pieceBoard[r][c].imageView.setImage(blackBishopImage);
 								break;
 							case WHITE:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/White Bishop.png")));
+								pieceBoard[r][c].imageView.setImage(whiteBishopImage);
 								break;
 							}
-						} catch (NullPointerException | FileNotFoundException ex) {
+						} catch (NullPointerException ex) {
 
 						}
 						break;
@@ -366,15 +391,13 @@ public class Main extends Application {
 						try {
 							switch (game.squareInfo(r, c).getColor()) {
 							case BLACK:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/Black King.png")));
+								pieceBoard[r][c].imageView.setImage(blackKingImage);
 								break;
 							case WHITE:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/White King.png")));
+								pieceBoard[r][c].imageView.setImage(whiteKingImage);
 								break;
 							}
-						} catch (NullPointerException | FileNotFoundException ex) {
+						} catch (NullPointerException ex) {
 
 						}
 						break;
@@ -382,15 +405,13 @@ public class Main extends Application {
 						try {
 							switch (game.squareInfo(r, c).getColor()) {
 							case BLACK:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/Black Knight.png")));
+								pieceBoard[r][c].imageView.setImage(blackKnightImage);
 								break;
 							case WHITE:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/White Knight.png")));
+								pieceBoard[r][c].imageView.setImage(whiteKnightImage);
 								break;
 							}
-						} catch (NullPointerException | FileNotFoundException ex) {
+						} catch (NullPointerException ex) {
 
 						}
 						break;
@@ -399,15 +420,13 @@ public class Main extends Application {
 						try {
 							switch (game.squareInfo(r, c).getColor()) {
 							case BLACK:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/Black Pawn.png")));
+								pieceBoard[r][c].imageView.setImage(blackPawnImage);
 								break;
 							case WHITE:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/White Pawn.png")));
+								pieceBoard[r][c].imageView.setImage(whitePawnImage);
 								break;
 							}
-						} catch (NullPointerException | FileNotFoundException ex) {
+						} catch (NullPointerException ex) {
 
 						}
 						break;
@@ -415,15 +434,13 @@ public class Main extends Application {
 						try {
 							switch (game.squareInfo(r, c).getColor()) {
 							case BLACK:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/Black Queen.png")));
+								pieceBoard[r][c].imageView.setImage(blackQueenImage);
 								break;
 							case WHITE:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/White Queen.png")));
+								pieceBoard[r][c].imageView.setImage(whiteQueenImage);
 								break;
 							}
-						} catch (NullPointerException | FileNotFoundException ex) {
+						} catch (NullPointerException ex) {
 
 						}
 						break;
@@ -431,20 +448,18 @@ public class Main extends Application {
 						try {
 							switch (game.squareInfo(r, c).getColor()) {
 							case BLACK:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/Black Rook.png")));
+								pieceBoard[r][c].imageView.setImage(blackRookImage);
 								break;
 							case WHITE:
-								pieceBoard[r][c].imageView
-										.setImage(new Image(new FileInputStream("src/White Rook.png")));
+								pieceBoard[r][c].imageView.setImage(whiteRookImage);
 								break;
 							}
-						} catch (NullPointerException | FileNotFoundException ex) {
+						} catch (NullPointerException ex) {
 
 						}
 						break;
 					default:
-						// pieceBoard[r][c].text.setText("");
+						pieceBoard[r][c].imageView.setImage(null);
 						break;
 					}
 				} catch (NullPointerException ex) {
