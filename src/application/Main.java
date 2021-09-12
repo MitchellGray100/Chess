@@ -54,6 +54,7 @@ public class Main extends Application {
 	private Image blackKingImage;
 	private Image whiteKingImage;
 	private Image image;
+	private boolean endGame = false;
 
 	private Parent createContent() throws FileNotFoundException {
 		blackBishopImage = new Image(new FileInputStream("src/Black Bishop.png"));
@@ -290,30 +291,34 @@ public class Main extends Application {
 //			borderGlow.setHeight(110);
 
 			setOnMouseClicked(event -> {
+				if (!endGame) {
 
-				if (game.getTurns() % 2 != 0) {
-					if (event.getButton() == MouseButton.PRIMARY) {
+					if (game.getTurns() % 2 != 0) {
+						if (event.getButton() == MouseButton.PRIMARY) {
 
-						if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
-							System.out.println("White Won The Game!");
-						} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
-							System.out.println("Black Won The Game!");
-						} else if (game.isStalemate(piecesPackage.Piece.Color.BLACK)) {
-							System.out.println("STALEMATE. Tie Game");
-						} else if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null
-								&& game.squareInfo(location.getXAxis(), location.getYAxis())
-										.getColor() != piecesPackage.Piece.Color.WHITE) {
-							displayValidMoves(location);
-							movingPieceX = location.getXAxis();
-							movingPieceY = location.getYAxis();
-							clicked = true;
-						} else if (clicked
-								&& game.isValidMove(movingPieceX, movingPieceY, location.getXAxis(),
-										location.getYAxis()).toBoolean()
-								&& !game.putsKingInCheck(movingPieceX, movingPieceY, location.getXAxis(),
-										location.getYAxis())) {
-							game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis());
-							game.setSquareInfo(movingPieceX, movingPieceY, null);
+							if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
+								System.out.println("White Won The Game!");
+								endGame = true;
+							} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
+								System.out.println("Black Won The Game!");
+								endGame = true;
+							} else if (game.isStalemate(piecesPackage.Piece.Color.BLACK)) {
+								System.out.println("STALEMATE. Tie Game");
+								endGame = true;
+							} else if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null
+									&& game.squareInfo(location.getXAxis(), location.getYAxis())
+											.getColor() != piecesPackage.Piece.Color.WHITE) {
+								displayValidMoves(location);
+								movingPieceX = location.getXAxis();
+								movingPieceY = location.getYAxis();
+								clicked = true;
+							} else if (clicked
+									&& game.isValidMove(movingPieceX, movingPieceY, location.getXAxis(),
+											location.getYAxis()).toBoolean()
+									&& !game.putsKingInCheck(movingPieceX, movingPieceY, location.getXAxis(),
+											location.getYAxis())) {
+								game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis());
+								game.setSquareInfo(movingPieceX, movingPieceY, null);
 //							pieceBoard[location.getXAxis()][location
 //									.getYAxis()] = pieceBoard[movingPieceX][movingPieceY];
 //						pieceBoard[location.getXAxis()][location.getYAxis()].setEffect(null);
@@ -321,52 +326,120 @@ public class Main extends Application {
 //									pieceBoard[movingPieceX][movingPieceY].color,
 //									new LocationImpl(movingPieceX, movingPieceY));
 
-							updateScores();
-							drawBoardPieces();
-							removeValidMoves();
-							removeLastPieceColor();
+								updateScores();
+								drawBoardPieces();
+								removeValidMoves();
+								removeLastPieceColor();
 
-							movedPieceX = location.getXAxis();
-							movedPieceY = location.getYAxis();
-							lastMovementX = movingPieceX;
-							lastMovementY = movingPieceY;
-							lastPieceColor();
-							clicked = false;
-							movingPieceX = -1;
-							movingPieceY = -1;
-							game.incrementTurns();
-						} else {
+								movedPieceX = location.getXAxis();
+								movedPieceY = location.getYAxis();
+								lastMovementX = movingPieceX;
+								lastMovementY = movingPieceY;
+								lastPieceColor();
+								clicked = false;
+								movingPieceX = -1;
+								movingPieceY = -1;
+								game.incrementTurns();
+
+								if (!endGame) {
+
+									if (game.getTurns() % 2 == 0) {
+										if (event.getButton() == MouseButton.PRIMARY) {
+											if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
+												System.out.println("STALEMATE. Tie Game");
+												endGame = true;
+											}
+											removeLastPieceColor();
+											LocationImpl[] returner = game
+													.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
+											movedPieceX = returner[0].getXAxis();
+											movedPieceY = returner[0].getYAxis();
+											lastMovementX = returner[1].getXAxis();
+											lastMovementY = returner[1].getYAxis();
+											lastPieceColor();
+											game.aiMove(piecesPackage.Piece.Color.WHITE);
+
+											updateScores();
+											drawBoardPieces();
+											game.incrementTurns();
+										}
+									}
+								}
+							} else {
+								removeValidMoves();
+								clicked = false;
+								movingPieceX = -1;
+								movingPieceY = -1;
+							}
+						} else if (event.getButton() == MouseButton.SECONDARY) {
 							removeValidMoves();
 							clicked = false;
 							movingPieceX = -1;
 							movingPieceY = -1;
 						}
-					} else if (event.getButton() == MouseButton.SECONDARY) {
-						removeValidMoves();
-						clicked = false;
-						movingPieceX = -1;
-						movingPieceY = -1;
-					}
-				} else {
-					if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
-						System.out.println("STALEMATE. Tie Game");
-					}
-					removeLastPieceColor();
-					LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
-					movedPieceX = returner[0].getXAxis();
-					movedPieceY = returner[0].getYAxis();
-					lastMovementX = returner[1].getXAxis();
-					lastMovementY = returner[1].getYAxis();
-					lastPieceColor();
-					game.aiMove(piecesPackage.Piece.Color.WHITE);
+					} else {
+						if (!endGame) {
 
-					updateScores();
-					drawBoardPieces();
-					game.incrementTurns();
+							if (game.getTurns() % 2 == 0) {
+								if (event.getButton() == MouseButton.PRIMARY) {
+
+									if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
+										System.out.println("White Won The Game!");
+										endGame = true;
+									} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
+										System.out.println("Black Won The Game!");
+										endGame = true;
+									} else if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
+										System.out.println("STALEMATE. Tie Game");
+										endGame = true;
+									}
+									removeLastPieceColor();
+									LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
+									movedPieceX = returner[0].getXAxis();
+									movedPieceY = returner[0].getYAxis();
+									lastMovementX = returner[1].getXAxis();
+									lastMovementY = returner[1].getYAxis();
+									lastPieceColor();
+									game.aiMove(piecesPackage.Piece.Color.WHITE);
+
+									updateScores();
+									drawBoardPieces();
+									game.incrementTurns();
+								}
+							}
+						}
+					}
 				}
 			});
 
+//			setOnMouseExited(event -> {
+//				if (!endGame) {
+//
+//					if (game.getTurns() % 2 == 0) {
+//						if (event.getButton() == MouseButton.NONE) {
+//							if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
+//								System.out.println("STALEMATE. Tie Game");
+//								endGame = true;
+//							}
+//							removeLastPieceColor();
+//							LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
+//							movedPieceX = returner[0].getXAxis();
+//							movedPieceY = returner[0].getYAxis();
+//							lastMovementX = returner[1].getXAxis();
+//							lastMovementY = returner[1].getYAxis();
+//							lastPieceColor();
+//							game.aiMove(piecesPackage.Piece.Color.WHITE);
+//
+//							updateScores();
+//							drawBoardPieces();
+//							game.incrementTurns();
+//						}
+//					}
+//				}
+//			});
+
 		};
+
 	}
 
 	public void drawBoardPieces() {
@@ -523,6 +596,7 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+
 	}
 
 }

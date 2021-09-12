@@ -842,19 +842,19 @@ public abstract class AbstractBoard implements Board {
 				return (new LocationImpl(100, 100));
 			} else if (x == 0 && y == 3 && board[x][y].isMoved() && r == 0 && c == 5 && board[0][7] != null
 					&& board[0][7].isMoved() && board[0][5] == null && board[0][6] == null && board[0][4] == null
-					&& !putsKingInCheck(0, 3, 0, 5) && !putsKingInCheck(0, 3, 0, 4)) {
+					&& !isCheck(0, 3).toBoolean() && !putsKingInCheck(0, 3, 0, 5) && !putsKingInCheck(0, 3, 0, 4)) {
 				return (new LocationImpl(350, 350));
 			} else if (x == 0 && y == 3 && board[x][y].isMoved() && r == 0 && c == 1 && board[0][0] != null
-					&& board[0][0].isMoved() && board[0][2] == null && board[0][1] == null
+					&& board[0][0].isMoved() && board[0][2] == null && board[0][1] == null && !isCheck(0, 3).toBoolean()
 					&& !putsKingInCheck(0, 3, 0, 1) && !putsKingInCheck(0, 3, 0, 2)) {
 				return (new LocationImpl(310, 310));
 			} else if (x == 7 && y == 3 && board[x][y].isMoved() && r == 7 && c == 1 && board[7][0] != null
-					&& board[7][0].isMoved() && board[7][2] == null && board[7][1] == null
+					&& board[7][0].isMoved() && board[7][2] == null && board[7][1] == null && !isCheck(7, 3).toBoolean()
 					&& !putsKingInCheck(7, 3, 7, 1) && !putsKingInCheck(7, 3, 7, 2)) {
 				return (new LocationImpl(317, 317));
 			} else if (x == 7 && y == 3 && board[x][y].isMoved() && r == 7 && c == 5 && board[7][7] != null
 					&& board[7][7].isMoved() && board[7][5] == null && board[7][6] == null && board[7][4] == null
-					&& !putsKingInCheck(7, 3, 7, 5) && !putsKingInCheck(7, 3, 7, 4)) {
+					&& !isCheck(7, 3).toBoolean() && !putsKingInCheck(7, 3, 7, 5) && !putsKingInCheck(7, 3, 7, 4)) {
 				return (new LocationImpl(357, 357));
 			}
 		}
