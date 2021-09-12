@@ -345,7 +345,13 @@ public class Main extends Application {
 
 									if (game.getTurns() % 2 == 0) {
 										if (event.getButton() == MouseButton.PRIMARY) {
-											if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
+											if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
+												System.out.println("White Won The Game!");
+												endGame = true;
+											} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
+												System.out.println("Black Won The Game!");
+												endGame = true;
+											} else if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
 												System.out.println("STALEMATE. Tie Game");
 												endGame = true;
 											}

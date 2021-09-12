@@ -1132,6 +1132,9 @@ public abstract class AbstractBoard implements Board {
 		if (board[x][y].getColor() != Piece.Color.WHITE) {
 			for (int i = 0; i < 16; i++) {
 				if (i != 3) {
+					if (pieces[i] == null) {
+						continue;
+					}
 					xCord = pieces[i].getLocation().getXAxis();
 					yCord = pieces[i].getLocation().getYAxis();
 					for (int k = 0; k < list.size(); k++) {
@@ -1146,6 +1149,9 @@ public abstract class AbstractBoard implements Board {
 		} else {
 			for (int i = 16; i < 32; i++) {
 				if (i != 19) {
+					if (pieces[i] == null) {
+						continue;
+					}
 					xCord = pieces[i].getLocation().getXAxis();
 					yCord = pieces[i].getLocation().getYAxis();
 					for (int k = 0; k < list.size(); k++) {
@@ -1179,8 +1185,11 @@ public abstract class AbstractBoard implements Board {
 	public boolean isStalemate(Piece.Color color) {
 		int xCord;
 		int yCord;
-
+		int kingXCord;
+		int kingYCord;
 		if (color == Piece.Color.WHITE) {
+			kingXCord = pieces[3].getLocation().getXAxis();
+			kingYCord = pieces[3].getLocation().getYAxis();
 			for (int i = 0; i < 16; i++) {
 				if (pieces[i] == null) {
 					continue;
@@ -1192,14 +1201,30 @@ public abstract class AbstractBoard implements Board {
 					if (isStalemateHelper(xCord, yCord, xCord - 1, yCord)
 							|| isStalemateHelper(xCord, yCord, xCord, yCord - 1)
 							|| isStalemateHelper(xCord, yCord, xCord + 1, yCord)
-							|| isStalemateHelper(xCord, yCord, xCord, yCord + 1)) {
+							|| isStalemateHelper(xCord, yCord, xCord, yCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord + 1)) {
 						return false;
 					}
 				} else if (pieces[i].getType() == Piece.Type.BISHOP) {
 					if (isStalemateHelper(xCord, yCord, xCord + 1, yCord + 1)
 							|| isStalemateHelper(xCord, yCord, xCord - 1, yCord - 1)
 							|| isStalemateHelper(xCord, yCord, xCord + 1, yCord - 1)
-							|| isStalemateHelper(xCord, yCord, xCord - 1, yCord + 1)) {
+							|| isStalemateHelper(xCord, yCord, xCord - 1, yCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord + 1)) {
 						return false;
 					}
 				} else if (pieces[i].getType() == Piece.Type.QUEEN || pieces[i].getType() == Piece.Type.KING) {
@@ -1210,7 +1235,15 @@ public abstract class AbstractBoard implements Board {
 							|| isStalemateHelper(xCord, yCord, xCord - 1, yCord)
 							|| isStalemateHelper(xCord, yCord, xCord, yCord - 1)
 							|| isStalemateHelper(xCord, yCord, xCord + 1, yCord)
-							|| isStalemateHelper(xCord, yCord, xCord, yCord + 1)) {
+							|| isStalemateHelper(xCord, yCord, xCord, yCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord + 1)) {
 						return false;
 					}
 				} else if (pieces[i].getType() == Piece.Type.PAWN) {
@@ -1219,7 +1252,15 @@ public abstract class AbstractBoard implements Board {
 							|| isStalemateHelper(xCord, yCord, xCord + 1, yCord - 1)
 							|| isStalemateHelper(xCord, yCord, xCord - 1, yCord + 1)
 							|| isStalemateHelper(xCord, yCord, xCord - 1, yCord)
-							|| isStalemateHelper(xCord, yCord, xCord + 1, yCord)) {
+							|| isStalemateHelper(xCord, yCord, xCord + 1, yCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord + 1)) {
 						return false;
 					}
 				} else if (pieces[i].getType() == Piece.Type.KNIGHT) {
@@ -1230,13 +1271,24 @@ public abstract class AbstractBoard implements Board {
 							|| isStalemateHelper(xCord, yCord, xCord + 1, yCord - 2)
 							|| isStalemateHelper(xCord, yCord, xCord + 1, yCord + 2)
 							|| isStalemateHelper(xCord, yCord, xCord + 2, yCord + 1)
-							|| isStalemateHelper(xCord, yCord, xCord + 2, yCord - 1)) {
+							|| isStalemateHelper(xCord, yCord, xCord + 2, yCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord - 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord + 1, kingYCord + 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord - 1)
+							|| isStalemateHelper(kingXCord, kingYCord, kingXCord, kingYCord + 1)) {
 						return false;
 					}
 				}
 
 			}
 		} else {
+
+			kingXCord = pieces[19].getLocation().getXAxis();
+			kingYCord = pieces[19].getLocation().getYAxis();
 			for (int i = 16; i < 32; i++) {
 				if (pieces[i] == null) {
 					continue;

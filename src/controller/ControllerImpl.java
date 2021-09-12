@@ -148,7 +148,11 @@ public class ControllerImpl implements Controller {
 			x = board.piecesGetter(19).getLocation().getXAxis();
 			y = board.piecesGetter(19).getLocation().getYAxis();
 		}
-		return board.isCheckmate(x, y);
+		if (board.isCheck(x, y).toBoolean()) {
+			return board.isCheckmate(board.isCheck(x, y).getXAxis(), board.isCheck(x, y).getYAxis());
+		} else {
+			return false;
+		}
 	}
 
 	public void aiMove(Piece.Color color) {
