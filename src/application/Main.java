@@ -342,13 +342,52 @@ public class Main extends Application {
 				try {
 					switch (game.squareInfo(r, c).getType()) {
 					case BISHOP:
-						// pieceBoard[r][c].text.setText("Bishop");
+						try {
+							switch (game.squareInfo(r, c).getColor()) {
+							case BLACK:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/Black Bishop.png")));
+								break;
+							case WHITE:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/White Bishop.png")));
+								break;
+							}
+						} catch (NullPointerException | FileNotFoundException ex) {
+
+						}
 						break;
 					case KING:
-						// pieceBoard[r][c].text.setText("King");
+						try {
+							switch (game.squareInfo(r, c).getColor()) {
+							case BLACK:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/Black King.png")));
+								break;
+							case WHITE:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/White King.png")));
+								break;
+							}
+						} catch (NullPointerException | FileNotFoundException ex) {
+
+						}
 						break;
 					case KNIGHT:
-						// pieceBoard[r][c].text.setText("Knight");
+						try {
+							switch (game.squareInfo(r, c).getColor()) {
+							case BLACK:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/Black Knight.png")));
+								break;
+							case WHITE:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/White Knight.png")));
+								break;
+							}
+						} catch (NullPointerException | FileNotFoundException ex) {
+
+						}
 						break;
 					case PAWN:
 
@@ -368,10 +407,36 @@ public class Main extends Application {
 						}
 						break;
 					case QUEEN:
-						// pieceBoard[r][c].text.setText("Queen");
+						try {
+							switch (game.squareInfo(r, c).getColor()) {
+							case BLACK:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/Black Queen.png")));
+								break;
+							case WHITE:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/White Queen.png")));
+								break;
+							}
+						} catch (NullPointerException | FileNotFoundException ex) {
+
+						}
 						break;
 					case ROOK:
-						// pieceBoard[r][c].text.setText("Rook");
+						try {
+							switch (game.squareInfo(r, c).getColor()) {
+							case BLACK:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/Black Rook.png")));
+								break;
+							case WHITE:
+								pieceBoard[r][c].imageView
+										.setImage(new Image(new FileInputStream("src/White Rook.png")));
+								break;
+							}
+						} catch (NullPointerException | FileNotFoundException ex) {
+
+						}
 						break;
 					default:
 						// pieceBoard[r][c].text.setText("");
