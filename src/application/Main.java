@@ -298,8 +298,7 @@ public class Main extends Application {
 							System.out.println("White Won The Game!");
 						} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
 							System.out.println("Black Won The Game!");
-						} else if (game.isStalemate(piecesPackage.Piece.Color.BLACK)
-								|| game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
+						} else if (game.isStalemate(piecesPackage.Piece.Color.BLACK)) {
 							System.out.println("STALEMATE. Tie Game");
 						} else if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null
 								&& game.squareInfo(location.getXAxis(), location.getYAxis())
@@ -349,7 +348,9 @@ public class Main extends Application {
 						movingPieceY = -1;
 					}
 				} else {
-
+					if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
+						System.out.println("STALEMATE. Tie Game");
+					}
 					removeLastPieceColor();
 					LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
 					movedPieceX = returner[0].getXAxis();
