@@ -482,12 +482,14 @@ public class Main extends Application {
 	}
 
 	public void lastPieceColor() {
-		pieceBoard[lastMovementX][lastMovementY].indicator.setFill(Color.GOLD);
-		pieceBoard[movedPieceX][movedPieceY].indicator.setFill(Color.GOLD);
+		if (lastMovementX >= 0 && lastMovementY >= 0 && movedPieceX >= 0 && movedPieceY >= 0) {
+			pieceBoard[lastMovementX][lastMovementY].indicator.setFill(Color.GOLD);
+			pieceBoard[movedPieceX][movedPieceY].indicator.setFill(Color.GOLD);
+		}
 	}
 
 	public void removeLastPieceColor() {
-		if (lastMovementX != -1 && lastMovementY != -1 && movedPieceX != -1 && movedPieceY != -1) {
+		if (lastMovementX >= 0 && lastMovementY >= 0 && movedPieceX >= 0 && movedPieceY >= 0) {
 			pieceBoard[lastMovementX][lastMovementY].indicator.setFill(null);
 			pieceBoard[movedPieceX][movedPieceY].indicator.setFill(null);
 		}

@@ -1131,7 +1131,7 @@ public abstract class AbstractBoard implements Board {
 
 		if (board[x][y].getColor() != Piece.Color.WHITE) {
 			for (int i = 0; i < 16; i++) {
-				if (i != 4) {
+				if (i != 3) {
 					xCord = pieces[i].getLocation().getXAxis();
 					yCord = pieces[i].getLocation().getYAxis();
 					for (int k = 0; k < list.size(); k++) {
@@ -1145,7 +1145,7 @@ public abstract class AbstractBoard implements Board {
 			}
 		} else {
 			for (int i = 16; i < 32; i++) {
-				if (i != 20) {
+				if (i != 19) {
 					xCord = pieces[i].getLocation().getXAxis();
 					yCord = pieces[i].getLocation().getYAxis();
 					for (int k = 0; k < list.size(); k++) {
