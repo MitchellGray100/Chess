@@ -69,6 +69,8 @@ public interface Controller {
 	 */
 	int getScore(Piece.Color color);
 
+	public LocationImpl[] aiMoveReturn(Piece.Color color);
+
 	/**
 	 * Returns the piece at the specified square or null if the square is empty
 	 *

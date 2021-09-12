@@ -157,6 +157,10 @@ public class ControllerImpl implements Controller {
 				Piece.Type.QUEEN);
 	}
 
+	public LocationImpl[] aiMoveReturn(Piece.Color color) {
+		return board.aiMove(color);
+	}
+
 	public int getScore(Piece.Color color) {
 		if (color == Piece.Color.WHITE) {
 			return board.getWhitePoints();

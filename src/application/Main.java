@@ -23,6 +23,7 @@ public class Main extends Application {
 	private Controller game = new ControllerImpl();
 	private Pane root = new Pane();
 	private Piece[][] pieceBoard = new Piece[8][8];
+	private Tile[][] tileBoard = new Tile[8][8];
 	private DropShadow borderGlow = new DropShadow();
 	private boolean clicked = false;
 	private int movingPieceX = -1;
@@ -30,6 +31,10 @@ public class Main extends Application {
 	private int blackScore = game.getScore(piecesPackage.Piece.Color.BLACK);
 	private int whiteScore = game.getScore(piecesPackage.Piece.Color.WHITE);
 	private ScoreTile[] scores = new ScoreTile[2];
+	private int lastMovementX = -1;
+	private int lastMovementY = -1;
+	private int movedPieceX = -1;
+	private int movedPieceY = -1;
 
 	private Parent createContent() {
 		GridPane grid = new GridPane();
@@ -58,6 +63,7 @@ public class Main extends Application {
 //				tile.setTranslateX(j * 100);
 //				tile.setTranslateY(i * 100);
 				pieceBoard[i][j] = piece;
+				tileBoard[i][j] = tile;
 				// root.getChildren().addAll(tile, piece);
 
 			}
@@ -107,14 +113,16 @@ public class Main extends Application {
 
 	private class Tile extends StackPane {
 		private Color color;
+		private Rectangle border = new Rectangle(100, 100);
+		private Circle indicator = new Circle(50, 50, 20, null);
 
 		public Tile(Color color) {
 			this.color = color;
-			Rectangle border = new Rectangle(100, 100);
 			border.setFill(color);
-			border.setStroke(color.WHITE);
+			border.setStroke(Color.WHITE);
+			indicator.setFill(Color.RED);
 			setAlignment(Pos.CENTER);
-			getChildren().addAll(border);
+			getChildren().addAll(border, indicator);
 			borderGlow.setOffsetY(0f);
 			borderGlow.setOffsetX(0f);
 			borderGlow.setColor(Color.DARKGREEN);
@@ -125,13 +133,11 @@ public class Main extends Application {
 	}
 
 	private class HorizontalBorderTile extends StackPane {
-		private Color color;
 
 		public HorizontalBorderTile(Color color) {
-			this.color = color;
 			Rectangle border = new Rectangle(100, 10);
 			border.setFill(color);
-			border.setStroke(color.SADDLEBROWN);
+			border.setStroke(Color.SADDLEBROWN);
 			setAlignment(Pos.TOP_CENTER);
 			getChildren().addAll(border);
 			borderGlow.setOffsetY(0f);
@@ -144,13 +150,11 @@ public class Main extends Application {
 	}
 
 	private class VerticalBorderTile extends StackPane {
-		private Color color;
 
 		public VerticalBorderTile(Color color) {
-			this.color = color;
 			Rectangle border = new Rectangle(10, 100);
 			border.setFill(color);
-			border.setStroke(color.SADDLEBROWN);
+			border.setStroke(Color.SADDLEBROWN);
 			setAlignment(Pos.CENTER_RIGHT);
 			getChildren().addAll(border);
 			borderGlow.setOffsetY(0f);
@@ -163,18 +167,16 @@ public class Main extends Application {
 	}
 
 	private class ScoreTile extends StackPane {
-		private Color color;
 		private Text score = new Text();
 
 		public ScoreTile(Color color, String input) {
-			this.color = color;
 			Rectangle border = new Rectangle(450, 100);
 			score.setText(input);
 			score.setX(this.getLayoutX());
 			score.setY(this.getLayoutY());
 			score.setFont(Font.font(40));
 			border.setFill(color);
-			border.setStroke(color.RED);
+			border.setStroke(Color.RED);
 			setAlignment(Pos.CENTER);
 
 			getChildren().addAll(border, score);
@@ -183,13 +185,12 @@ public class Main extends Application {
 	}
 
 	private class LeftTextTile extends StackPane {
-		private Color color;
 		private Text text = new Text();
 
 		public LeftTextTile(String textInput) {
 			Rectangle border = new Rectangle(100, 100);
 			border.setFill(null);
-			border.setStroke(color.WHITE);
+			border.setStroke(Color.WHITE);
 			text.setText(textInput);
 			text.setFont(Font.font(60));
 			text.setX(this.getLayoutX());
@@ -201,13 +202,12 @@ public class Main extends Application {
 	}
 
 	private class TopTextTile extends StackPane {
-		private Color color;
 		private Text text = new Text();
 
 		public TopTextTile(String textInput) {
 			Rectangle border = new Rectangle(100, 100);
 			border.setFill(null);
-			border.setStroke(color.WHITE);
+			border.setStroke(Color.WHITE);
 			text.setText(textInput);
 			text.setFont(Font.font(60));
 			text.setX(this.getLayoutX());
@@ -271,6 +271,12 @@ public class Main extends Application {
 							updateScores();
 							drawBoardPieces();
 							removeValidMoves();
+							removeLastPieceColor();
+							movedPieceX = location.getXAxis();
+							movedPieceY = location.getYAxis();
+							lastMovementX = movingPieceX;
+							lastMovementY = movingPieceY;
+							lastPieceColor();
 							clicked = false;
 							movingPieceX = -1;
 							movingPieceY = -1;
@@ -288,6 +294,13 @@ public class Main extends Application {
 						movingPieceY = -1;
 					}
 				} else {
+					LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
+					removeLastPieceColor();
+					movedPieceX = returner[0].getXAxis();
+					movedPieceY = returner[0].getYAxis();
+					lastMovementX = returner[1].getXAxis();
+					lastMovementY = returner[1].getYAxis();
+					lastPieceColor();
 					game.aiMove(piecesPackage.Piece.Color.WHITE);
 					updateScores();
 					drawBoardPieces();
@@ -355,6 +368,18 @@ public class Main extends Application {
 					pieceBoard[r][c].indicator.setFill(null);
 				}
 			}
+		}
+	}
+
+	public void lastPieceColor() {
+		pieceBoard[lastMovementX][lastMovementY].indicator.setFill(Color.YELLOW);
+		pieceBoard[movedPieceX][movedPieceY].indicator.setFill(Color.YELLOW);
+	}
+
+	public void removeLastPieceColor() {
+		if (lastMovementX != -1 && lastMovementY != -1 && movedPieceX != -1 && movedPieceY != -1) {
+			pieceBoard[lastMovementX][lastMovementY].indicator.setFill(null);
+			pieceBoard[movedPieceX][movedPieceY].indicator.setFill(null);
 		}
 	}
 
