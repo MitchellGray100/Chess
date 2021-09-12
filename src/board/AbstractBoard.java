@@ -138,8 +138,48 @@ public abstract class AbstractBoard implements Board {
 						if (r >= 2 && c >= 2 && r <= 5 && c <= 5) {
 							adder++;
 						}
-						if (pieces[i].getType() == Piece.Type.PAWN && (r == 0 || r == 7)) {
+//						if (pieceValue > 1 && pieceValue != 100) {
+//							adder += 1;
+//						}
+						if (pieces[i].getType() == Piece.Type.PAWN && (r == 0 || r == 7)
+								&& putsPieceInProtection(xAXis, yAxis, r, c)) {
 							adder += 50;
+						}
+						if (isCheck(xAXis, yAxis).toBoolean() && !isProtect(xAXis, yAxis).toBoolean()
+								&& pieceValue > 1) {
+							adder += 10;
+						}
+						if (isCheck(xAXis, yAxis).toBoolean() && !isProtect(xAXis, yAxis).toBoolean()
+								&& pieceValue == 1) {
+							adder += 2;
+						}
+						if (isCheck(xAXis, yAxis).toBoolean() && !isProtect(xAXis, yAxis).toBoolean()) {
+							adder += 10;
+						}
+						if (isCheck(xAXis, yAxis).toBoolean()) {
+							if (isValidMove(xAXis, yAxis, isCheck(xAXis, yAxis).getXAxis(),
+									isCheck(xAXis, yAxis).getYAxis()).toBoolean()
+									&& !isProtect(isCheck(xAXis, yAxis).getXAxis(), isCheck(xAXis, yAxis).getYAxis())
+											.toBoolean()
+									&& r == isCheck(xAXis, yAxis).getXAxis() && c == isCheck(xAXis, yAxis).getYAxis()) {
+								adder += 80;
+							} else if (isValidMove(xAXis, yAxis, isCheck(xAXis, yAxis).getXAxis(),
+									isCheck(xAXis, yAxis).getYAxis()).toBoolean()
+									&& isProtect(isCheck(xAXis, yAxis).getXAxis(), isCheck(xAXis, yAxis).getYAxis())
+											.toBoolean()
+									&& 0 >= pieceValue
+											- board[isCheck(xAXis, yAxis).getXAxis()][isCheck(xAXis, yAxis).getYAxis()]
+													.getValue()
+									&& r == isCheck(xAXis, yAxis).getXAxis() && c == isCheck(xAXis, yAxis).getYAxis()) {
+								adder += 30;
+							} else {
+								adder += 10;
+							}
+
+						}
+						if (pieces[i].getType() == Piece.Type.PAWN && Math.abs(r - xAXis) == 2
+								&& putsPieceInProtection(xAXis, yAxis, r, c)) {
+							adder++;
 						}
 
 						Piece temp1 = board[xAXis][yAxis];
@@ -186,8 +226,7 @@ public abstract class AbstractBoard implements Board {
 
 								maxLocation = new LocationImpl(r, c);
 								pieceLocation = new LocationImpl(xAXis, yAxis);
-							} else if (pieces[i].getType() == Piece.Type.PAWN && Math.abs(r - xAXis) == 2
-									&& maxScore <= 1) {
+							} else if (maxScore <= 1) {
 								maxScore = 1 + adder;
 								maxLocation = new LocationImpl(r, c);
 								pieceLocation = new LocationImpl(xAXis, yAxis);
@@ -215,22 +254,22 @@ public abstract class AbstractBoard implements Board {
 							}
 
 							if (putsEnemyKingInCheckmate(xAXis, yAxis, r, c)) {
-								maxScore = 300;
+								maxScore = 10000;
+								maxLocation = new LocationImpl(r, c);
+								pieceLocation = new LocationImpl(xAXis, yAxis);
+							} else if (pieceValue < oppositePieceValue) {
+								maxScore = 1200 + adder + (oppositePieceValue * 2);
+
+								maxLocation = new LocationImpl(r, c);
+								pieceLocation = new LocationImpl(xAXis, yAxis);
+							} else if (pieceValue <= oppositePieceValue) {
+								maxScore = 1000 + adder + (oppositePieceValue * 2);
+
 								maxLocation = new LocationImpl(r, c);
 								pieceLocation = new LocationImpl(xAXis, yAxis);
 							} else if (putsOppositeKingInCheck(xAXis, yAxis, r, c)
 									&& putsPieceInProtection(xAXis, yAxis, r, c)) {
 								maxScore = 150 + adder;
-
-								maxLocation = new LocationImpl(r, c);
-								pieceLocation = new LocationImpl(xAXis, yAxis);
-							} else if (pieceValue + adder < oppositePieceValue) {
-								maxScore = 100 + adder;
-
-								maxLocation = new LocationImpl(r, c);
-								pieceLocation = new LocationImpl(xAXis, yAxis);
-							} else if (pieceValue <= oppositePieceValue) {
-								maxScore = 50 + adder;
 
 								maxLocation = new LocationImpl(r, c);
 								pieceLocation = new LocationImpl(xAXis, yAxis);
@@ -306,8 +345,33 @@ public abstract class AbstractBoard implements Board {
 						if (putsPieceInProtecting(xAXis, yAxis, r, c)) {
 							adder++;
 						}
-						if (pieces[i].getType() == Piece.Type.PAWN && (r == 0 || r == 7)) {
+						if (pieces[i].getType() == Piece.Type.PAWN && (r == 0 || r == 7)
+								&& putsPieceInProtection(xAXis, yAxis, r, c)) {
 							adder += 50;
+						}
+						if (isCheck(xAXis, yAxis).toBoolean() && !isProtect(xAXis, yAxis).toBoolean()) {
+							adder += 10;
+						}
+						if (isCheck(xAXis, yAxis).toBoolean()) {
+							if (isValidMove(xAXis, yAxis, isCheck(xAXis, yAxis).getXAxis(),
+									isCheck(xAXis, yAxis).getYAxis()).toBoolean()
+									&& !isProtect(isCheck(xAXis, yAxis).getXAxis(), isCheck(xAXis, yAxis).getYAxis())
+											.toBoolean()
+									&& r == isCheck(xAXis, yAxis).getXAxis() && c == isCheck(xAXis, yAxis).getYAxis()) {
+								adder += 80;
+							} else if (isValidMove(xAXis, yAxis, isCheck(xAXis, yAxis).getXAxis(),
+									isCheck(xAXis, yAxis).getYAxis()).toBoolean()
+									&& isProtect(isCheck(xAXis, yAxis).getXAxis(), isCheck(xAXis, yAxis).getYAxis())
+											.toBoolean()
+									&& 0 >= pieceValue
+											- board[isCheck(xAXis, yAxis).getXAxis()][isCheck(xAXis, yAxis).getYAxis()]
+													.getValue()
+									&& r == isCheck(xAXis, yAxis).getXAxis() && c == isCheck(xAXis, yAxis).getYAxis()) {
+								adder += 30;
+							} else {
+								adder += 10;
+							}
+
 						}
 
 						if (board[r][c] == null) {
@@ -337,18 +401,18 @@ public abstract class AbstractBoard implements Board {
 							}
 
 							if (putsEnemyKingInCheckmate(xAXis, yAxis, r, c)) {
-								maxScore = 250;
+								maxScore = 9980;
+							} else if (pieceValue < oppositePieceValue) {
+								maxScore = 1200 + adder + (oppositePieceValue * 2);
+							} else if (pieceValue <= oppositePieceValue) {
+								maxScore = 1000 + adder + (oppositePieceValue * 2);
 							} else if (putsOppositeKingInCheck(xAXis, yAxis, r, c)
 									&& putsPieceInProtection(xAXis, yAxis, r, c)) {
 								maxScore = 150 + adder;
-
-							} else if (pieceValue + adder < oppositePieceValue) {
-								maxScore = 100 + adder;
-							} else if (pieceValue <= oppositePieceValue) {
-								maxScore = 50 + adder;
 							} else if (oppositePieceValue + adder >= maxScore) {
 								maxScore = oppositePieceValue + adder;
 							}
+
 						}
 					}
 				}
@@ -1111,7 +1175,7 @@ public abstract class AbstractBoard implements Board {
 
 	public boolean isCheckmatePieceAttack(int x, int y) {
 		LocationImpl canBeTaken = isCheck(x, y);
-		return !locationToBoolean(canBeTaken) || putsKingInCheck(canBeTaken.getXAxis(), canBeTaken.getYAxis(), x, y);
+		return !locationToBoolean(canBeTaken) || putsKingInCheck(canBeTaken.getXAxis(), canBeTaken.getYAxis(), x, y);// broken????
 
 	}
 
