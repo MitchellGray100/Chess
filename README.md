@@ -15,7 +15,7 @@ is displayed with JavaFX.
 
 Start of game
 
-![Image of Start of Game](https://github.com/MitchellGray100/Chess/readMeImages/Photo1.png)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo1.jpg)
 
 
 
