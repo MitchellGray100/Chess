@@ -27,14 +27,14 @@ Yellow dots show the last piece to move and where that piece moved from.
 
 
 
-Green Dots appear when clicking on a piece to indicate it’s a valid move
+Green Dots appear when clicking on a piece to indicate itâ€™s a valid move
 
 ![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo3.PNG)
 
 
 
 
-The d4 knight will take c3 pawn to gain 1 point.
+The e4 knight will take c3 pawn to gain 1 point.
 
 ![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo4.PNG)
 
