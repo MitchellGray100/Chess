@@ -54,4 +54,4 @@ The AI uses the b1 knight to take the c3 knight to gain 3 points. Points balance
 
 
 Backend Representation of the game (Not the actual GUI)
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/chess%20board%20for%20github%207.0.png)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/chess%20board%20for%20github%208.0.png)
