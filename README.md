@@ -22,24 +22,36 @@ Start of game
 
 Yellow dots show the last piece to move and where that piece moved from.
 
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo2.PNG)
+![Display of Yellow Dots](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo2.PNG)
 
 
 
 
 Green Dots appear when clicking on a piece to indicate it’s a valid move
 
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo3.PNG)
+![Display of Green Dots](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo3.PNG)
 
 
 
 
 The e4 knight will take c3 pawn to gain 1 point.
 
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo4.PNG)
+![Shows the knight before taking pawn](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo4.PNG)
 
 
 
 The AI uses the b1 knight to take the c3 knight to gain 3 points. Points balance out to 2:0.
 
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo5.PNG)
+![Shows the b1 knight after taking c3 knight](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo5.PNG)
+
+
+
+
+
+
+
+
+
+
+Backend Representation of the game (Not the actual GUI)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/chess%20board%20for%20github%207.0.png)
