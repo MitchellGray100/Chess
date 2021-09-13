@@ -15,31 +15,31 @@ is displayed with JavaFX.
 
 Start of game
 
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo1.png)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo1.PNG)
 
 
 
 
 Yellow dots show the last piece to move and where that piece moved from.
 
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo2.png)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo2.PNG)
 
 
 
 
 Green Dots appear when clicking on a piece to indicate it’s a valid move
 
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo3.png)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo3.PNG)
 
 
 
 
 The d4 knight will take c3 pawn to gain 1 point.
 
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo4.png)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo4.PNG)
 
 
 
 The AI uses the b1 knight to take the c3 knight to gain 3 points. Points balance out to 2:0.
 
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo5.png)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo5.PNG)
