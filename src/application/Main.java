@@ -94,6 +94,7 @@ public class Main extends Application {
 					piece = new Piece(Color.BLACK, new LocationImpl(i, j));
 					tile = new Tile(Color.BLACK);
 				}
+
 				tile.setCache(true);
 				tile.setCacheHint(CacheHint.SPEED);
 				grid.add(tile, j * 100, i * 100);
