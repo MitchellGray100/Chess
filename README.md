@@ -36,7 +36,7 @@ Green Dots appear when clicking on a piece to indicate it’s a valid move. Curr
 
 The AI will use the c3 knight to take the e4 knight to gain 3 points.
 
-![Shows the c3 AI knight after taking the e4 knight(https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo4.PNG)
+![Shows the c3 AI knight after taking the e4 knight](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo4.PNG)
 
 
 
@@ -52,4 +52,4 @@ Promotion buttons being clicked. Whatever button is selected is what the pawn wi
 
 
 Backend Representation of the game (Not the actual GUI)
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/ChessGIF.gif)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/chess%20board%20for%20github%208.0.png)
