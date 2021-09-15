@@ -27,22 +27,22 @@ Yellow dots show the last piece to move and where that piece moved from.
 
 
 
-Green Dots appear when clicking on a piece to indicate it’s a valid move
+Green Dots appear when clicking on a piece to indicate it’s a valid move. Currently the black queen is selected.
 
 ![Display of Green Dots](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo3.PNG)
 
 
 
 
-The e4 knight will take c3 pawn to gain 1 point.
+The AI will use the c3 knight to take the e4 knight to gain 3 points.
 
-![Shows the knight before taking pawn](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo4.PNG)
+![Shows the c3 AI knight after taking the e4 knight(https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo4.PNG)
 
 
 
-The AI uses the b1 knight to take the c3 knight to gain 3 points. Points balance out to 2:0.
+The d5 pawn takes the e4 knight to gain 3 points. Points balance out to 0:0.
 
-![Shows the b1 knight after taking c3 knight](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo5.PNG)
+![Shows the d5 pawn after taking e4 knight](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo5.PNG)
 
 
 
@@ -55,3 +55,9 @@ The AI uses the b1 knight to take the c3 knight to gain 3 points. Points balance
 
 Backend Representation of the game (Not the actual GUI)
 ![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/chess%20board%20for%20github%208.0.png)
+
+
+
+
+Promotion buttons being clicked. Whatever button is selected is what the pawn will promote to when promoting.
+![Promotion Buttons switching](https://raw.githubusercontent.com/MitchellGray100/Chess/main/ChessGIF.gif)
