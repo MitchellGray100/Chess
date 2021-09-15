@@ -58,12 +58,12 @@ public class Main extends Application {
 	private Image image;
 	private final Object PAUSE_KEY = new Object();
 	private boolean endGame = false;
-	private boolean clickedPromotion = false;
+	private boolean clickedPromotion = true;
 	private PromotionTile knightTile = new PromotionTile(blackKnightImage, piecesPackage.Piece.Type.KNIGHT);
 	private PromotionTile bishopTile = new PromotionTile(blackBishopImage, piecesPackage.Piece.Type.BISHOP);
 	private PromotionTile queenTile = new PromotionTile(blackQueenImage, piecesPackage.Piece.Type.QUEEN);
 	private PromotionTile rookTile = new PromotionTile(blackRookImage, piecesPackage.Piece.Type.ROOK);
-	private piecesPackage.Piece.Type promotionPieceType = null;
+	private piecesPackage.Piece.Type promotionPieceType = piecesPackage.Piece.Type.QUEEN;
 
 	private Parent createContent() throws FileNotFoundException {
 
@@ -178,6 +178,7 @@ public class Main extends Application {
 		promotionBoard[3] = knightTile;
 		setPromotionImages();
 		removePromotionColors();
+		promotionBoard[0].border.setFill(Color.GRAY);
 		indexesWithScore.add(promotionGrid, 3, 1, 3, 3);
 		promotionGrid.setAlignment(Pos.CENTER);
 		// indexesWithScore.setGridLinesVisible(true);
@@ -332,12 +333,12 @@ public class Main extends Application {
 					}
 				}
 			});
-			setOnMouseMoved(event -> {
-				if (Platform.isNestedLoopRunning() && clickedPromotion == true) {
-					clickedPromotion = false;
-					Platform.exitNestedEventLoop(PAUSE_KEY, null);
-				}
-			});
+//			setOnMouseMoved(event -> {
+//				if (Platform.isNestedLoopRunning() && clickedPromotion == true) {
+//					clickedPromotion = false;
+//					Platform.exitNestedEventLoop(PAUSE_KEY, null);
+//				}
+//			});
 		}
 	}
 
@@ -404,10 +405,12 @@ public class Main extends Application {
 								if ((location.getXAxis() == 0 || location.getXAxis() == 7)
 										&& game.squareInfo(movingPieceX, movingPieceY)
 												.getType() == piecesPackage.Piece.Type.PAWN) {
-									Platform.enterNestedEventLoop(PAUSE_KEY);
+									if (promotionPieceType == null) {
+										Platform.enterNestedEventLoop(PAUSE_KEY);
+									}
 									game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis(),
 											promotionPieceType);
-									promotionPieceType = null;
+
 								} else {
 									game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis(),
 											piecesPackage.Piece.Type.QUEEN);
