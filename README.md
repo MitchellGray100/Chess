@@ -46,18 +46,10 @@ The d5 pawn takes the e4 knight to gain 3 points. Points balance out to 0:0.
 
 
 
-
-
-
-
+Promotion buttons being clicked. Whatever button is selected is what the pawn will promote to when promoting.
+![Promotion Buttons switching](https://raw.githubusercontent.com/MitchellGray100/Chess/main/ChessGIF.gif)
 
 
 
 Backend Representation of the game (Not the actual GUI)
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/chess%20board%20for%20github%208.0.png)
-
-
-
-
-Promotion buttons being clicked. Whatever button is selected is what the pawn will promote to when promoting.
-![Promotion Buttons switching](https://raw.githubusercontent.com/MitchellGray100/Chess/main/ChessGIF.gif)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/ChessGIF.gif)
