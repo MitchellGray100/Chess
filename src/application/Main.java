@@ -167,11 +167,11 @@ public class Main extends Application {
 
 		// PROMOTION BUILDING
 		GridPane promotionGrid = new GridPane();
-		promotionGrid.setGridLinesVisible(true);
-		promotionGrid.add(queenTile, 0, 0);
-		promotionGrid.add(rookTile, 0, 1);
-		promotionGrid.add(bishopTile, 0, 2);
-		promotionGrid.add(knightTile, 0, 3);
+//		promotionGrid.setGridLinesVisible(true);
+		promotionGrid.add(queenTile, 1, 1);
+		promotionGrid.add(rookTile, 1, 2);
+		promotionGrid.add(bishopTile, 1, 3);
+		promotionGrid.add(knightTile, 1, 4);
 		promotionBoard[0] = queenTile;
 		promotionBoard[1] = rookTile;
 		promotionBoard[2] = bishopTile;
@@ -183,6 +183,17 @@ public class Main extends Application {
 		promotionGrid.setAlignment(Pos.CENTER);
 		// indexesWithScore.setGridLinesVisible(true);
 		root.getChildren().addAll(indexesWithScore);
+		LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
+		movedPieceX = returner[0].getXAxis();
+		movedPieceY = returner[0].getYAxis();
+		lastMovementX = returner[1].getXAxis();
+		lastMovementY = returner[1].getYAxis();
+		lastPieceColor();
+		game.aiMove(piecesPackage.Piece.Color.WHITE);
+
+		updateScores();
+		drawBoardPieces();
+		game.incrementTurns();
 		drawBoardPieces();
 		return root;
 	}
@@ -312,6 +323,7 @@ public class Main extends Application {
 			// this.color = color;
 			// this.location = location;
 			border.setFill(Color.WHITE);
+			border.setStroke(Color.BLACK);
 //			indicator.setFill(Color.GREEN);
 
 //			border.setStroke(null);
