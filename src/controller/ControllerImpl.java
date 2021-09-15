@@ -73,41 +73,40 @@ public class ControllerImpl implements Controller {
 		}
 	}
 
-	public boolean move(int x, int y, int r, int c) {
+	public boolean move(int x, int y, int r, int c, piecesPackage.Piece.Type type) {
 
 		Scanner scan = new Scanner(System.in);
 		boolean repeat = true;
-		piecesPackage.Piece.Type type = piecesPackage.Piece.Type.QUEEN;
 
-		if (board.squareInfo(x, y).getType() == piecesPackage.Piece.Type.PAWN && (r == 0 || r == 7)) {
-			while (repeat) {
-				System.out.println("What piece would you like your pawn to promote to? Knight/Bishop/Rook/Queen: ");
-
-				switch (scan.nextLine().toLowerCase()) {
-				case "knight":
-					type = Piece.Type.KNIGHT;
-					repeat = false;
-					break;
-				case "bishop":
-					type = Piece.Type.BISHOP;
-					repeat = false;
-					break;
-				case "rook":
-					type = Piece.Type.ROOK;
-					repeat = false;
-					break;
-				case "queen":
-					type = Piece.Type.QUEEN;
-					repeat = false;
-					break;
-				default:
-					System.out.println("Enter a valid piece.");
-					break;
-
-				}
-
-			}
-		}
+//		if (board.squareInfo(x, y).getType() == piecesPackage.Piece.Type.PAWN && (r == 0 || r == 7)) {
+//			while (repeat) {
+//				System.out.println("What piece would you like your pawn to promote to? Knight/Bishop/Rook/Queen: ");
+//
+//				switch (scan.nextLine().toLowerCase()) {
+//				case "knight":
+//					type = Piece.Type.KNIGHT;
+//					repeat = false;
+//					break;
+//				case "bishop":
+//					type = Piece.Type.BISHOP;
+//					repeat = false;
+//					break;
+//				case "rook":
+//					type = Piece.Type.ROOK;
+//					repeat = false;
+//					break;
+//				case "queen":
+//					type = Piece.Type.QUEEN;
+//					repeat = false;
+//					break;
+//				default:
+//					System.out.println("Enter a valid piece.");
+//					break;
+//
+//				}
+//
+//			}
+//		}
 		return board.move(x, y, r, c, type);
 	}
 
@@ -126,7 +125,7 @@ public class ControllerImpl implements Controller {
 			System.out.println("What is the c value of your piece?: ");
 			int c = scan.nextInt();
 
-			if (!move(x, y, r, c)) {
+			if (!move(x, y, r, c, Piece.Type.QUEEN)) {
 				System.out.println("Please make a valid move.");
 			} else {
 				repeat = false;

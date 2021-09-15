@@ -151,14 +151,14 @@ public abstract class AbstractBoard implements Board {
 						}
 						if (isCheck(xAxis, yAxis).toBoolean() && !isProtect(xAxis, yAxis).toBoolean()
 								&& pieceValue > 1) {
-							adder += 100;
+							adder += 100 + r;
 						}
 						if (isCheck(xAxis, yAxis).toBoolean() && !isProtect(xAxis, yAxis).toBoolean()
 								&& pieceValue == 1) {
-							adder += 2;
+							adder += 2 + r;
 						}
 						if (isCheck(xAxis, yAxis).toBoolean() && !isProtect(xAxis, yAxis).toBoolean()) {
-							adder += 10;
+							adder += 10 + r;
 						}
 						if (isCheck(xAxis, yAxis).toBoolean()) {
 							if (isValidMove(xAxis, yAxis, isCheck(xAxis, yAxis).getXAxis(),
@@ -167,7 +167,7 @@ public abstract class AbstractBoard implements Board {
 											.toBoolean()
 									&& r == isCheck(xAxis, yAxis).getXAxis() && c == isCheck(xAxis, yAxis).getYAxis()
 									&& pieces[i].getType() != Piece.Type.PAWN) {
-								adder += 1200;
+								adder += 1200 + r;
 							} else if (isValidMove(xAxis, yAxis, isCheck(xAxis, yAxis).getXAxis(),
 									isCheck(xAxis, yAxis).getYAxis()).toBoolean()
 									&& isProtect(isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis())
@@ -177,14 +177,18 @@ public abstract class AbstractBoard implements Board {
 											- board[isCheck(xAxis, yAxis).getXAxis()][isCheck(xAxis, yAxis).getYAxis()]
 													.getValue()
 									&& pieces[i].getType() != Piece.Type.PAWN) {
-								adder += 1000;
+								adder += 1000 + r;
 							} else if (isValidMove(xAxis, yAxis, isCheck(xAxis, yAxis).getXAxis(),
 									isCheck(xAxis, yAxis).getYAxis()).toBoolean()
 									&& isProtect(isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis())
 											.toBoolean()
 									&& r == isCheck(xAxis, yAxis).getXAxis() && c == isCheck(xAxis, yAxis).getYAxis()
 									&& pieces[i].getType() == Piece.Type.KING) {
-								adder += 1000;
+								adder += 1000 + r;
+
+							} else if (pieces[i].getType() == Piece.Type.KING && isValidMove(xAxis, yAxis,
+									isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis()).toBoolean()) {
+								adder += 100;
 							} else {
 								adder += 10;
 							}
@@ -402,6 +406,9 @@ public abstract class AbstractBoard implements Board {
 									&& r == isCheck(xAxis, yAxis).getXAxis() && c == isCheck(xAxis, yAxis).getYAxis()
 									&& pieces[i].getType() == Piece.Type.KING) {
 								adder += 980;
+							} else if (pieces[i].getType() == Piece.Type.KING && isValidMove(xAxis, yAxis,
+									isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis()).toBoolean()) {
+								adder += 100;
 							} else {
 								adder += 8;
 							}

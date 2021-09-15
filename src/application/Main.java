@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import controller.Controller;
 import controller.ControllerImpl;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Parent;
@@ -30,6 +31,7 @@ public class Main extends Application {
 	private Pane root = new Pane();
 	private Piece[][] pieceBoard = new Piece[8][8];
 	private Tile[][] tileBoard = new Tile[8][8];
+	private PromotionTile[] promotionBoard = new PromotionTile[4];
 	private DropShadow borderGlow = new DropShadow();
 	private boolean clicked = false;
 	private int movingPieceX = -1;
@@ -54,9 +56,25 @@ public class Main extends Application {
 	private Image blackKingImage;
 	private Image whiteKingImage;
 	private Image image;
+	private final Object PAUSE_KEY = new Object();
 	private boolean endGame = false;
+	private boolean clickedPromotion = false;
+	private PromotionTile knightTile = new PromotionTile(blackKnightImage, piecesPackage.Piece.Type.KNIGHT);
+	private PromotionTile bishopTile = new PromotionTile(blackBishopImage, piecesPackage.Piece.Type.BISHOP);
+	private PromotionTile queenTile = new PromotionTile(blackQueenImage, piecesPackage.Piece.Type.QUEEN);
+	private PromotionTile rookTile = new PromotionTile(blackRookImage, piecesPackage.Piece.Type.ROOK);
+	private piecesPackage.Piece.Type promotionPieceType = null;
 
 	private Parent createContent() throws FileNotFoundException {
+
+		knightTile.imageView.setFitHeight(100);
+		knightTile.imageView.setFitWidth(100);
+		bishopTile.imageView.setFitHeight(100);
+		bishopTile.imageView.setFitWidth(100);
+		queenTile.imageView.setFitHeight(100);
+		queenTile.imageView.setFitWidth(100);
+		rookTile.imageView.setFitHeight(100);
+		rookTile.imageView.setFitWidth(100);
 		blackBishopImage = new Image(new FileInputStream("src/Black Bishop.png"));
 		whiteBishopImage = new Image(new FileInputStream("src/White Bishop.png"));
 		blackKnightImage = new Image(new FileInputStream("src/Black Knight.png"));
@@ -144,8 +162,24 @@ public class Main extends Application {
 		scores[0] = new ScoreTile(Color.GRAY, "Black Score: " + blackScore);
 		scores[1] = new ScoreTile(Color.GRAY, "White Score: " + whiteScore);
 		indexesWithScore.add(frameWithIndexes, 0, 0, 2, 2);
-		indexesWithScore.add(scores[0], 2, 4);
-		indexesWithScore.add(scores[1], 2, 0);
+		indexesWithScore.add(scores[0], 3, 4);
+		indexesWithScore.add(scores[1], 3, 0);
+
+		// PROMOTION BUILDING
+		GridPane promotionGrid = new GridPane();
+		promotionGrid.setGridLinesVisible(true);
+		promotionGrid.add(queenTile, 0, 0);
+		promotionGrid.add(rookTile, 0, 1);
+		promotionGrid.add(bishopTile, 0, 2);
+		promotionGrid.add(knightTile, 0, 3);
+		promotionBoard[0] = queenTile;
+		promotionBoard[1] = rookTile;
+		promotionBoard[2] = bishopTile;
+		promotionBoard[3] = knightTile;
+		setPromotionImages();
+		removePromotionColors();
+		indexesWithScore.add(promotionGrid, 3, 1, 3, 3);
+		promotionGrid.setAlignment(Pos.CENTER);
 		// indexesWithScore.setGridLinesVisible(true);
 		root.getChildren().addAll(indexesWithScore);
 		drawBoardPieces();
@@ -259,6 +293,54 @@ public class Main extends Application {
 		};
 	}
 
+	private class PromotionTile extends StackPane {
+		// private Text text = new Text();
+		private ImageView imageView = new ImageView(image);
+		private piecesPackage.Piece.Type type;
+		private Rectangle border = new Rectangle(200, 200);
+
+		public PromotionTile(Image pieceImage, piecesPackage.Piece.Type type) {
+			this.type = type;
+			imageView = new ImageView(pieceImage);
+			imageView.setImage(pieceImage);
+			imageView.setX(this.getLayoutX());
+			imageView.setY(this.getLayoutY());
+			imageView.setImage(pieceImage);
+			imageView.setFitHeight(100);
+			imageView.setFitWidth(100);
+			// this.color = color;
+			// this.location = location;
+			border.setFill(Color.WHITE);
+//			indicator.setFill(Color.GREEN);
+
+//			border.setStroke(null);
+//			text.setFont(Font.font(12));
+//			text.setX(this.getLayoutX());
+//			text.setY(this.getLayoutY());
+			setAlignment(Pos.CENTER);
+			getChildren().addAll(border, imageView);
+
+			setOnMouseClicked(event -> {
+				clickedPromotion = true;
+				if (event.getButton() == MouseButton.PRIMARY) {
+					removePromotionColors();
+					border.setFill(Color.GRAY);
+					promotionPieceType = this.type;
+					if (Platform.isNestedLoopRunning()) {
+						clickedPromotion = false;
+						Platform.exitNestedEventLoop(PAUSE_KEY, null);
+					}
+				}
+			});
+			setOnMouseMoved(event -> {
+				if (Platform.isNestedLoopRunning() && clickedPromotion == true) {
+					clickedPromotion = false;
+					Platform.exitNestedEventLoop(PAUSE_KEY, null);
+				}
+			});
+		}
+	}
+
 	private class Piece extends StackPane {
 		// private Text text = new Text();
 		private ImageView imageView = null;
@@ -266,8 +348,9 @@ public class Main extends Application {
 		// private Color color;
 		private Circle indicator = new Circle(70, 70, 32, null);
 
-		public Piece(Color color, LocationImpl location) {
+//		private GridPane promotionGrid = new GridPane();
 
+		public Piece(Color color, LocationImpl location) {
 			imageView = new ImageView(image);
 			imageView.setFitHeight(50);
 			imageView.setFitWidth(50);
@@ -318,7 +401,18 @@ public class Main extends Application {
 											location.getYAxis()).toBoolean()
 									&& !game.putsKingInCheck(movingPieceX, movingPieceY, location.getXAxis(),
 											location.getYAxis())) {
-								game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis());
+								if ((location.getXAxis() == 0 || location.getXAxis() == 7)
+										&& game.squareInfo(movingPieceX, movingPieceY)
+												.getType() == piecesPackage.Piece.Type.PAWN) {
+									Platform.enterNestedEventLoop(PAUSE_KEY);
+									game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis(),
+											promotionPieceType);
+									promotionPieceType = null;
+								} else {
+									game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis(),
+											piecesPackage.Piece.Type.QUEEN);
+								}
+
 								game.setSquareInfo(movingPieceX, movingPieceY, null);
 //							pieceBoard[location.getXAxis()][location
 //									.getYAxis()] = pieceBoard[movingPieceX][movingPieceY];
@@ -592,6 +686,20 @@ public class Main extends Application {
 				}
 			}
 		}
+	}
+
+	public void setPromotionImages() {
+		promotionBoard[0].imageView.setImage(blackQueenImage);
+		promotionBoard[1].imageView.setImage(blackRookImage);
+		promotionBoard[2].imageView.setImage(blackBishopImage);
+		promotionBoard[3].imageView.setImage(blackKnightImage);
+	}
+
+	public void removePromotionColors() {
+		promotionBoard[0].border.setFill(Color.WHITE);
+		promotionBoard[1].border.setFill(Color.WHITE);
+		promotionBoard[2].border.setFill(Color.WHITE);
+		promotionBoard[3].border.setFill(Color.WHITE);
 	}
 
 	@Override

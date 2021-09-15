@@ -24,13 +24,14 @@ public interface Controller {
 	/**
 	 * Move the piece and if not return false.
 	 * 
-	 * @param x X cord of the piece to move
-	 * @param y Y cord of the piece to move
-	 * @param r X cord of the spot to move to
-	 * @param c Y cord of the spot to move to
+	 * @param x    X cord of the piece to move
+	 * @param y    Y cord of the piece to move
+	 * @param r    X cord of the spot to move to
+	 * @param c    Y cord of the spot to move to
+	 * @param type The type of piece to promote to for a pawn.
 	 * @return whether or not the move was successful
 	 */
-	boolean move(int x, int y, int r, int c);
+	boolean move(int x, int y, int r, int c, piecesPackage.Piece.Type type);
 
 	/**
 	 * Prompts the user for the x,y,r,c values for move() and then runs
