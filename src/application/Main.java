@@ -23,6 +23,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import location.LocationImpl;
 
@@ -64,7 +65,7 @@ public class Main extends Application {
 	private PromotionTile queenTile = new PromotionTile(blackQueenImage, piecesPackage.Piece.Type.QUEEN);
 	private PromotionTile rookTile = new PromotionTile(blackRookImage, piecesPackage.Piece.Type.ROOK);
 	private piecesPackage.Piece.Type promotionPieceType = piecesPackage.Piece.Type.QUEEN;
-
+	private Text endGameText = new Text();
 	private Parent createContent() throws FileNotFoundException {
 
 		knightTile.imageView.setFitHeight(100);
@@ -180,6 +181,11 @@ public class Main extends Application {
 		removePromotionColors();
 		promotionBoard[0].border.setFill(Color.GRAY);
 		indexesWithScore.add(promotionGrid, 3, 1, 3, 3);
+		//endGameText.setText("test");
+		endGameText.setFont(new Font(100));
+		endGameText.setTextAlignment(TextAlignment.CENTER);
+		indexesWithScore.add(endGameText, 0, 0,2,2);
+		endGameText.setFill(Color.RED);
 		promotionGrid.setAlignment(Pos.CENTER);
 		// indexesWithScore.setGridLinesVisible(true);
 		root.getChildren().addAll(indexesWithScore);
@@ -394,13 +400,13 @@ public class Main extends Application {
 						if (event.getButton() == MouseButton.PRIMARY) {
 
 							if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
-								System.out.println("White Won The Game!");
+								endGameText.setText("White Won The Game!");
 								endGame = true;
 							} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
-								System.out.println("Black Won The Game!");
+								endGameText.setText("Black Won The Game!");
 								endGame = true;
 							} else if (game.isStalemate(piecesPackage.Piece.Color.BLACK)) {
-								System.out.println("STALEMATE. Tie Game");
+								endGameText.setText("STALEMATE. Tie Game");
 								endGame = true;
 							} else if (!clicked && game.squareInfo(location.getXAxis(), location.getYAxis()) != null
 									&& game.squareInfo(location.getXAxis(), location.getYAxis())
@@ -456,13 +462,13 @@ public class Main extends Application {
 									if (game.getTurns() % 2 == 0) {
 										if (event.getButton() == MouseButton.PRIMARY) {
 											if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
-												System.out.println("White Won The Game!");
+												endGameText.setText("White Won The Game!");
 												endGame = true;
 											} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
-												System.out.println("Black Won The Game!");
+												endGameText.setText("Black Won The Game!");
 												endGame = true;
 											} else if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
-												System.out.println("STALEMATE. Tie Game");
+												endGameText.setText("STALEMATE. Tie Game");
 												endGame = true;
 											}
 											removeLastPieceColor();
@@ -500,13 +506,13 @@ public class Main extends Application {
 								if (event.getButton() == MouseButton.PRIMARY) {
 
 									if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
-										System.out.println("White Won The Game!");
+										endGameText.setText("White Won The Game!");
 										endGame = true;
 									} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
-										System.out.println("Black Won The Game!");
+										endGameText.setText("Black Won The Game!");
 										endGame = true;
 									} else if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
-										System.out.println("STALEMATE. Tie Game");
+										endGameText.setText("STALEMATE. Tie Game");
 										endGame = true;
 									}
 									removeLastPieceColor();
