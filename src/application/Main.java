@@ -15,6 +15,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -68,6 +69,7 @@ public class Main extends Application {
 	private Text endGameText = new Text();
 	private Parent createContent() throws FileNotFoundException {
 
+		AnchorPane anchor = new AnchorPane();
 		knightTile.imageView.setFitHeight(100);
 		knightTile.imageView.setFitWidth(100);
 		bishopTile.imageView.setFitHeight(100);
@@ -188,7 +190,6 @@ public class Main extends Application {
 		endGameText.setFill(Color.RED);
 		promotionGrid.setAlignment(Pos.CENTER);
 		// indexesWithScore.setGridLinesVisible(true);
-		root.getChildren().addAll(indexesWithScore);
 		LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
 		movedPieceX = returner[0].getXAxis();
 		movedPieceY = returner[0].getYAxis();
@@ -196,7 +197,8 @@ public class Main extends Application {
 		lastMovementY = returner[1].getYAxis();
 		lastPieceColor();
 		game.aiMove(piecesPackage.Piece.Color.WHITE);
-
+		anchor.getChildren().addAll(indexesWithScore);
+		root.getChildren().addAll(anchor);
 		updateScores();
 		drawBoardPieces();
 		game.incrementTurns();
@@ -534,31 +536,6 @@ public class Main extends Application {
 				}
 			});
 
-//			setOnMouseExited(event -> {
-//				if (!endGame) {
-//
-//					if (game.getTurns() % 2 == 0) {
-//						if (event.getButton() == MouseButton.NONE) {
-//							if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
-//								System.out.println("STALEMATE. Tie Game");
-//								endGame = true;
-//							}
-//							removeLastPieceColor();
-//							LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
-//							movedPieceX = returner[0].getXAxis();
-//							movedPieceY = returner[0].getYAxis();
-//							lastMovementX = returner[1].getXAxis();
-//							lastMovementY = returner[1].getYAxis();
-//							lastPieceColor();
-//							game.aiMove(piecesPackage.Piece.Color.WHITE);
-//
-//							updateScores();
-//							drawBoardPieces();
-//							game.incrementTurns();
-//						}
-//					}
-//				}
-//			});
 
 		};
 
