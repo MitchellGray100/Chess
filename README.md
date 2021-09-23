@@ -56,3 +56,6 @@ Game ending in black checkmating white. Text appears on screen.
 
 Backend Representation of the game (Not the actual GUI)
 ![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/chess%20board%20for%20github%208.0.png)
+
+Scaling of the window.
+![Window Growing and Shrinking](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/ScalingGIF.gif)
