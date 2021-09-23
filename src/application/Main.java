@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -61,14 +62,18 @@ public class Main extends Application {
 	private final Object PAUSE_KEY = new Object();
 	private boolean endGame = false;
 	private boolean clickedPromotion = true;
-	private PromotionTile knightTile = new PromotionTile(blackKnightImage, piecesPackage.Piece.Type.KNIGHT);
-	private PromotionTile bishopTile = new PromotionTile(blackBishopImage, piecesPackage.Piece.Type.BISHOP);
-	private PromotionTile queenTile = new PromotionTile(blackQueenImage, piecesPackage.Piece.Type.QUEEN);
-	private PromotionTile rookTile = new PromotionTile(blackRookImage, piecesPackage.Piece.Type.ROOK);
+	private PromotionTile knightTile;
+	private PromotionTile bishopTile;
+	private PromotionTile queenTile;
+	private PromotionTile rookTile;
 	private piecesPackage.Piece.Type promotionPieceType = piecesPackage.Piece.Type.QUEEN;
 	private Text endGameText = new Text();
-	private Parent createContent() throws FileNotFoundException {
 
+	private Parent createContent(Stage primaryStage) throws FileNotFoundException {
+		knightTile = new PromotionTile(blackKnightImage, piecesPackage.Piece.Type.KNIGHT, primaryStage);
+		bishopTile = new PromotionTile(blackBishopImage, piecesPackage.Piece.Type.BISHOP, primaryStage);
+		queenTile = new PromotionTile(blackQueenImage, piecesPackage.Piece.Type.QUEEN, primaryStage);
+		rookTile = new PromotionTile(blackRookImage, piecesPackage.Piece.Type.ROOK, primaryStage);
 		AnchorPane anchor = new AnchorPane();
 		knightTile.imageView.setFitHeight(100);
 		knightTile.imageView.setFitWidth(100);
@@ -94,7 +99,6 @@ public class Main extends Application {
 		GridPane gridWithFrame = new GridPane();
 		GridPane frameWithIndexes = new GridPane();
 		GridPane indexesWithScore = new GridPane();
-		root.setPrefSize(1400, 1050);
 		grid.setCache(true);
 		gridWithFrame.setCache(true);
 		frameWithIndexes.setCache(true);
@@ -109,11 +113,11 @@ public class Main extends Application {
 				Piece piece;
 				Tile tile;
 				if ((i + j) % 2 == 0) {
-					piece = new Piece(Color.WHITE, new LocationImpl(i, j));
-					tile = new Tile(Color.WHITE);
+					piece = new Piece(Color.WHITE, new LocationImpl(i, j), primaryStage);
+					tile = new Tile(Color.WHITE, primaryStage);
 				} else {
-					piece = new Piece(Color.BLACK, new LocationImpl(i, j));
-					tile = new Tile(Color.BLACK);
+					piece = new Piece(Color.BLACK, new LocationImpl(i, j), primaryStage);
+					tile = new Tile(Color.BLACK, primaryStage);
 				}
 
 				tile.setCache(true);
@@ -134,27 +138,27 @@ public class Main extends Application {
 		// FRAME BUILDING
 		gridWithFrame.add(grid, 1, 1, 9, 9);
 		for (int i = 1; i < 9; i++) {
-			gridWithFrame.add(new HorizontalBorderTile(Color.GRAY), i, 0);
+			gridWithFrame.add(new HorizontalBorderTile(Color.GRAY, primaryStage), i, 0);
 		}
 		for (int i = 1; i < 9; i++) {
-			gridWithFrame.add(new HorizontalBorderTile(Color.GRAY), i, 10);
+			gridWithFrame.add(new HorizontalBorderTile(Color.GRAY, primaryStage), i, 10);
 		}
 		for (int i = 1; i < 9; i++) {
-			gridWithFrame.add(new VerticalBorderTile(Color.GRAY), 0, i);
+			gridWithFrame.add(new VerticalBorderTile(Color.GRAY, primaryStage), 0, i);
 		}
 		for (int i = 1; i < 9; i++) {
-			gridWithFrame.add(new VerticalBorderTile(Color.GRAY), 10, i);
+			gridWithFrame.add(new VerticalBorderTile(Color.GRAY, primaryStage), 10, i);
 		}
 
 		// NUMBER BUILDING
 
 		// frameWithIndexes.add(new ScoreTile(Color.RED), 0, 0);
 		for (int i = 1; i < 9; i++) {
-			frameWithIndexes.add(new LeftTextTile(Integer.toString(i)), 0, i + 1);
+			frameWithIndexes.add(new LeftTextTile(Integer.toString(i), primaryStage), 0, i + 1);
 		}
 		int counter = 1;
 		for (int i = 104; i >= 97; i--) {
-			frameWithIndexes.add(new TopTextTile(Character.toString(i)), counter, 0);
+			frameWithIndexes.add(new TopTextTile(Character.toString(i), primaryStage), counter, 0);
 			counter++;
 		}
 		frameWithIndexes.add(gridWithFrame, 1, 1, 9, 9);
@@ -162,8 +166,8 @@ public class Main extends Application {
 		frameWithIndexes.setAlignment(Pos.CENTER_LEFT);
 
 		// SCORE BUILDING
-		scores[0] = new ScoreTile(Color.GRAY, "Black Score: " + blackScore);
-		scores[1] = new ScoreTile(Color.GRAY, "White Score: " + whiteScore);
+		scores[0] = new ScoreTile(Color.GRAY, "Black Score: " + blackScore, primaryStage);
+		scores[1] = new ScoreTile(Color.GRAY, "White Score: " + whiteScore, primaryStage);
 		indexesWithScore.add(frameWithIndexes, 0, 0, 2, 2);
 		indexesWithScore.add(scores[0], 3, 4);
 		indexesWithScore.add(scores[1], 3, 0);
@@ -182,11 +186,15 @@ public class Main extends Application {
 		setPromotionImages();
 		removePromotionColors();
 		promotionBoard[0].border.setFill(Color.GRAY);
-		indexesWithScore.add(promotionGrid, 3, 1, 3, 3);
-		//endGameText.setText("test");
+		VBox rightHolder = new VBox();
+		rightHolder.prefHeightProperty().bind(primaryStage.heightProperty().multiply(.95));
+		rightHolder.getChildren().addAll(scores[0], promotionGrid, scores[1]);
+		rightHolder.setAlignment(Pos.CENTER_LEFT);
+		indexesWithScore.add(rightHolder, 3, 0, 3, 4);
+		// endGameText.setText("test");
 		endGameText.setFont(new Font(100));
 		endGameText.setTextAlignment(TextAlignment.CENTER);
-		indexesWithScore.add(endGameText, 0, 0,2,2);
+		indexesWithScore.add(endGameText, 0, 0, 2, 2);
 		endGameText.setFill(Color.RED);
 		promotionGrid.setAlignment(Pos.CENTER);
 		// indexesWithScore.setGridLinesVisible(true);
@@ -198,6 +206,8 @@ public class Main extends Application {
 		lastPieceColor();
 		game.aiMove(piecesPackage.Piece.Color.WHITE);
 		anchor.getChildren().addAll(indexesWithScore);
+//		anchor.prefWidthProperty().bind(primaryStage.widthProperty());
+//		anchor.prefHeightProperty().bind(primaryStage.heightProperty());
 		root.getChildren().addAll(anchor);
 		updateScores();
 		drawBoardPieces();
@@ -211,7 +221,11 @@ public class Main extends Application {
 		private Rectangle border = new Rectangle(100, 100);
 		private Circle indicator = new Circle(50, 50, 20, null);
 
-		public Tile(Color color) {
+		public Tile(Color color, Stage primaryStage) {
+
+			border.widthProperty().bind(primaryStage.widthProperty().multiply(.08));
+
+			border.heightProperty().bind(primaryStage.heightProperty().multiply(.1));
 			this.color = color;
 			border.setFill(color);
 			border.setStroke(Color.WHITE);
@@ -229,8 +243,9 @@ public class Main extends Application {
 
 	private class HorizontalBorderTile extends StackPane {
 
-		public HorizontalBorderTile(Color color) {
+		public HorizontalBorderTile(Color color, Stage primaryStage) {
 			Rectangle border = new Rectangle(100, 10);
+			border.widthProperty().bind(primaryStage.widthProperty().multiply(.08));
 			border.setFill(color);
 			border.setStroke(Color.SADDLEBROWN);
 			setAlignment(Pos.TOP_CENTER);
@@ -246,8 +261,9 @@ public class Main extends Application {
 
 	private class VerticalBorderTile extends StackPane {
 
-		public VerticalBorderTile(Color color) {
+		public VerticalBorderTile(Color color, Stage primaryStage) {
 			Rectangle border = new Rectangle(10, 100);
+			border.heightProperty().bind(primaryStage.heightProperty().multiply(.1));
 			border.setFill(color);
 			border.setStroke(Color.SADDLEBROWN);
 			setAlignment(Pos.CENTER_RIGHT);
@@ -264,8 +280,11 @@ public class Main extends Application {
 	private class ScoreTile extends StackPane {
 		private Text score = new Text();
 
-		public ScoreTile(Color color, String input) {
+		public ScoreTile(Color color, String input, Stage primaryStage) {
 			Rectangle border = new Rectangle(450, 100);
+			border.widthProperty().bind(primaryStage.widthProperty().multiply(.3));
+
+			border.heightProperty().bind(primaryStage.heightProperty().multiply(.1));
 			score.setText(input);
 			score.setX(this.getLayoutX());
 			score.setY(this.getLayoutY());
@@ -282,8 +301,13 @@ public class Main extends Application {
 	private class LeftTextTile extends StackPane {
 		private Text text = new Text();
 
-		public LeftTextTile(String textInput) {
-			Rectangle border = new Rectangle(100, 100);
+		public LeftTextTile(String textInput, Stage primaryStage) {
+
+			Rectangle border = new Rectangle(10, 100);
+
+			border.widthProperty().bind(primaryStage.widthProperty().multiply(.03));
+
+			border.heightProperty().bind(primaryStage.heightProperty().multiply(.1));
 			border.setFill(null);
 			border.setStroke(Color.WHITE);
 			text.setText(textInput);
@@ -299,8 +323,11 @@ public class Main extends Application {
 	private class TopTextTile extends StackPane {
 		private Text text = new Text();
 
-		public TopTextTile(String textInput) {
+		public TopTextTile(String textInput, Stage primaryStage) {
 			Rectangle border = new Rectangle(100, 100);
+			border.widthProperty().bind(primaryStage.widthProperty().multiply(.08));
+
+			border.heightProperty().bind(primaryStage.heightProperty().multiply(.04));
 			border.setFill(null);
 			border.setStroke(Color.WHITE);
 			text.setText(textInput);
@@ -319,7 +346,11 @@ public class Main extends Application {
 		private piecesPackage.Piece.Type type;
 		private Rectangle border = new Rectangle(200, 200);
 
-		public PromotionTile(Image pieceImage, piecesPackage.Piece.Type type) {
+		public PromotionTile(Image pieceImage, piecesPackage.Piece.Type type, Stage primaryStage) {
+
+			border.widthProperty().bind(primaryStage.widthProperty().multiply(.15));
+
+			border.heightProperty().bind(primaryStage.heightProperty().multiply(.18));
 			this.type = type;
 			imageView = new ImageView(pieceImage);
 			imageView.setImage(pieceImage);
@@ -371,14 +402,16 @@ public class Main extends Application {
 
 //		private GridPane promotionGrid = new GridPane();
 
-		public Piece(Color color, LocationImpl location) {
+		public Piece(Color color, LocationImpl location, Stage primaryStage) {
 			imageView = new ImageView(image);
 			imageView.setFitHeight(50);
 			imageView.setFitWidth(50);
 			// this.color = color;
 			// this.location = location;
 			Rectangle border = new Rectangle(100, 100);
+			border.widthProperty().bind(primaryStage.widthProperty().multiply(.08));
 
+			border.heightProperty().bind(primaryStage.heightProperty().multiply(.1));
 //			indicator.setFill(Color.GREEN);
 			border.setFill(color);
 //			border.setStroke(null);
@@ -535,7 +568,6 @@ public class Main extends Application {
 					}
 				}
 			});
-
 
 		};
 
@@ -704,7 +736,11 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 
 		primaryStage.show();
-		primaryStage.setScene(new Scene(createContent()));
+		primaryStage.setScene(new Scene(createContent(primaryStage)));
+		primaryStage.setMinHeight(1000);
+		primaryStage.setMinWidth(1350);
+		primaryStage.setHeight(1000);
+		primaryStage.setWidth(1350);
 	}
 
 	public static void main(String[] args) {
