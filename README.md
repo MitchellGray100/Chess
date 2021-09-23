@@ -55,6 +55,7 @@ Game ending in black checkmating white. Text appears on screen.
 
 
 Scaling of the window.
+
 ![Window Growing and Shrinking](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/ScalingGIF.gif)
 
 Backend Representation of the game (Not the actual GUI)
