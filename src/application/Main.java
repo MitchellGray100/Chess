@@ -195,6 +195,8 @@ public class Main extends Application {
 		// endGameText.setText("test");
 		endGameText.setFont(new Font(100));
 		endGameText.setTextAlignment(TextAlignment.CENTER);
+		endGameText.scaleXProperty().bind(primaryStage.widthProperty().multiply(.0005));
+		endGameText.scaleYProperty().bind(primaryStage.heightProperty().multiply(.001));
 		indexesWithScore.add(endGameText, 0, 0, 2, 2);
 		endGameText.setFill(Color.RED);
 		promotionGrid.setAlignment(Pos.CENTER);
