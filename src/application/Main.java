@@ -282,6 +282,8 @@ public class Main extends Application {
 		private Text score = new Text();
 
 		public ScoreTile(Color color, String input, Stage primaryStage) {
+			score.scaleXProperty().bind(primaryStage.widthProperty().multiply(.001));
+			score.scaleYProperty().bind(primaryStage.heightProperty().multiply(.002));
 			Rectangle border = new Rectangle(450, 100);
 			border.widthProperty().bind(primaryStage.widthProperty().multiply(.3));
 
