@@ -104,7 +104,7 @@ public abstract class AbstractBoard implements Board {
 				for (int c = 0; c < 8; c++) {
 					int adder = 0;
 
-					if (maxScore >= 300) {
+					if (maxScore >= 10000) {
 						break;
 					}
 
@@ -149,8 +149,8 @@ public abstract class AbstractBoard implements Board {
 								&& putsPieceInProtection(xAxis, yAxis, r, c)) {
 							adder += 50;
 						}
-						if (isCheck(xAxis, yAxis).toBoolean() && !isProtect(xAxis, yAxis).toBoolean()
-								&& pieceValue > 1) {
+						if (isCheck(xAxis, yAxis).toBoolean() && !isProtect(xAxis, yAxis).toBoolean() && pieceValue > 1
+								&& pieces[i].getType() != Piece.Type.PAWN) {
 							adder += 100 + r;
 						}
 						if (isCheck(xAxis, yAxis).toBoolean() && !isProtect(xAxis, yAxis).toBoolean()
@@ -219,7 +219,6 @@ public abstract class AbstractBoard implements Board {
 						board[xAxis][yAxis].setLocation(new LocationImpl(xAxis, yAxis));
 
 						adder -= enemyAIScore;
-
 						if (board[r][c] == null) {
 
 							if (maxScore == -1000) {
@@ -275,12 +274,12 @@ public abstract class AbstractBoard implements Board {
 								maxLocation = new LocationImpl(r, c);
 								pieceLocation = new LocationImpl(xAxis, yAxis);
 							} else if (pieceValue < oppositePieceValue) {
-								maxScore = 1200 + adder + (oppositePieceValue * 2);
+								maxScore = 1200 + adder + (oppositePieceValue * 10);
 
 								maxLocation = new LocationImpl(r, c);
 								pieceLocation = new LocationImpl(xAxis, yAxis);
 							} else if (pieceValue <= oppositePieceValue) {
-								maxScore = 1000 + adder + (oppositePieceValue * 2);
+								maxScore = 1000 + adder + (oppositePieceValue * 10);
 
 								maxLocation = new LocationImpl(r, c);
 								pieceLocation = new LocationImpl(xAxis, yAxis);
@@ -329,7 +328,7 @@ public abstract class AbstractBoard implements Board {
 			for (int r = 0; r < 8; r++) {
 				for (int c = 0; c < 8; c++) {
 
-					if (maxScore == 250) {
+					if (maxScore == 10000) {
 						break;
 					}
 
@@ -442,9 +441,9 @@ public abstract class AbstractBoard implements Board {
 							if (putsEnemyKingInCheckmate(xAxis, yAxis, r, c)) {
 								maxScore = 9980;
 							} else if (pieceValue < oppositePieceValue || pieces[i].getType() == Piece.Type.PAWN) {
-								maxScore = 1150 + adder + (oppositePieceValue * 2);
+								maxScore = 1150 + adder + (oppositePieceValue * 10);
 							} else if (pieceValue <= oppositePieceValue || pieces[i].getType() == Piece.Type.PAWN) {
-								maxScore = 950 + adder + (oppositePieceValue * 2);
+								maxScore = 950 + adder + (oppositePieceValue * 10);
 							} else if (putsOppositeKingInCheck(xAxis, yAxis, r, c)
 									&& putsPieceInProtection(xAxis, yAxis, r, c)) {
 								maxScore = 125 + adder;
