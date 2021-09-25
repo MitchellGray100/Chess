@@ -188,7 +188,10 @@ public abstract class AbstractBoard implements Board {
 
 							} else if (pieces[i].getType() == Piece.Type.KING && isValidMove(xAxis, yAxis,
 									isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis()).toBoolean()) {
-								adder += 100;
+								adder += 1000;
+							} else if (locationToBoolean(isValidMove(xAxis, yAxis, r, c))
+									&& !putsPieceInCheck(xAxis, yAxis, r, c)) {
+								adder += 900 + pieces[i].getValue() * 3;
 							} else {
 								adder += 10;
 							}
