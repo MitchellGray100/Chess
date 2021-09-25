@@ -188,7 +188,7 @@ public class Main extends Application {
 		promotionBoard[0].border.setFill(Color.GRAY);
 		VBox rightHolder = new VBox();
 		rightHolder.prefHeightProperty().bind(primaryStage.heightProperty().multiply(.95));
-		rightHolder.getChildren().addAll(scores[0], promotionGrid, scores[1]);
+		rightHolder.getChildren().addAll(scores[1], promotionGrid, scores[0]);
 		rightHolder.setAlignment(Pos.CENTER_LEFT);
 		indexesWithScore.add(rightHolder, 3, 0, 3, 4);
 		// endGameText.setText("test");
