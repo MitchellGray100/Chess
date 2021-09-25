@@ -535,12 +535,15 @@ public abstract class AbstractBoard implements Board {
 					board[r][c].setLocation(new LocationImpl(r, c));
 					if (board[r][c].getColor() == Piece.Color.WHITE) {
 						whitePoints--;
+						board[r][c].setColor(Piece.Color.BLACK);
+						changeScore(r, c);
+						board[r][c].setColor(Piece.Color.WHITE);
 					} else {
 						blackPoints--;
+						board[r][c].setColor(Piece.Color.WHITE);
+						changeScore(r, c);
+						board[r][c].setColor(Piece.Color.BLACK);
 					}
-					board[r][c].setValue(-board[r][c].getValue());
-					changeScore(r, c);
-					board[r][c].setValue(-board[r][c].getValue());
 					pieces[arrayLocation] = board[r][c];
 				}
 
@@ -713,6 +716,7 @@ public abstract class AbstractBoard implements Board {
 	}
 
 	public void changeScore(int r, int c) {
+
 		if (whitePoints < 0) {
 			blackPoints += Math.abs(whitePoints);
 			whitePoints = 0;
