@@ -177,7 +177,7 @@ public abstract class AbstractBoard implements Board {
 											- board[isCheck(xAxis, yAxis).getXAxis()][isCheck(xAxis, yAxis).getYAxis()]
 													.getValue()
 									&& pieces[i].getType() != Piece.Type.PAWN) {
-								adder += 1000 + r;
+								adder += 1200 + r;
 							} else if (isValidMove(xAxis, yAxis, isCheck(xAxis, yAxis).getXAxis(),
 									isCheck(xAxis, yAxis).getYAxis()).toBoolean()
 									&& isProtect(isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis())
@@ -192,6 +192,15 @@ public abstract class AbstractBoard implements Board {
 							} else if (locationToBoolean(isValidMove(xAxis, yAxis, r, c))
 									&& !putsPieceInCheck(xAxis, yAxis, r, c)) {
 								adder += 900 + pieces[i].getValue() * 3;
+							} else if (isValidMove(xAxis, yAxis, isCheck(xAxis, yAxis).getXAxis(),
+									isCheck(xAxis, yAxis).getYAxis()).toBoolean()
+									&& isProtect(isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis())
+											.toBoolean()
+									&& r == isCheck(xAxis, yAxis).getXAxis() && c == isCheck(xAxis, yAxis).getYAxis()
+									&& 0 >= pieceValue
+											- board[isCheck(xAxis, yAxis).getXAxis()][isCheck(xAxis, yAxis).getYAxis()]
+													.getValue()) {
+								adder += 900 + r;
 							} else {
 								adder += 10;
 							}
@@ -390,7 +399,7 @@ public abstract class AbstractBoard implements Board {
 											.toBoolean()
 									&& pieces[i].getType() != Piece.Type.PAWN && r == isCheck(xAxis, yAxis).getXAxis()
 									&& c == isCheck(xAxis, yAxis).getYAxis()) {
-								adder += 1180;
+								adder += 1100;
 							} else if (isValidMove(xAxis, yAxis, isCheck(xAxis, yAxis).getXAxis(),
 									isCheck(xAxis, yAxis).getYAxis()).toBoolean()
 									&& isProtect(isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis())
@@ -408,6 +417,18 @@ public abstract class AbstractBoard implements Board {
 									&& r == isCheck(xAxis, yAxis).getXAxis() && c == isCheck(xAxis, yAxis).getYAxis()
 									&& pieces[i].getType() == Piece.Type.KING) {
 								adder += 980;
+							} else if (locationToBoolean(isValidMove(xAxis, yAxis, r, c))
+									&& !putsPieceInCheck(xAxis, yAxis, r, c)) {
+								adder += 850 + pieces[i].getValue() * 3;
+							} else if (isValidMove(xAxis, yAxis, isCheck(xAxis, yAxis).getXAxis(),
+									isCheck(xAxis, yAxis).getYAxis()).toBoolean()
+									&& isProtect(isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis())
+											.toBoolean()
+									&& r == isCheck(xAxis, yAxis).getXAxis() && c == isCheck(xAxis, yAxis).getYAxis()
+									&& 0 >= pieceValue
+											- board[isCheck(xAxis, yAxis).getXAxis()][isCheck(xAxis, yAxis).getYAxis()]
+													.getValue()) {
+								adder += 875 + r;
 							} else if (pieces[i].getType() == Piece.Type.KING && isValidMove(xAxis, yAxis,
 									isCheck(xAxis, yAxis).getXAxis(), isCheck(xAxis, yAxis).getYAxis()).toBoolean()) {
 								adder += 100;

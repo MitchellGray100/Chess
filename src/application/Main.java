@@ -192,11 +192,13 @@ public class Main extends Application {
 		rightHolder.getChildren().addAll(scores[1], promotionGrid, scores[0]);
 		rightHolder.setAlignment(Pos.CENTER_LEFT);
 		indexesWithScore.add(rightHolder, 3, 0, 3, 4);
-		// endGameText.setText("test");
+		// endGameText.setText("STALEMATE. Tie Game");
 		endGameText.setFont(new Font(100));
 		endGameText.setTextAlignment(TextAlignment.CENTER);
 		endGameText.scaleXProperty().bind(primaryStage.widthProperty().multiply(.0005));
 		endGameText.scaleYProperty().bind(primaryStage.heightProperty().multiply(.001));
+		endGameText.translateXProperty().bind(primaryStage.widthProperty().divide(10));
+		endGameText.translateYProperty().bind(primaryStage.heightProperty().divide(36));
 		indexesWithScore.add(endGameText, 0, 0, 2, 2);
 		endGameText.setFill(Color.RED);
 		promotionGrid.setAlignment(Pos.CENTER);
@@ -284,8 +286,10 @@ public class Main extends Application {
 		private Text score = new Text();
 
 		public ScoreTile(Color color, String input, Stage primaryStage) {
-			score.scaleXProperty().bind(primaryStage.widthProperty().multiply(.001));
+			score.setTextAlignment(TextAlignment.CENTER);
+			score.scaleXProperty().bind(primaryStage.widthProperty().multiply(.0008));
 			score.scaleYProperty().bind(primaryStage.heightProperty().multiply(.002));
+			score.translateXProperty().bind(primaryStage.widthProperty().divide(20));
 			Rectangle border = new Rectangle(450, 100);
 			border.widthProperty().bind(primaryStage.widthProperty().multiply(.3));
 
@@ -296,7 +300,7 @@ public class Main extends Application {
 			score.setFont(Font.font(40));
 			border.setFill(color);
 			border.setStroke(Color.RED);
-			setAlignment(Pos.CENTER);
+			setAlignment(Pos.CENTER_LEFT);
 
 			getChildren().addAll(border, score);
 
