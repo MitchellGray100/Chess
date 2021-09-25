@@ -140,7 +140,7 @@ public abstract class AbstractBoard implements Board {
 							adder++;
 						}
 						if (!putsPieceInProtection(xAxis, yAxis, r, c) && putsPieceInCheck(xAxis, yAxis, r, c)) {
-							adder -= 150;
+							adder -= 1000;
 						}
 //						if (pieceValue > 1 && pieceValue != 100) {
 //							adder += 1;
@@ -328,7 +328,7 @@ public abstract class AbstractBoard implements Board {
 			for (int r = 0; r < 8; r++) {
 				for (int c = 0; c < 8; c++) {
 
-					if (maxScore == 10000) {
+					if (maxScore >= 10000) {
 						break;
 					}
 
@@ -362,7 +362,7 @@ public abstract class AbstractBoard implements Board {
 							adder++;
 						}
 						if (!putsPieceInProtection(xAxis, yAxis, r, c) && putsPieceInCheck(xAxis, yAxis, r, c)) {
-							adder -= 150;
+							adder -= 1000;
 						}
 						if (pieces[i].getType() == Piece.Type.PAWN && (r == 0 || r == 7)
 								&& putsPieceInProtection(xAxis, yAxis, r, c)) {

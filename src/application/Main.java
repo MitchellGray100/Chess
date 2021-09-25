@@ -59,6 +59,7 @@ public class Main extends Application {
 	private Image blackKingImage;
 	private Image whiteKingImage;
 	private Image image;
+	private boolean debugging = true;
 	private final Object PAUSE_KEY = new Object();
 	private boolean endGame = false;
 	private boolean clickedPromotion = true;
@@ -468,6 +469,9 @@ public class Main extends Application {
 									game.move(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis(),
 											piecesPackage.Piece.Type.QUEEN);
 								}
+								if (debugging) {
+									debugMoves(movingPieceX, movingPieceY, location.getXAxis(), location.getYAxis());
+								}
 
 								game.setSquareInfo(movingPieceX, movingPieceY, null);
 //							pieceBoard[location.getXAxis()][location
@@ -716,6 +720,11 @@ public class Main extends Application {
 				}
 			}
 		}
+	}
+
+	public void debugMoves(int x, int y, int r, int c) {
+		System.out.println("Moved From: " + (x + 1) + " " + (char) (-y + 8 + 96) + " Moved To: " + (r + 1) + " "
+				+ (char) (-c + 8 + 96));
 	}
 
 	public void setPromotionImages() {
