@@ -109,12 +109,12 @@ public abstract class AbstractBoard implements Board {
 					}
 
 					if (color == Piece.Color.WHITE) {
-						if (putsEnemyInStalemate(xAxis, yAxis, r, c)) {
+						if (putsEnemyInStalemate(xAxis, yAxis, r, c) && isValidMove(xAxis, yAxis, r, c).toBoolean()) {
 							if (whitePoints < blackPoints)
 								maxScore = 250;
 						}
 					} else {
-						if (putsEnemyInStalemate(xAxis, yAxis, r, c)) {
+						if (putsEnemyInStalemate(xAxis, yAxis, r, c) && isValidMove(xAxis, yAxis, r, c).toBoolean()) {
 							if (blackPoints < whitePoints) {
 								maxScore = 250;
 							}
@@ -334,12 +334,12 @@ public abstract class AbstractBoard implements Board {
 					}
 
 					if (color == Piece.Color.WHITE) {
-						if (putsEnemyInStalemate(xAxis, yAxis, r, c)) {
+						if (putsEnemyInStalemate(xAxis, yAxis, r, c) && isValidMove(xAxis, yAxis, r, c).toBoolean()) {
 							if (whitePoints < blackPoints)
 								maxScore = 250;
 						}
 					} else {
-						if (putsEnemyInStalemate(xAxis, yAxis, r, c)) {
+						if (putsEnemyInStalemate(xAxis, yAxis, r, c) && isValidMove(xAxis, yAxis, r, c).toBoolean()) {
 							if (blackPoints < whitePoints) {
 								maxScore = 250;
 							}
@@ -1144,6 +1144,9 @@ public abstract class AbstractBoard implements Board {
 	 * @return whether or not the king at the specified location is in check
 	 */
 	public LocationImpl isCheck(int x, int y) {
+		if (board[x][y] == null) {
+			return new LocationImpl(-100, -100);
+		}
 		if (board[x][y].getColor() == Piece.Color.BLACK) {
 			for (int i = 0; i < 16; i++) {
 				if (pieces[i] != null) {

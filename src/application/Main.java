@@ -734,9 +734,9 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
+		Scene scene = new Scene(createContent(primaryStage));
 		primaryStage.show();
-		primaryStage.setScene(new Scene(createContent(primaryStage)));
+		primaryStage.setScene(scene);
 		primaryStage.setMinHeight(1000);
 		primaryStage.setMinWidth(1350);
 		primaryStage.setHeight(1000);
