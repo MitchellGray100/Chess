@@ -224,7 +224,7 @@ public class Main extends Application {
 	private class Tile extends StackPane {
 		private Color color;
 		private Rectangle border = new Rectangle(100, 100);
-		private Circle indicator = new Circle(50, 50, 20, null);
+	//	private Circle indicator = new Circle(50, 50, 20, null);
 
 		public Tile(Color color, Stage primaryStage) {
 
@@ -234,9 +234,9 @@ public class Main extends Application {
 			this.color = color;
 			border.setFill(color);
 			border.setStroke(Color.WHITE);
-			indicator.setFill(Color.RED);
+			//indicator.setFill(Color.RED);
 			setAlignment(Pos.CENTER);
-			getChildren().addAll(border, indicator);
+			getChildren().addAll(border);
 			borderGlow.setOffsetY(0f);
 			borderGlow.setOffsetX(0f);
 			borderGlow.setColor(Color.DARKGREEN);
@@ -313,7 +313,8 @@ public class Main extends Application {
 		public LeftTextTile(String textInput, Stage primaryStage) {
 
 			Rectangle border = new Rectangle(10, 100);
-
+			text.scaleXProperty().bind(primaryStage.widthProperty().multiply(.001));
+			text.scaleYProperty().bind(primaryStage.heightProperty().multiply(.001));
 			border.widthProperty().bind(primaryStage.widthProperty().multiply(.03));
 
 			border.heightProperty().bind(primaryStage.heightProperty().multiply(.1));
@@ -334,6 +335,9 @@ public class Main extends Application {
 
 		public TopTextTile(String textInput, Stage primaryStage) {
 			Rectangle border = new Rectangle(100, 100);
+
+			text.scaleXProperty().bind(primaryStage.widthProperty().multiply(.001));
+			text.scaleYProperty().bind(primaryStage.heightProperty().multiply(.0010));
 			border.widthProperty().bind(primaryStage.widthProperty().multiply(.08));
 
 			border.heightProperty().bind(primaryStage.heightProperty().multiply(.04));
@@ -412,9 +416,14 @@ public class Main extends Application {
 //		private GridPane promotionGrid = new GridPane();
 
 		public Piece(Color color, LocationImpl location, Stage primaryStage) {
+			indicator.scaleXProperty().bind(primaryStage.widthProperty().divide(1100));
+
+			indicator.scaleYProperty().bind(primaryStage.heightProperty().divide(900));
 			imageView = new ImageView(image);
 			imageView.setFitHeight(50);
 			imageView.setFitWidth(50);
+			imageView.fitHeightProperty().bind(primaryStage.heightProperty().divide(20));
+			imageView.fitWidthProperty().bind(primaryStage.widthProperty().divide(25));
 			// this.color = color;
 			// this.location = location;
 			Rectangle border = new Rectangle(100, 100);
@@ -754,8 +763,8 @@ public class Main extends Application {
 		Scene scene = new Scene(createContent(primaryStage));
 		primaryStage.show();
 		primaryStage.setScene(scene);
-		primaryStage.setMinHeight(1000);
-		primaryStage.setMinWidth(1350);
+		primaryStage.setMinHeight(750);
+		primaryStage.setMinWidth(1012.5);
 		primaryStage.setHeight(1000);
 		primaryStage.setWidth(1350);
 	}
