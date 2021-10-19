@@ -9,9 +9,11 @@ As a personal project, I created a representation of Chess in Java that allows c
 make valid moves, checks if the king is in check or checkmate, determines if a player is in 
 stalemate, changes the piece scoreboard as the game goes on, checks if a piece is being protected
 and/or protecting another piece, and has a custom AI that uses MiniMax techniques. The project 
-is displayed with JavaFX.
+is displayed with JavaFX. Now Supports 1 Player (with AI) and 2 Player modes.
 
- 
+The Title screen. </br>
+One Player mode is for playing against the AI and Two Player mode is for playing against another player on the same machine.
+ ![Image of The Title Screen](https://github.com/MitchellGray100/Chess/blob/main/readMeImages/Chess%20Title%20Screenshot.PNG)
 
 Start of game
 
