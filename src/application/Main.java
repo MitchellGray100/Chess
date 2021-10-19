@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.CacheHint;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -69,6 +70,56 @@ public class Main extends Application {
 	private PromotionTile rookTile;
 	private piecesPackage.Piece.Type promotionPieceType = piecesPackage.Piece.Type.QUEEN;
 	private Text endGameText = new Text();
+	private boolean buttonOnePlayerClicked;
+	private boolean buttonTwoPlayerClicked;
+
+	private Parent createTitleContent(Stage primaryStage) throws FileNotFoundException {
+
+		Image titleScreenImage = new Image(new FileInputStream("src/Chess Title Screen.png"));
+		ImageView title = new ImageView(titleScreenImage);
+		GridPane grid = new GridPane();
+		grid.add(title, 0, 0);
+		TitleButton onePlayer = new TitleButton(0, primaryStage);
+		onePlayer.setText("One Player");
+		TitleButton twoPlayer = new TitleButton(1, primaryStage);
+		twoPlayer.setText("Two Player");
+		grid.add(onePlayer, 0, 0);
+		grid.add(twoPlayer, 0, 0);
+		onePlayer.translateXProperty().bind(primaryStage.widthProperty().divide(8));
+		onePlayer.translateYProperty().bind(primaryStage.heightProperty().subtract(985));
+		twoPlayer.translateXProperty().bind(primaryStage.widthProperty().divide(8));
+		twoPlayer.translateYProperty().bind(primaryStage.heightProperty().subtract(750));
+		return grid;
+	}
+
+	private class TitleButton extends Button {
+		int button;
+
+		public TitleButton(int button, Stage primaryStage) {
+			this.button = button;
+			this.setStyle("-fx-focus-color: red;");
+			this.prefWidthProperty().bind(primaryStage.widthProperty().divide(3));
+			this.prefHeightProperty().bind(primaryStage.heightProperty().divide(12));
+			this.setOnMouseClicked(event -> {
+				if (button == 0) {
+					buttonOnePlayerClicked = true;
+				} else if (button == 1) {
+					buttonTwoPlayerClicked = true;
+				}
+
+				Scene scene = null;
+				try {
+					scene = new Scene(createContent(primaryStage));
+					primaryStage.setMaxHeight(Integer.MAX_VALUE);
+					primaryStage.setMaxWidth(Integer.MAX_VALUE);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+				primaryStage.setScene(scene);
+				primaryStage.show();
+			});
+		}
+	}
 
 	private Parent createContent(Stage primaryStage) throws FileNotFoundException {
 		knightTile = new PromotionTile(blackKnightImage, piecesPackage.Piece.Type.KNIGHT, primaryStage);
@@ -202,13 +253,17 @@ public class Main extends Application {
 		endGameText.setFill(Color.RED);
 		promotionGrid.setAlignment(Pos.CENTER);
 		// indexesWithScore.setGridLinesVisible(true);
-		LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
-		movedPieceX = returner[0].getXAxis();
-		movedPieceY = returner[0].getYAxis();
-		lastMovementX = returner[1].getXAxis();
-		lastMovementY = returner[1].getYAxis();
-		lastPieceColor();
-		game.aiMove(piecesPackage.Piece.Color.WHITE);
+		if (buttonOnePlayerClicked) {
+			LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
+			movedPieceX = returner[0].getXAxis();
+			movedPieceY = returner[0].getYAxis();
+			lastMovementX = returner[1].getXAxis();
+			lastMovementY = returner[1].getYAxis();
+			lastPieceColor();
+			game.aiMove(piecesPackage.Piece.Color.WHITE);
+		} else {
+			game.setTurns(game.getTurns() - 1);
+		}
 		anchor.getChildren().addAll(indexesWithScore);
 //		anchor.prefWidthProperty().bind(primaryStage.widthProperty());
 //		anchor.prefHeightProperty().bind(primaryStage.heightProperty());
@@ -512,38 +567,40 @@ public class Main extends Application {
 								movingPieceY = -1;
 								game.incrementTurns();
 
-								if (!endGame) {
+								if (buttonOnePlayerClicked) {
+									if (!endGame) {
 
-									if (game.getTurns() % 2 == 0) {
-										if (event.getButton() == MouseButton.PRIMARY) {
-											if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
-												endGameText.setText("White Won The Game!");
-												endGame = true;
-											} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
-												endGameText.setText("Black Won The Game!");
-												endGame = true;
-											} else if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
-												endGameText.setText("STALEMATE. Tie Game");
-												endGame = true;
+										if (game.getTurns() % 2 == 0) {
+											if (event.getButton() == MouseButton.PRIMARY) {
+												if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
+													endGameText.setText("White Won The Game!");
+													endGame = true;
+												} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
+													endGameText.setText("Black Won The Game!");
+													endGame = true;
+												} else if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
+													endGameText.setText("STALEMATE. Tie Game");
+													endGame = true;
+												}
+												removeLastPieceColor();
+												LocationImpl[] returner = game
+														.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
+												movedPieceX = returner[0].getXAxis();
+												movedPieceY = returner[0].getYAxis();
+												lastMovementX = returner[1].getXAxis();
+												lastMovementY = returner[1].getYAxis();
+												lastPieceColor();
+												game.aiMove(piecesPackage.Piece.Color.WHITE);
+
+												updateScores();
+												drawBoardPieces();
+												game.incrementTurns();
 											}
-											removeLastPieceColor();
-											LocationImpl[] returner = game
-													.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
-											movedPieceX = returner[0].getXAxis();
-											movedPieceY = returner[0].getYAxis();
-											lastMovementX = returner[1].getXAxis();
-											lastMovementY = returner[1].getYAxis();
-											lastPieceColor();
-											game.aiMove(piecesPackage.Piece.Color.WHITE);
-
-											updateScores();
-											drawBoardPieces();
-											game.incrementTurns();
 										}
 									}
 								}
 							} else {
-								removeValidMoves();
+								// removeValidMoves();
 								clicked = false;
 								movingPieceX = -1;
 								movingPieceY = -1;
@@ -559,29 +616,79 @@ public class Main extends Application {
 
 							if (game.getTurns() % 2 == 0) {
 								if (event.getButton() == MouseButton.PRIMARY) {
-
 									if (game.isCheckmate(piecesPackage.Piece.Color.BLACK)) {
 										endGameText.setText("White Won The Game!");
 										endGame = true;
 									} else if (game.isCheckmate(piecesPackage.Piece.Color.WHITE)) {
 										endGameText.setText("Black Won The Game!");
 										endGame = true;
-									} else if (game.isStalemate(piecesPackage.Piece.Color.WHITE)) {
+									} else if (game.isStalemate(piecesPackage.Piece.Color.BLACK)) {
 										endGameText.setText("STALEMATE. Tie Game");
 										endGame = true;
-									}
-									removeLastPieceColor();
-									LocationImpl[] returner = game.aiMoveReturn(piecesPackage.Piece.Color.WHITE);
-									movedPieceX = returner[0].getXAxis();
-									movedPieceY = returner[0].getYAxis();
-									lastMovementX = returner[1].getXAxis();
-									lastMovementY = returner[1].getYAxis();
-									lastPieceColor();
-									game.aiMove(piecesPackage.Piece.Color.WHITE);
+									} else if (!clicked
+											&& game.squareInfo(location.getXAxis(), location.getYAxis()) != null
+											&& game.squareInfo(location.getXAxis(), location.getYAxis())
+													.getColor() == piecesPackage.Piece.Color.WHITE) {
+										displayValidMoves(location);
+										movingPieceX = location.getXAxis();
+										movingPieceY = location.getYAxis();
+										clicked = true;
+									} else if (clicked
+											&& game.isValidMove(movingPieceX, movingPieceY, location.getXAxis(),
+													location.getYAxis()).toBoolean()
+											&& !game.putsKingInCheck(movingPieceX, movingPieceY, location.getXAxis(),
+													location.getYAxis())) {
+										if ((location.getXAxis() == 0 || location.getXAxis() == 7)
+												&& game.squareInfo(movingPieceX, movingPieceY)
+														.getType() == piecesPackage.Piece.Type.PAWN) {
+											if (promotionPieceType == null) {
+												Platform.enterNestedEventLoop(PAUSE_KEY);
+											}
+											game.move(movingPieceX, movingPieceY, location.getXAxis(),
+													location.getYAxis(), promotionPieceType);
 
-									updateScores();
-									drawBoardPieces();
-									game.incrementTurns();
+										} else {
+											game.move(movingPieceX, movingPieceY, location.getXAxis(),
+													location.getYAxis(), piecesPackage.Piece.Type.QUEEN);
+										}
+										if (debugging) {
+											debugMoves(movingPieceX, movingPieceY, location.getXAxis(),
+													location.getYAxis());
+										}
+
+										game.setSquareInfo(movingPieceX, movingPieceY, null);
+//									pieceBoard[location.getXAxis()][location
+//											.getYAxis()] = pieceBoard[movingPieceX][movingPieceY];
+//								pieceBoard[location.getXAxis()][location.getYAxis()].setEffect(null);
+//									pieceBoard[movingPieceX][movingPieceY] = new Piece(
+//											pieceBoard[movingPieceX][movingPieceY].color,
+//											new LocationImpl(movingPieceX, movingPieceY));
+
+										updateScores();
+										drawBoardPieces();
+										removeValidMoves();
+										removeLastPieceColor();
+
+										movedPieceX = location.getXAxis();
+										movedPieceY = location.getYAxis();
+										lastMovementX = movingPieceX;
+										lastMovementY = movingPieceY;
+										lastPieceColor();
+										clicked = false;
+										movingPieceX = -1;
+										movingPieceY = -1;
+										game.incrementTurns();
+									} else {
+										// removeValidMoves();
+										clicked = false;
+										movingPieceX = -1;
+										movingPieceY = -1;
+									}
+								} else if (event.getButton() == MouseButton.SECONDARY) {
+									removeValidMoves();
+									clicked = false;
+									movingPieceX = -1;
+									movingPieceY = -1;
 								}
 							}
 						}
@@ -761,9 +868,13 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		blackKnightImage = new Image(new FileInputStream("src/Black Knight.png"));
 		primaryStage.getIcons().add(blackKnightImage);
-		Scene scene = new Scene(createContent(primaryStage));
+		Scene titleScene = new Scene(createTitleContent(primaryStage));
+
+		// Scene scene = new Scene(createContent(primaryStage));
 		primaryStage.show();
-		primaryStage.setScene(scene);
+		primaryStage.setScene(titleScene);
+		primaryStage.setMaxHeight(1000);
+		primaryStage.setMaxWidth(1350);
 		primaryStage.setMinHeight(1000);
 		primaryStage.setMinWidth(1350);
 		primaryStage.setHeight(1000);
