@@ -86,7 +86,6 @@ public class Main extends Application {
 		rookTile.imageView.setFitWidth(100);
 		blackBishopImage = new Image(new FileInputStream("src/Black Bishop.png"));
 		whiteBishopImage = new Image(new FileInputStream("src/White Bishop.png"));
-		blackKnightImage = new Image(new FileInputStream("src/Black Knight.png"));
 		whiteKnightImage = new Image(new FileInputStream("src/White Knight.png"));
 		blackRookImage = new Image(new FileInputStream("src/Black Rook.png"));
 		whiteRookImage = new Image(new FileInputStream("src/White Rook.png"));
@@ -224,7 +223,7 @@ public class Main extends Application {
 	private class Tile extends StackPane {
 		private Color color;
 		private Rectangle border = new Rectangle(100, 100);
-	//	private Circle indicator = new Circle(50, 50, 20, null);
+		// private Circle indicator = new Circle(50, 50, 20, null);
 
 		public Tile(Color color, Stage primaryStage) {
 
@@ -234,7 +233,7 @@ public class Main extends Application {
 			this.color = color;
 			border.setFill(color);
 			border.setStroke(Color.WHITE);
-			//indicator.setFill(Color.RED);
+			// indicator.setFill(Color.RED);
 			setAlignment(Pos.CENTER);
 			getChildren().addAll(border);
 			borderGlow.setOffsetY(0f);
@@ -760,6 +759,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		blackKnightImage = new Image(new FileInputStream("src/Black Knight.png"));
+		primaryStage.getIcons().add(blackKnightImage);
 		Scene scene = new Scene(createContent(primaryStage));
 		primaryStage.show();
 		primaryStage.setScene(scene);
