@@ -373,7 +373,7 @@ public class Main extends Application {
 
 			border.heightProperty().bind(primaryStage.heightProperty().multiply(.1));
 			border.setFill(null);
-			border.setStroke(Color.WHITE);
+			border.setStroke(Color.WHITESMOKE);
 			text.setText(textInput);
 			text.setFont(Font.font(60));
 			text.setX(this.getLayoutX());
@@ -396,7 +396,7 @@ public class Main extends Application {
 
 			border.heightProperty().bind(primaryStage.heightProperty().multiply(.04));
 			border.setFill(null);
-			border.setStroke(Color.WHITE);
+			border.setStroke(Color.WHITESMOKE);
 			text.setText(textInput);
 			text.setFont(Font.font(60));
 			text.setX(this.getLayoutX());
