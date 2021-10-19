@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import location.LocationImpl;
 import piecesPackage.Pawn;
 import piecesPackage.Piece;
+import piecesPackage.Piece.Color;
 import piecesPackage.PieceFactory;
 
 //
@@ -94,11 +95,14 @@ public abstract class AbstractBoard implements Board {
 		}
 
 		for (int i = start; i < end; i++) {
-			if (pieces[i] == null) {
+			if (pieces[i] == null || pieces[i].getColor() == Color.BLACK) {
 				continue;
 			}
 			int xAxis = pieces[i].getLocation().getXAxis();
 			int yAxis = pieces[i].getLocation().getYAxis();
+			if (board[xAxis][yAxis] != null && board[xAxis][yAxis].getColor() == Color.BLACK) {
+				continue;
+			}
 			int pieceValue = pieces[i].getValue();
 			for (int r = 0; r < 8; r++) {
 				for (int c = 0; c < 8; c++) {

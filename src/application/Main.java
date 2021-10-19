@@ -591,7 +591,10 @@ public class Main extends Application {
 												lastMovementY = returner[1].getYAxis();
 												lastPieceColor();
 												game.aiMove(piecesPackage.Piece.Color.WHITE);
-
+												if (debugging) {
+													debugMoves(movingPieceX, movingPieceY, location.getXAxis(),
+															location.getYAxis());
+												}
 												updateScores();
 												drawBoardPieces();
 												game.incrementTurns();
@@ -846,8 +849,8 @@ public class Main extends Application {
 	}
 
 	public void debugMoves(int x, int y, int r, int c) {
-		System.out.println("Moved From: " + (x + 1) + " " + (char) (-y + 8 + 96) + " Moved To: " + (r + 1) + " "
-				+ (char) (-c + 8 + 96));
+		System.out.println("Turn: " + game.getTurns() + " Moved From: " + (x + 1) + " " + (char) (-y + 8 + 96)
+				+ " Moved To: " + (r + 1) + " " + (char) (-c + 8 + 96));
 	}
 
 	public void setPromotionImages() {
