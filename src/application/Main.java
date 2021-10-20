@@ -96,6 +96,7 @@ public class Main extends Application {
 		int button;
 
 		public TitleButton(int button, Stage primaryStage) {
+			this.setFont(new Font(72));
 			this.button = button;
 			this.setStyle("-fx-focus-color: red;");
 			this.prefWidthProperty().bind(primaryStage.widthProperty().divide(3));
