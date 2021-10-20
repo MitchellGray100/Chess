@@ -604,7 +604,7 @@ public class Main extends Application {
 									}
 								}
 							} else {
-								// removeValidMoves();
+								removeValidMoves();
 								clicked = false;
 								movingPieceX = -1;
 								movingPieceY = -1;
@@ -683,7 +683,7 @@ public class Main extends Application {
 										movingPieceY = -1;
 										game.incrementTurns();
 									} else {
-										// removeValidMoves();
+										removeValidMoves();
 										clicked = false;
 										movingPieceX = -1;
 										movingPieceY = -1;
