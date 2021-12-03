@@ -17,6 +17,8 @@ ___
 
 # Images
 
+<h3>
+ 
 The Title screen. </br>
 One Player mode is for playing against the AI and Two Player mode is for playing against another player on the same machine.
  ![Image of The Title Screen](https://github.com/MitchellGray100/Chess/blob/main/readMeImages/Chess%20Title%20Screenshot.PNG)
@@ -65,6 +67,8 @@ Backend Representation of the game (Not the actual GUI)
 
 # GIFs
 
+<h3>
+ 
 Scaling of the window.
 
 ![Window Growing and Shrinking](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/ScalingGIF.gif)
