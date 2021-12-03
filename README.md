@@ -11,6 +11,12 @@ stalemate, changes the piece scoreboard as the game goes on, checks if a piece i
 and/or protecting another piece, and has a custom AI that uses MiniMax techniques. The project 
 is displayed with JavaFX. Now Supports 1 Player (with AI) and 2 Player modes.
 
+___
+
+</br>
+
+# Images
+
 The Title screen. </br>
 One Player mode is for playing against the AI and Two Player mode is for playing against another player on the same machine.
  ![Image of The Title Screen](https://github.com/MitchellGray100/Chess/blob/main/readMeImages/Chess%20Title%20Screenshot.PNG)
@@ -48,18 +54,24 @@ The d5 pawn takes the e4 knight to gain 3 points. Points balance out to 0:0.
 
 
 
-Promotion buttons being clicked. Whatever button is selected is what the pawn will promote to when promoting.
-![Promotion Buttons switching](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/ChessGIF.gif)
-
 Game ending in black checkmating white. Text appears on screen.
 
 ![Red Text saying black won the game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/Photo6.PNG)
 
+Backend Representation of the game (Not the actual GUI)
+![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/chess%20board%20for%20github%208.0.png)
+
+</br>
+
+# GIFs
 
 Scaling of the window.
 
 ![Window Growing and Shrinking](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/ScalingGIF.gif)
 
-Backend Representation of the game (Not the actual GUI)
-![Image of Start of Game](https://raw.githubusercontent.com/MitchellGray100/Chess/main/chess%20board%20for%20github%208.0.png)
+
+Promotion buttons being clicked. Whatever button is selected is what the pawn will promote to when promoting.
+![Promotion Buttons switching](https://raw.githubusercontent.com/MitchellGray100/Chess/main/readMeImages/ChessGIF.gif)
+
+
 
