@@ -15,6 +15,18 @@ ___
 
 </br>
 
+# Play
+
+<h3>
+  To Play, just download the .exe file: https://github.com/MitchellGray100/Chess/raw/main/Chess.exe.
+  
+
+
+</br>
+</br>
+
+</br>
+
 # Images
 
 <h3>
