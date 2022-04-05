@@ -2,7 +2,7 @@
 MitchellGray100@gmail.com
 https://github.com/MitchellGray100/Chess
 
-JavaFX based Chess Game. 
+JavaFX based Chess Game. <br>
 It's chess
 
 As a personal project, I created a representation of Chess in Java that allows chess pieces to 
